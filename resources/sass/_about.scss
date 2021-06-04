@@ -1,0 +1,72 @@
+.main-header, .service-describe, .author-footer, .source-footer{
+    font-family: "Odibee Sans",cursive;
+    text-align: center;
+    padding: 10px;
+    color: white;
+}
+.main-header{
+    width: calc(90% - 20px);
+    font-size: 3.9em;
+    letter-spacing: 0.09em;
+    margin-bottom: 9vh;
+}
+.service-describe{
+    width: calc(50% - 20px);
+    font-size: 1.9em;
+    line-height: 1.8em;
+    margin-bottom: 10vh;
+}
+.author-footer{
+    width: calc(40% - 20px);
+    padding: 10px;
+    font-size: 1.3em;
+    margin-bottom: 4vh;
+}
+.source-footer{
+    padding: 20px 10px;
+    width: calc(40% - 20px);
+    text-align: center;
+    font-size: 1.9em;
+    color: black;
+    background: linear-gradient(to right, #0a0a0a, #222, #666, #222, #0a0a0a);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: filter 0.4s;
+}
+.source-footer:hover{
+    filter: brightness(70%);
+}
+@media screen and (max-width: 972px) {
+    .service-describe{
+        width: calc(70% - 20px);
+    }
+    .author-footer, .source-footer{
+        width: calc(60% - 20px);
+    }
+}
+@media screen and (max-width: 680px) {
+    .main-header{
+        margin-bottom: 4vh;
+    }
+    .service-describe{
+        font-size: 1.4em;
+        line-height: 1.4em;
+    }
+}
+@media screen and (max-width: 474px) {
+    .main-header{
+        font-size: 3.1em;
+    }
+    .service-describe{
+        font-size: 1.2em;
+        line-height: 1.2em;
+    }
+    .author-footer{
+        width: calc(80% - 20px);
+        font-size: 1em;
+    }
+    .source-footer{
+        width: calc(90% - 20px);
+    }
+}

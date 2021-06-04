@@ -1,0 +1,82 @@
+.nav-wrapper{
+    background: none !important;
+    a{
+        color: white;
+        text-decoration: none; 
+    }
+    .menu-btn{
+        display: none;
+    }
+    .service-name{
+        color: white;
+        font-size: 1.7em;
+        letter-spacing: 0.05em;
+        font-family: 'Odibee Sans', cursive;
+        transition: filter 0.3s;
+    }
+    .service-name:hover{
+        filter: brightness(70%);
+    }
+    .item-btn-wrapper, .service-name{
+        margin: 6px;
+    }
+    .item-btn{
+        border-radius: 10px;
+        padding: 10px 20px;
+        font-size: 1.2em;
+        letter-spacing: 0.05em;
+        background: darkred;
+        font-family: 'Odibee Sans', cursive;
+        transition: all 0.4s;
+    }
+    .login-btn{
+        margin-left: auto;
+    }
+    .rwd{
+        display: none;
+    }
+    .hidden{
+        display: none !important;
+    }
+}
+@media screen and (max-width: 860px) {
+    .nav-wrapper{
+        .service-name{
+            font-size: 1.3em;
+        }
+        .item-btn{
+            font-size: 0.9em;
+        }
+    }
+}
+@media screen and (max-width: 656px) {
+    .nav-wrapper{
+        .menu-btn{
+            display: block;
+        }
+        .rwd{
+            margin-top: 2px;
+            margin-bottom: 2px;
+            display: block;
+            .item-btn{
+                width: calc(95% - 40px);
+                display: block;
+                margin: 2px auto;
+            }
+        }
+        .non-rwd{
+            display: none;
+        }
+    }
+}
+@media screen and (max-width: 424px) {
+    .nav-wrapper{
+        .service-name{
+            font-size: 1em;
+            margin-left: 2px;
+        }
+        .item-btn{
+            font-size: 0.6em;
+        }
+    }
+}

@@ -14,3 +14,4 @@ require('./bootstrap');
 
 require('./components/Example');
 require("./components/MainNav");
+require("./components/SigninInputs");

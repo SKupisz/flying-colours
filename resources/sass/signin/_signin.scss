@@ -1,0 +1,44 @@
+.signin-form{
+    width: calc(70% - 20px);
+    padding: 10px;
+    text-align: center;
+    .sign-in-container{
+        width: calc(90% - 20px);
+        padding: 10px;
+        font-family: 'Odibee Sans', cursive;
+        .email-input{
+            width: calc(60% - 20px);
+            padding: 10px;
+            .MuiFilledInput-underline:before{
+                border-color: darkred;
+            }
+            .MuiFilledInput-underline:after{
+                border-color: white;
+            }
+            input, label{
+                color: white;
+            }
+        }
+        .error-message{
+            width: calc(80% - 10px);
+            padding: 5px;
+            text-align: center;
+            font-size: 1.2em;
+            color: red;
+        }
+        .login-btn{
+            border-radius: 10px;
+            padding: 10px 20px;
+            width: calc(40% - 40px);
+            font-size: 1.2em;
+            letter-spacing: 0.09em;
+            background: linear-gradient(to left, #e53935, #d32f2f, #c62828, #b71c1c);
+            transition: all 0.4s;
+            cursor: pointer;
+            margin-top: 7vh;
+        }
+        .login-btn:hover{
+            filter: brightness(70%);
+        }
+    }
+}

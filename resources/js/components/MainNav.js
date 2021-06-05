@@ -15,7 +15,9 @@ const ButtonComponent = ({href, hrefClassName, content}) => {
     </a>;
 }
 
-const MainNav = () => {
+const MainNav = (data) => {
+
+    console.log(data["issignedin"]);
 
     const [isHidden, setHidden] = useState(true);
 
@@ -31,8 +33,12 @@ const MainNav = () => {
                 </a>
                 <ButtonComponent href = "/tests" hrefClassName = "public-tests-btn non-rwd" content = "Public tests"/>
                 <ButtonComponent href = "/about" hrefClassName = "about-btn non-rwd" content = "About the project"/>
-                <ButtonComponent href = "/sign-in" hrefClassName = "login-btn" content = "Sign in"/>
-                <ButtonComponent href = "/sign-up" hrefClassName = "register-btn" content = "Sign up"/>
+                {data["issignedin"] === "false" ? <div className="right-aligned">
+                    <ButtonComponent href = "/sign-in" hrefClassName = "login-btn" content = "Sign in"/>
+                    <ButtonComponent href = "/sign-up" hrefClassName = "register-btn" content = "Sign up"/>
+                </div> : <div className="right-aligned">
+                    <ButtonComponent href = "/logout" hrefClassName = "login-btn" content = "Logout"/>
+                    </div>}
             </Toolbar>
             <ButtonComponent href = "/tests" hrefClassName = {isHidden === true ? "public-tests-btn rwd hidden" : "public-tests-btn rwd"} content = "Public tests"/>
             <ButtonComponent href = "/about" hrefClassName = {isHidden === true ? "about-btn rwd hidden" : "about-btn rwd"} content = "About the project"/>

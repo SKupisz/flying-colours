@@ -32,7 +32,7 @@
             width: calc(40% - 40px);
             font-size: 1.2em;
             letter-spacing: 0.09em;
-            background: linear-gradient(to left, #e53935, #d32f2f, #c62828, #b71c1c);
+            background: $btn-linear-gradient;
             transition: all 0.4s;
             cursor: pointer;
             margin-top: 7vh;

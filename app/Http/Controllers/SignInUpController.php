@@ -57,9 +57,8 @@ class SignInUpController extends Controller
                     $getFinalData = json_decode(json_encode($checkIfExists),true)[0];
                     if(password_verify($passwd,$getFinalData["passwd"])){
                         $helper = (string) $getFinalData["verification_date"];
-                        $day1 = (int)$helper[5]; $day2 = (int)$helper[6];
-                        $user_history_table_name = $this->userDatabaseName($email,$day1,$day2);
-                        return $user_history_table_name;
+                        $day1 = (int)$helper[8]; $day2 = (int)$helper[9];
+                        $user_history_table_name = $this->userDatabaseName($email,$day1,$day2)."_testsHistory";
                         session(["current" => $email, "name" => $getFinalData["nickname"], "dbs" => [$user_history_table_name]]);
                         return redirect("/main");
                     }
@@ -116,13 +115,12 @@ class SignInUpController extends Controller
     }
     public function launchMainPanel(){
         if(session()->has("current") && session()->has("name") && session()->has("dbs")){
-            
             try {
                 $history = session()->get("dbs")[0];
                 $getTheRecentHistory = DB::table($history)->orderBy("last_opened_at")->take(5)->get();
                 $getTheRecentHistory = json_decode(json_encode($getTheRecentHistory),true);
                 return view("panel")->with("data",["status" => "done", "recentlyDone" => $getTheRecentHistory, "recentlyPublished" => []]);
-            } catch (\Throwable $th) {
+            } catch (Illuminate\Database\QueryException $e) {
                 return view("panel")->with("data",["status" => "error"]);
             }
             

@@ -17,8 +17,6 @@ const ButtonComponent = ({href, hrefClassName, content}) => {
 
 const MainNav = (data) => {
 
-    console.log(data["issignedin"]);
-
     const [isHidden, setHidden] = useState(true);
 
         return <AppBar position="static" className = "nav-wrapper">

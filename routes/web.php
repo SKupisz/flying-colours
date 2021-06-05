@@ -12,6 +12,7 @@
 */
 
 Route::get('/', function () {
+    if(session()->has("current") && session()->has("name") && session()->has("dbs")) return redirect("/main");
     return view('welcome');
 });
 
@@ -27,8 +28,9 @@ Route::get("/sign-up",function(){
     return view("signup");
 });
 
-Route::get("/main",function(){
-    return view("panel");
+Route::get("/main","SignInUpController@launchMainPanel");
+Route::get("/publish", function(){
+    return view("publish");
 });
 
 Route::get("/logout","SignInUpController@Logout");

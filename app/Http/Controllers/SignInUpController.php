@@ -14,6 +14,37 @@ class SignInUpController extends Controller
     public function redirectWithError($destiny, $message){
         return redirect($destiny)->with("data",["status"=>"error","message"=>$message]);
     }
+    public function factorial($x){
+        if($x == 0 || $x == 1) return 1;
+        else return $x*$this->factorial($x-1);
+    }
+    public function toThePowerOf($x,$p){
+        if($p == 0) return 1;
+        else if($p == 1) return $x;
+        else return $x*$x*$this->toThePowerOf($x,$p-2);
+    }
+    public function userDatabaseName($givenNick,$day1,$day2){
+        $operand = $givenNick;
+        for($i = 0 ; $i < strlen($operand); $i++){
+            $current = ord($operand[$i]);
+            $first = intdiv($current,10);
+            $second = $current%10;
+            $b = $this->factorial($first);
+            $x = ($second%7)+2;
+            $t = $day1+$day2;
+            $sup = $this->toThePowerOf($x,$t-1);
+            $b*=$sup;
+            $c = $b*$x;
+            $c%=65;
+            $c+=65;
+            if($c < 65 || ($c > 90 && $c < 97) || $c >122){
+                $c%=24;
+                $c+=65;
+            }
+            $operand[$i] = chr($c);
+        }
+        return $operand;
+    }
     public function SignIn(Request $data){
         if($data->has("email") && $data->has("passwd")){
             $email = $this->entities($data->input("email"));
@@ -25,7 +56,11 @@ class SignInUpController extends Controller
                     $checkIfExists = $checkIfExists->get();
                     $getFinalData = json_decode(json_encode($checkIfExists),true)[0];
                     if(password_verify($passwd,$getFinalData["passwd"])){
-                        session(["current" => $email]);
+                        $helper = (string) $getFinalData["verification_date"];
+                        $day1 = (int)$helper[5]; $day2 = (int)$helper[6];
+                        $user_history_table_name = $this->userDatabaseName($email,$day1,$day2);
+                        return $user_history_table_name;
+                        session(["current" => $email, "name" => $getFinalData["nickname"], "dbs" => [$user_history_table_name]]);
                         return redirect("/main");
                     }
                     else return $this->redirectWithError("/sign-in","Wrong email or password");
@@ -58,9 +93,15 @@ class SignInUpController extends Controller
                     "verification_date" => $currentDate,
                     "is_verified" => 1
                 ];
+                $currentDate = $currentDate->format("d");
+                $day1 = intdiv($currentDate,10); $day2 = $currentDate%10;
+                $user_history_table_name = $this->userDatabaseName($email,$day1, $day2)."_testsHistory";
+                DB::statement("CREATE TABLE ".$user_history_table_name." ( id INT NOT NULL AUTO_INCREMENT , testID TEXT CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
+                    last_opened_at DATETIME NOT NULL, result INT NOT NULL, PRIMARY KEY (id)) ENGINE = InnoDB CHARSET=utf8
+                    COLLATE utf8_polish_ci;");
                 DB::table("users")->insert($dataToPutIn);
-                session(["current"=>$dataToPutIn["email"]]);
-                return redirect("/main");
+                session(["current" => $dataToPutIn["email"], "name" => $dataToPutIn["nickname"], "dbs" => [$user_history_table_name]]);
+                return $this->launchMainPanel();
             } catch (Illuminate\Database\QueryException $e) {
                 return $this->redirectWithError("/sign-up","Connection error. Try later");
             }
@@ -69,6 +110,23 @@ class SignInUpController extends Controller
     }
     public function Logout(){
         session()->forget("current");
+        session()->forget("name");
+        session()->forget("dbs");
         return redirect("/");
+    }
+    public function launchMainPanel(){
+        if(session()->has("current") && session()->has("name") && session()->has("dbs")){
+            
+            try {
+                $history = session()->get("dbs")[0];
+                $getTheRecentHistory = DB::table($history)->orderBy("last_opened_at")->take(5)->get();
+                $getTheRecentHistory = json_decode(json_encode($getTheRecentHistory),true);
+                return view("panel")->with("data",["status" => "done", "recentlyDone" => $getTheRecentHistory, "recentlyPublished" => []]);
+            } catch (\Throwable $th) {
+                return view("panel")->with("data",["status" => "error"]);
+            }
+            
+        }
+        else return $this->Logout();
     }
 }

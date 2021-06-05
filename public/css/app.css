@@ -247,9 +247,154 @@ a {
   transition: all 0.4s;
   cursor: pointer;
   margin-top: 7vh;
+  font-family: 'Odibee Sans', cursive;
 }
 
 .signin-form .sign-in-container .login-btn:hover {
   filter: brightness(70%);
+}
+
+.main-data-container {
+  width: calc(95% - 20px);
+  padding: 10px;
+  text-align: center;
+  height: calc(60vh - 20px);
+}
+
+.main-data-container .data-wrapper {
+  display: inline-block;
+  vertical-align: top;
+  padding: 10px;
+  height: 100%;
+  border: 1px solid white;
+  border-radius: 10px;
+  margin: 6px;
+}
+
+.main-data-container .data-wrapper a {
+  text-decoration: none;
+  color: white;
+}
+
+.main-data-container .data-wrapper .recent-header {
+  width: calc(90% - 10px);
+  padding: 5px;
+  font-size: 1.9em;
+  font-family: 'Odibee Sans', cursive;
+  color: white;
+  letter-spacing: 0.07em;
+  margin-bottom: 12vh;
+}
+
+.main-data-container .data-wrapper .go-to-tests-btn {
+  padding: 20px 40px;
+  font-size: 1.7em;
+  letter-spacing: 0.04em;
+  font-family: 'Odibee Sans', cursive;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: filter 0.4s;
+  width: calc(50% - 80px);
+  background: linear-gradient(to right, #b71c1c, #c62828, #d32f2f, #e53935, #f44336);
+}
+
+.main-data-container .data-wrapper .go-to-tests-btn:hover {
+  filter: brightness(70%);
+}
+
+.main-data-container .recently-done {
+  width: calc(50% - 34px);
+}
+
+.main-data-container .recently-published {
+  width: calc(40% - 34px);
+}
+
+.main-data-container .recently-published .go-to-tests-btn {
+  padding: 20px;
+  width: calc(80% - 40px);
+}
+
+@media screen and (max-width: 1372px) {
+  .main-data-container {
+    width: calc(100% - 20px);
+  }
+}
+
+@media screen and (max-width: 1167px) {
+  .main-data-container .data-wrapper .recent-header {
+    width: calc(100% - 10px);
+    font-size: 1.4em;
+  }
+
+  .main-data-container .data-wrapper .go-to-tests-btn {
+    font-size: 1.4em;
+    width: calc(70% - 80px);
+  }
+
+  .main-data-container .recently-published .go-to-tests-btn {
+    width: calc(90% - 40px);
+  }
+}
+
+@media screen and (max-width: 930px) {
+  .history-container .main-header {
+    font-size: 3.1em !important;
+  }
+}
+
+@media screen and (max-width: 834px) {
+  .main-data-container .data-wrapper .recent-header {
+    font-size: 1.1em;
+  }
+
+  .main-data-container .data-wrapper .go-to-tests-btn {
+    font-size: 1.1em;
+  }
+}
+
+@media screen and (max-width: 758px) {
+  .main-data-container {
+    height: auto;
+  }
+
+  .main-data-container .data-wrapper {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: calc(80% - 20px);
+    height: 40vh;
+    margin-bottom: 2vh;
+  }
+
+  .main-data-container .data-wrapper .go-to-tests-btn {
+    padding: 20px;
+    width: calc(70% - 40px);
+  }
+}
+
+@media screen and (max-width: 476px) {
+  .main-data-container .data-wrapper {
+    width: calc(90% - 20px);
+  }
+
+  .main-data-container .data-wrapper .go-to-tests-btn {
+    width: calc(90% - 40px);
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .main-data-container .data-wrapper {
+    width: calc(95% - 20px);
+  }
+
+  .main-data-container .data-wrapper .recent-header {
+    font-size: 0.9em;
+  }
+
+  .main-data-container .data-wrapper .go-to-tests-btn {
+    font-size: 0.9em;
+  }
 }
 

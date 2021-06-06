@@ -7,6 +7,20 @@
     width: calc(90% - 20px);
     padding: 10px;
     text-align: center;
+    .go-to-questions-btn{
+        width: calc(25% - 20px);
+        padding: 10px;
+        text-align: center;
+        border: none;
+        border-radius: 10px;
+        font-family: 'Odibee Sans', cursive;
+        font-size: 1.5em;
+        background: $btn-linear-gradient;
+        transition: filter 0.4s;
+    }
+    .go-to-questions-btn:hover{
+        filter: brightness(70%);
+    }
 }
 .creator-container{
     margin-top: 6vh;
@@ -36,23 +50,9 @@
         color: white;
         text-align: center;
     }
-    .go-to-questions-btn{
-        width: calc(25% - 20px);
-        padding: 10px;
-        text-align: center;
-        border: none;
-        border-radius: 10px;
-        font-family: 'Odibee Sans', cursive;
-        font-size: 1.5em;
-        background: $btn-linear-gradient;
-        transition: filter 0.4s;
-    }
-    .go-to-questions-btn:hover{
-        filter: brightness(70%);
-    }
 }
 .creator-panel{
-    .question-header{
+    .question-header, .question-sub-header{
         width: calc(90% - 20px);
         padding: 10px;
         text-align: center;
@@ -60,9 +60,96 @@
         font-family: 'Odibee Sans', cursive;
         color: white;
     }
+    .question-sub-header{
+        font-size: 1.4em;
+    }
+    .question-name-input{
+        width: calc(40% - 20px);
+        padding: 10px;
+        .MuiFilledInput-underline:before{
+            border-color: darkred;
+        }
+        .MuiFilledInput-underline:after{
+            border-color: white;
+        }
+        input, label{
+            color: white;
+            font-family: 'Odibee Sans', cursive;
+            font-size: 1.3em;
+        }
+    }
+    .type-container{
+        width: calc(50% - 20px);
+        padding: 10px;
+        text-align: center;
+        margin-bottom: 4vh;
+        .question-type-btn{
+            margin: 6px;
+            padding: 20px 10px;
+            width: calc(15% - 20px);
+            font-size: 1em;
+            font-family: 'Odibee Sans', cursive;
+            background: $btn-round-gradient;
+            cursor: pointer;
+            transition: filter 0.3s;
+        }
+        .question-type-btn:hover{
+            filter: brightness(70%);
+        }
+        .selected-type{
+            background: $btn-selected-gradient;
+        }
+    }
+    .answer-wrapper{
+        width: calc(40% - 20px);
+        padding: 10px;
+        margin-bottom: 3vh;
+        height: auto;
+        .answer-content,.answer-correct{
+            display: inline-block;
+            vertical-align: top;
+            margin: 6px;
+        }
+        .answer-icon{
+            background: none;
+            border: none;
+            margin-left: 20px;
+            font-size: 2.6em;
+        }
+        .answer-correct{
+            color: green;
+        }
+        .answer-wrong{
+            color: red;
+        }
+        .answer-content{
+            color: white;
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+            }
+            input[type=number] {
+                -moz-appearance: textfield;
+            }
+            .MuiFilledInput-underline:before{
+                border-color: darkred;
+            }
+            .MuiFilledInput-underline.Mui-focused:after{
+                border-color: white !important;
+            }
+            input, label{
+                color: white;
+                text-align: center;
+                font-size: 2.2em;
+                padding-top: 0;
+                font-family: 'Odibee Sans', cursive;
+            }
+        }
+    }
 }
 @media screen and (max-width: 1083px) {
-    .creator-container{
+    .creator-container, .creator-panel{
         .questions-input{
             width: calc(50% - 20px);
         }
@@ -72,7 +159,7 @@
     }
 }
 @media screen and (max-width: 733px) {
-    .creator-container{
+    .creator-container, .creator-panel{
         .go-to-questions-btn{
             width: calc(50% - 20px);
             font-size: 1.2em;
@@ -88,7 +175,7 @@
     }
 }
 @media screen and (max-width: 485px) {
-    .creator-container{
+    .creator-container, .creator-panel{
         .go-to-questions-btn{
             width: calc(70% - 20px);
         }
@@ -103,7 +190,7 @@
     }
 }
 @media screen and (max-width: 360px) {
-    .creator-container{
+    .creator-container, .creator-panel{
         .questions-input{
             width: calc(95% - 20px);
             font-size: 1.5em;

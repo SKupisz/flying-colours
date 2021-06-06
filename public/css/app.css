@@ -533,7 +533,7 @@ a {
 }
 
 .creator-panel .answer-wrapper .answer-content,
-.creator-panel .answer-wrapper .answer-correct {
+.creator-panel .answer-wrapper .answer-icon {
   display: inline-block;
   vertical-align: top;
   margin: 6px;
@@ -542,8 +542,9 @@ a {
 .creator-panel .answer-wrapper .answer-icon {
   background: none;
   border: none;
-  margin-left: 20px;
+  margin: 0 20px;
   font-size: 2.6em;
+  width: calc(20% - 40px);
 }
 
 .creator-panel .answer-wrapper .answer-correct {
@@ -555,17 +556,8 @@ a {
 }
 
 .creator-panel .answer-wrapper .answer-content {
+  width: 70%;
   color: white;
-}
-
-.creator-panel .answer-wrapper .answer-content input::-webkit-outer-spin-button,
-.creator-panel .answer-wrapper .answer-content input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.creator-panel .answer-wrapper .answer-content input[type=number] {
-  -moz-appearance: textfield;
 }
 
 .creator-panel .answer-wrapper .answer-content .MuiFilledInput-underline:before {
@@ -648,6 +640,79 @@ a {
   .creator-container .questions-input {
     width: calc(95% - 20px);
     font-size: 1.5em;
+  }
+}
+
+@media screen and (max-width: 1292px) {
+  .creator-panel .type-container .question-type-btn {
+    width: calc(20% - 20px);
+  }
+}
+
+@media screen and (max-width: 1090px) {
+  .creator-panel .answer-wrapper {
+    width: calc(60% - 20px);
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .creator-panel .type-container .question-type-btn {
+    width: calc(25% - 20px);
+    font-size: 0.8em;
+  }
+}
+
+@media screen and (max-width: 755px) {
+  .creator-panel .question-name-input {
+    width: calc(60% - 20px);
+  }
+}
+
+@media screen and (max-width: 688px) {
+  .creator-panel .type-container .question-type-btn {
+    width: calc(40% - 20px);
+    font-size: 1em;
+  }
+
+  .creator-panel .answer-wrapper {
+    width: calc(80% - 20px);
+  }
+
+  .creator-panel .answer-wrapper .answer-content,
+  .creator-panel .answer-wrapper .answer-icon {
+    width: auto;
+  }
+}
+
+@media screen and (max-width: 570px) {
+  .creator-panel .answer-wrapper .answer-content,
+  .creator-panel .answer-wrapper .answer-icon {
+    width: auto;
+  }
+
+  .creator-panel .answer-wrapper .answer-content input,
+  .creator-panel .answer-wrapper .answer-content label {
+    font-size: 1.8em;
+  }
+}
+
+@media screen and (max-width: 511px) {
+  .creator-panel .type-container .question-type-btn {
+    width: calc(50% - 20px);
+    font-size: 0.8em;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .creator-panel .question-name-input {
+    width: calc(80% - 20px);
+  }
+
+  .creator-panel .type-container .question-type-btn {
+    width: calc(80% - 20px);
+    margin: 2px 6px;
+    padding: 10px;
+    font-size: 1em;
   }
 }
 

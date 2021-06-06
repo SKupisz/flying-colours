@@ -94,7 +94,9 @@ class SignInUpController extends Controller
                 ];
                 $currentDate = $currentDate->format("d");
                 $day1 = intdiv($currentDate,10); $day2 = $currentDate%10;
-                $user_history_table_name = $this->userDatabaseName($email,$day1, $day2)."_testsHistory";
+                $baseForDatabaseName = $this->userDatabaseName($email,$day1, $day2);
+                $user_history_table_name = $baseForDatabaseName."_testsHistory";
+                $user_temp_tests_name = $baseForDatabaseName."_temp";
                 DB::statement("CREATE TABLE ".$user_history_table_name." ( id INT NOT NULL AUTO_INCREMENT , testID TEXT CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
                     last_opened_at DATETIME NOT NULL, result INT NOT NULL, PRIMARY KEY (id)) ENGINE = InnoDB CHARSET=utf8
                     COLLATE utf8_polish_ci;");

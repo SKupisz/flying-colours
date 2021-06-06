@@ -2,6 +2,7 @@ import React from "React";
 import ReactDOM from "react-dom";
 import {Grid, InputBase, Button, TextField} from "@material-ui/core";
 import QuestionContent from "./QuestionContent.js";
+import QuestionTypes from "./QuestionTypes.js";
 
 export default class TestCreator extends React.Component{
     constructor(props){
@@ -64,7 +65,7 @@ export default class TestCreator extends React.Component{
         operand["correctAnswerInd"] = ind === operand["correctAnswerInd"] ? -1 : ind;
         this.setState({
             currentQuestionData: operand
-        }, () => {console.log(this.state.currentQuestionData["correctAnswerInd"])});
+        }, () => {});
     }
     nextQuestion(){
         this.setState({
@@ -101,16 +102,7 @@ export default class TestCreator extends React.Component{
                     <Grid item xs={12}>
                         <header className="question-sub-header block-center">Select type of the questions</header>
                     </Grid>
-                    <Grid item xs={12} className="type-container block-center">
-                        <Button type="button" variant="contained" className="question-type-btn" ref = {this.singleAnswerRef}
-                        onClick = {() => {this.pickUpNewQuestionType(0)}}>Closed-single answer</Button>
-                        <Button type="button" variant="contained" className="question-type-btn" ref = {this.multiAnswerRef}
-                        onClick = {() => {this.pickUpNewQuestionType(1)}}>Closed-multi answer</Button>
-                        <Button type="button" variant="contained" className="question-type-btn" ref = {this.textAnswerRef}
-                        onClick = {() => {this.pickUpNewQuestionType(2)}}>Open-text answer</Button>
-                        <Button type="button" variant="contained" className="question-type-btn" ref = {this.numberAnswerRef}
-                        onClick = {() => {this.pickUpNewQuestionType(3)}}>Open-number answer</Button>
-                    </Grid>
+                    <QuestionTypes refsTable = {this.tableOfQuestionTypeRefs} callBackFunction = {this.pickUpNewQuestionType}/>
                     {this.state.currentQuestionType === -1 ? "" : this.state.currentQuestionType === 0 ?
                     this.state.currentQuestionData.answerStack.map((elem, index) => <QuestionContent defaultValue = {elem} chooseAsCorrect = {this.selectNewCorrectAnswer} 
                     questionIndex = {index} currentCorrectInd={this.state.currentQuestionData["correctAnswerInd"]}/>) : ""}

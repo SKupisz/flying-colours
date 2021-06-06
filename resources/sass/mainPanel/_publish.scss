@@ -105,7 +105,7 @@
         padding: 10px;
         margin-bottom: 3vh;
         height: auto;
-        .answer-content,.answer-correct{
+        .answer-content,.answer-icon{
             display: inline-block;
             vertical-align: top;
             margin: 6px;
@@ -113,8 +113,9 @@
         .answer-icon{
             background: none;
             border: none;
-            margin-left: 20px;
+            margin: 0 20px;
             font-size: 2.6em;
+            width: calc(20% - 40px);
         }
         .answer-correct{
             color: green;
@@ -123,15 +124,8 @@
             color: red;
         }
         .answer-content{
+            width: 70%;
             color: white;
-            input::-webkit-outer-spin-button,
-            input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-            }
-            input[type=number] {
-                -moz-appearance: textfield;
-            }
             .MuiFilledInput-underline:before{
                 border-color: darkred;
             }
@@ -148,69 +142,5 @@
         }
     }
 }
-@media screen and (max-width: 1083px) {
-    .creator-container, .creator-panel{
-        .questions-input{
-            width: calc(50% - 20px);
-        }
-        .go-to-questions-btn{
-            width: calc(40% - 20px);
-        }
-    }
-}
-@media screen and (max-width: 733px) {
-    .creator-container, .creator-panel{
-        .go-to-questions-btn{
-            width: calc(50% - 20px);
-            font-size: 1.2em;
-        }
-    } 
-}
-@media screen and (max-width: 659px) {
-    .creator-container{
-        .questions-input{
-            width: calc(70% - 20px);
-            font-size: 2.1em;
-        }
-    }
-}
-@media screen and (max-width: 485px) {
-    .creator-container, .creator-panel{
-        .go-to-questions-btn{
-            width: calc(70% - 20px);
-        }
-    } 
-}
-@media screen and (max-width: 417px) {
-    .creator-container{
-        .questions-input{
-            width: calc(90% - 20px);
-            font-size: 1.8em;
-        }
-    }
-}
-@media screen and (max-width: 360px) {
-    .creator-container, .creator-panel{
-        .questions-input{
-            width: calc(95% - 20px);
-            font-size: 1.5em;
-        }
-        .go-to-questions-btn{
-            width: calc(80% - 20px);
-            font-size: 1em;
-        }
-    }
-}
-@media screen and (max-width: 320px) {
-    .publish-container{
-        .main-header{
-            font-size: 2.5em;
-        }
-    }
-    .creator-container{
-        .questions-input{
-            width: calc(95% - 20px);
-            font-size: 1.5em;
-        }
-    }
-}
+@import "./RWDFirstPhase";
+@import "./RWDSecondPhase";

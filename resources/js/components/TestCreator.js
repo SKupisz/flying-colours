@@ -1,8 +1,8 @@
 import React from "React";
 import ReactDOM from "react-dom";
 import {Grid, InputBase, Button, TextField} from "@material-ui/core";
-import QuestionContent from "./QuestionContent.js";
 import QuestionTypes from "./QuestionTypes.js";
+import CloseAnswerQuestion from "./questions/CloseAnswerQuestion.js";
 
 export default class TestCreator extends React.Component{
     constructor(props){
@@ -13,13 +13,30 @@ export default class TestCreator extends React.Component{
         this.textAnswerRef = React.createRef();
         this.numberAnswerRef = React.createRef();
 
+        this.defaultQuestionModels = [
+            {
+                type: "csa",
+                questionName: "",
+                answerStack: ["true", "false"],
+                correctAnswerInd: -1 // closed-single-answer
+            },
+            {
+                type: "cma",
+                questionName: "",
+                answerStack: ["true", "false"],
+                correctAnswerInd: [] // closed-multi-answer
+            }
+        ];
+
         this.state = {
             ifCreatingAllowed: true,
             startedCreating: true,
-            currentQuestion: 2,
+            currentQuestion: 1,
             howManyQuestions: 1,
             currentQuestionType: -1,
             currentQuestionData: {
+                type: "cma",
+                questionName: "",
                 answerStack: ["true", "false"],
                 correctAnswerInd: -1
             },
@@ -32,10 +49,13 @@ export default class TestCreator extends React.Component{
         this.nextQuestion = this.nextQuestion.bind(this);
         this.pickUpNewQuestionType = this.pickUpNewQuestionType.bind(this);
         this.selectNewCorrectAnswer = this.selectNewCorrectAnswer.bind(this);
+        this.addNewCorrectAnswer = this.addNewCorrectAnswer.bind(this);
         this.sendNextRowData = this.sendNextRowData.bind(this);
         this.previousQuestion = this.previousQuestion.bind(this);
         this.lastPhase = this.lastPhase.bind(this);
         this.finishThePublishing = this.finishThePublishing.bind(this);
+        this.changeQuestionAnswer = this.changeQuestionAnswer.bind(this);
+        this.changeQuestionName = this.changeQuestionName.bind(this);
 
         this.tableOfQuestionTypeRefs = [this.singleAnswerRef, this.multiAnswerRef, this.textAnswerRef, this.numberAnswerRef];
     }
@@ -58,6 +78,7 @@ export default class TestCreator extends React.Component{
     }
     pickUpNewQuestionType(ind){
         this.setState({
+            currentQuestionData: this.state.currentQuestionType === ind ? {} : this.defaultQuestionModels[ind],
             currentQuestionType: this.state.currentQuestionType === ind ? -1 : ind
         }, () => {
             for(let i = 0 ; i < this.tableOfQuestionTypeRefs.length; i++){
@@ -69,6 +90,13 @@ export default class TestCreator extends React.Component{
     selectNewCorrectAnswer(ind){
         let operand = this.state.currentQuestionData;
         operand["correctAnswerInd"] = ind === operand["correctAnswerInd"] ? -1 : ind;
+        this.setState({
+            currentQuestionData: operand
+        }, () => {});
+    }
+    addNewCorrectAnswer(ind){
+        let operand = this.state.currentQuestionData;
+        operand["correctAnswerInd"].indexOf(ind) === -1 ? operand["correctAnswerInd"].push(ind) : operand["correctAnswerInd"] = operand["correctAnswerInd"].filter((elem) => { return elem !== ind;});
         this.setState({
             currentQuestionData: operand
         }, () => {});
@@ -109,6 +137,20 @@ export default class TestCreator extends React.Component{
             isEndingOfTheQuiz: !this.state.isEndingOfTheQuiz
         }, () => {});
     }
+    changeQuestionAnswer(event, ind){
+        let operand = this.state.currentQuestionData, newName = event.target.value;
+        operand["answerStack"][ind] = newName;
+        this.setState({
+            currentQuestionData: operand
+        }, () => {});
+    }
+    changeQuestionName(event){
+        let operand = this.state.currentQuestionData, newName = event.target.value;
+        operand["questionName"] = newName;
+        this.setState({
+            currentQuestionData: operand
+        }, () => {});
+    }
     finishThePublishing(){
 
     }
@@ -137,22 +179,23 @@ export default class TestCreator extends React.Component{
                         <TextField
                             required
                             label="Question" variant="filled" 
-                            className = "question-name-input block-center" margin="normal" name="question-name"/>
+                            className = "question-name-input block-center" margin="normal" name="question-name"
+                            onChange = {event => {this.changeQuestionName(event);}}/>
                     </Grid>
                     <Grid item xs={12}>
                         <header className="question-sub-header block-center">Select type of the questions</header>
                     </Grid>
                     <QuestionTypes refsTable = {this.tableOfQuestionTypeRefs} callBackFunction = {this.pickUpNewQuestionType}/>
                     {this.state.currentQuestionType === -1 ? "" : this.state.currentQuestionType === 0 ?
-                    this.state.currentQuestionData.answerStack.map((elem, index) => <QuestionContent defaultValue = {elem} chooseAsCorrect = {this.selectNewCorrectAnswer} 
-                    questionIndex = {index} currentCorrectInd={this.state.currentQuestionData["correctAnswerInd"]}/>) : ""}
-                    {this.state.currentQuestionData["correctAnswerInd"] !== -1 && this.state.currentQuestionType !== -1? <Grid item xs={12}>
-                        <Button variant="contained" 
-                        className="go-to-questions-btn block-center" type = "button"
-                        onClick = {() => {this.nextQuestion()}}>
-                            Next question
-                        </Button>
-                    </Grid> : ""}
+                    <CloseAnswerQuestion currentQuestionData = {this.state.currentQuestionData} 
+                    selectNewCorrectAnswer = {this.selectNewCorrectAnswer}
+                    currentQuestionType = {this.state.currentQuestionType}
+                    goToNextQuestion = {this.nextQuestion}
+                    changeQuestionAnswer = {this.changeQuestionAnswer}/> : this.state.currentQuestionType === 1 ? <CloseAnswerQuestion currentQuestionData = {this.state.currentQuestionData} 
+                    selectNewCorrectAnswer = {this.addNewCorrectAnswer}
+                    currentQuestionType = {this.state.currentQuestionType}
+                    goToNextQuestion = {this.nextQuestion}
+                    changeQuestionAnswer = {this.changeQuestionAnswer}/> : ""}
                 </Grid> : this.state.isEndingOfTheQuiz === false ? <Grid container className="creator-panel block-center">
                     <Grid item xs={12}>
                         <header className="question-header block-center">End of Questions</header>

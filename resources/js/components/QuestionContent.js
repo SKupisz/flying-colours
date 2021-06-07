@@ -5,12 +5,18 @@ import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 
 export default class QuestionContent extends React.Component{
     render(){
+        let ifChosen = false;
+        if(typeof this.props.currentCorrectInd === "object"){
+            if(this.props.currentCorrectInd.indexOf(this.props.questionIndex) !== -1) ifChosen = true;
+        }
+        else if(typeof this.props.currentCorrectInd === "number" && this.props.currentCorrectInd === this.props.questionIndex) ifChosen = true;
         return <Grid item xs = {12}>
             <div className="answer-wrapper block-center">
-            {this.props.currentCorrectInd !== this.props.questionIndex ? <HighlightOffIcon  onClick = {() => {this.props.chooseAsCorrect(this.props.questionIndex)}} className="answer-icon answer-wrong"/> : 
+            {!ifChosen ? <HighlightOffIcon  onClick = {() => {this.props.chooseAsCorrect(this.props.questionIndex)}} className="answer-icon answer-wrong"/> : 
             <CheckCircleOutlineIcon onClick = {() => {this.props.chooseAsCorrect(this.props.questionIndex);}} className="answer-icon answer-correct"/>}
                 <TextField className="answer-content" margin="dense" variant="filled" 
-                type = "text" placeholder="Answer content..." required defaultValue = {this.props.defaultValue}/>
+                type = "text" placeholder="Answer content..." required defaultValue = {this.props.defaultValue}
+                onChange= {event => {this.props.changeQuestionAnswer(event, this.props.questionIndex);}}/>
             </div>
         </Grid> ;
     }

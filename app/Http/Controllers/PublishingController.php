@@ -84,4 +84,7 @@ class PublishingController extends Controller
         }
         else return json_encode(["error"]);
     }
+    public function PublishTheTest(Request $data){
+        
+    }
 }

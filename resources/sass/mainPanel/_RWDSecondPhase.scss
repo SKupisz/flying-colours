@@ -30,6 +30,13 @@
         }
     }
 }
+@media screen and (max-width: 782px) {
+    .creator-panel{
+        .answer-wrapper{
+            width: calc(80% - 20px);
+        }
+    }
+}
 @media screen and (max-width: 755px) {
     .creator-panel{
         .question-name-input{
@@ -90,6 +97,14 @@
                 width: calc(50% - 20px);
                 font-size: 0.8em;
             }
+        }
+    }
+}
+@media screen and (max-width: 480px) {
+    .creator-panel{
+        .adding-answer-button{
+            width: calc(70% - 20px);
+            font-size: 0.7em;
         }
     }
 }

@@ -516,7 +516,7 @@ a {
   width: calc(50% - 20px);
   padding: 10px;
   text-align: center;
-  margin-bottom: 4vh;
+  margin-bottom: 1vh;
 }
 
 .creator-panel .type-container .question-type-btn {
@@ -538,8 +538,26 @@ a {
   background: radial-gradient(#ff4441, #f83838, #ff3333, #ff1d1d);
 }
 
-.creator-panel .answer-wrapper {
+.creator-panel .adding-answer-button {
   width: calc(40% - 20px);
+  padding: 20px 10px;
+  font-size: 1em;
+  letter-spacing: 0.07em;
+  font-family: 'Odibee Sans', cursive;
+  background: linear-gradient(to left, #e53935, #d32f2f, #c62828, #b71c1c);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: filter 0.4s;
+  margin-bottom: 4vh;
+}
+
+.creator-panel .adding-answer-button:hover {
+  filter: brightness(70%);
+}
+
+.creator-panel .answer-wrapper {
+  width: calc(50% - 20px);
   padding: 10px;
   margin-bottom: 3vh;
   height: auto;
@@ -555,9 +573,15 @@ a {
 .creator-panel .answer-wrapper .answer-icon {
   background: none;
   border: none;
-  margin: 0 20px;
+  margin: 0 10px;
   font-size: 2.6em;
-  width: calc(20% - 40px);
+  width: calc(10% - 20px);
+  cursor: pointer;
+  transition: filter 0.4s;
+}
+
+.creator-panel .answer-wrapper .answer-icon:hover {
+  filter: brightness(70%);
 }
 
 .creator-panel .answer-wrapper .answer-correct {
@@ -568,8 +592,12 @@ a {
   color: red;
 }
 
+.creator-panel .answer-wrapper .delete-icon {
+  color: white;
+}
+
 .creator-panel .answer-wrapper .answer-content {
-  width: 70%;
+  width: 60%;
   color: white;
 }
 
@@ -588,6 +616,10 @@ a {
   font-size: 2.2em;
   padding-top: 0;
   font-family: 'Odibee Sans', cursive;
+}
+
+.creator-panel .answer-wrapper .answer-content input {
+  width: 100%;
 }
 
 .creator-panel .ending-options-container {
@@ -740,6 +772,12 @@ a {
   }
 }
 
+@media screen and (max-width: 782px) {
+  .creator-panel .answer-wrapper {
+    width: calc(80% - 20px);
+  }
+}
+
 @media screen and (max-width: 755px) {
   .creator-panel .question-name-input {
     width: calc(60% - 20px);
@@ -792,6 +830,13 @@ a {
   .creator-panel .type-container .question-type-btn {
     width: calc(50% - 20px);
     font-size: 0.8em;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .creator-panel .adding-answer-button {
+    width: calc(70% - 20px);
+    font-size: 0.7em;
   }
 }
 

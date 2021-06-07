@@ -2,6 +2,7 @@ import React from "react";
 import { Grid, TextField } from "@material-ui/core";
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 export default class QuestionContent extends React.Component{
     render(){
@@ -14,6 +15,7 @@ export default class QuestionContent extends React.Component{
             <div className="answer-wrapper block-center">
             {!ifChosen ? <HighlightOffIcon  onClick = {() => {this.props.chooseAsCorrect(this.props.questionIndex)}} className="answer-icon answer-wrong"/> : 
             <CheckCircleOutlineIcon onClick = {() => {this.props.chooseAsCorrect(this.props.questionIndex);}} className="answer-icon answer-correct"/>}
+                <DeleteForeverIcon onClick = {() => {this.props.deleteTheAnswer(this.props.questionIndex);}} className = "answer-icon delete-icon"/>
                 <TextField className="answer-content" margin="dense" variant="filled" 
                 type = "text" placeholder="Answer content..." required defaultValue = {this.props.defaultValue}
                 onChange= {event => {this.props.changeQuestionAnswer(event, this.props.questionIndex);}}/>

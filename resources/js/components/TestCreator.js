@@ -17,13 +17,13 @@ export default class TestCreator extends React.Component{
             {
                 type: "csa",
                 questionName: "",
-                answerStack: ["true", "false"],
+                answerStack: ["answer 1", "answer 2"],
                 correctAnswerInd: -1 // closed-single-answer
             },
             {
                 type: "cma",
                 questionName: "",
-                answerStack: ["true", "false"],
+                answerStack: ["answer 1", "answer 2"],
                 correctAnswerInd: [] // closed-multi-answer
             }
         ];
@@ -35,10 +35,10 @@ export default class TestCreator extends React.Component{
             howManyQuestions: 1,
             currentQuestionType: -1,
             currentQuestionData: {
-                type: "cma",
+                type: "csa",
                 questionName: "",
-                answerStack: ["true", "false"],
-                correctAnswerInd: -1
+                answerStack: ["answer 1", "answer 2"],
+                correctAnswerInd: -1 // closed-single-answer
             },
             currentTestID: "",
             isEndingOfTheQuiz: false
@@ -49,6 +49,8 @@ export default class TestCreator extends React.Component{
         this.nextQuestion = this.nextQuestion.bind(this);
         this.pickUpNewQuestionType = this.pickUpNewQuestionType.bind(this);
         this.selectNewCorrectAnswer = this.selectNewCorrectAnswer.bind(this);
+        this.addNewAnswer = this.addNewAnswer.bind(this);
+        this.deleteAnswer = this.deleteAnswer.bind(this);
         this.addNewCorrectAnswer = this.addNewCorrectAnswer.bind(this);
         this.sendNextRowData = this.sendNextRowData.bind(this);
         this.previousQuestion = this.previousQuestion.bind(this);
@@ -77,8 +79,10 @@ export default class TestCreator extends React.Component{
         }, () => {});
     }
     pickUpNewQuestionType(ind){
+        let current = this.state.currentQuestionData, operand = this.defaultQuestionModels[ind];
+        if(current["questionName"] !== "") operand["questionName"] = current["questionName"];
         this.setState({
-            currentQuestionData: this.state.currentQuestionType === ind ? {} : this.defaultQuestionModels[ind],
+            currentQuestionData: this.state.currentQuestionType === ind ? {} : {...operand},
             currentQuestionType: this.state.currentQuestionType === ind ? -1 : ind
         }, () => {
             for(let i = 0 ; i < this.tableOfQuestionTypeRefs.length; i++){
@@ -151,8 +155,23 @@ export default class TestCreator extends React.Component{
             currentQuestionData: operand
         }, () => {});
     }
+    addNewAnswer(){
+        let operand = this.state.currentQuestionData;
+        operand["answerStack"].push("answer "+(this.state.currentQuestionData["answerStack"].length+1));
+        this.setState({
+            currentQuestionData: operand
+        }, () => {});
+    }
+    deleteAnswer(ind){
+        let operand = this.state.currentQuestionData;
+        operand["answerStack"] = operand["answerStack"].filter((elem,index) => {console.log(index); return index !== ind});
+        console.log(operand["answerStack"]);
+        this.setState({
+            currentQuestionData: operand
+        }, () => {});
+    }
     finishThePublishing(){
-
+        
     }
     render(){
         return <div>
@@ -186,15 +205,22 @@ export default class TestCreator extends React.Component{
                         <header className="question-sub-header block-center">Select type of the questions</header>
                     </Grid>
                     <QuestionTypes refsTable = {this.tableOfQuestionTypeRefs} callBackFunction = {this.pickUpNewQuestionType}/>
+                    {this.state.currentQuestionType === 0 || this.state.currentQuestionType === 1 ? <Grid item xs = {12}>
+                        <Button variant="contained" 
+                        className="adding-answer-button block-center" type = "button"
+                        onClick = {() => {this.addNewAnswer()}}>
+                            Add an answer
+                        </Button>
+                    </Grid> : ""}
                     {this.state.currentQuestionType === -1 ? "" : this.state.currentQuestionType === 0 ?
                     <CloseAnswerQuestion currentQuestionData = {this.state.currentQuestionData} 
                     selectNewCorrectAnswer = {this.selectNewCorrectAnswer}
                     currentQuestionType = {this.state.currentQuestionType}
-                    goToNextQuestion = {this.nextQuestion}
+                    goToNextQuestion = {this.nextQuestion} deleteTheAnswer = {this.deleteAnswer}
                     changeQuestionAnswer = {this.changeQuestionAnswer}/> : this.state.currentQuestionType === 1 ? <CloseAnswerQuestion currentQuestionData = {this.state.currentQuestionData} 
                     selectNewCorrectAnswer = {this.addNewCorrectAnswer}
                     currentQuestionType = {this.state.currentQuestionType}
-                    goToNextQuestion = {this.nextQuestion}
+                    goToNextQuestion = {this.nextQuestion} deleteTheAnswer = {this.deleteAnswer}
                     changeQuestionAnswer = {this.changeQuestionAnswer}/> : ""}
                 </Grid> : this.state.isEndingOfTheQuiz === false ? <Grid container className="creator-panel block-center">
                     <Grid item xs={12}>

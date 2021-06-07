@@ -3,7 +3,7 @@
         margin-bottom: 3vh;
     }
 }
-.creator-container, .creator-panel{
+.creator-container, .creator-panel, .ending-panel{
     width: calc(90% - 20px);
     padding: 10px;
     text-align: center;
@@ -20,6 +20,21 @@
     }
     .go-to-questions-btn:hover{
         filter: brightness(70%);
+    }
+    .question-name-input{
+        width: calc(40% - 20px);
+        padding: 10px;
+        .MuiFilledInput-underline:before{
+            border-color: darkred;
+        }
+        .MuiFilledInput-underline:after{
+            border-color: white;
+        }
+        input, label{
+            color: white;
+            font-family: 'Odibee Sans', cursive;
+            font-size: 1.3em;
+        }
     }
 }
 .creator-container{
@@ -62,21 +77,6 @@
     }
     .question-sub-header{
         font-size: 1.4em;
-    }
-    .question-name-input{
-        width: calc(40% - 20px);
-        padding: 10px;
-        .MuiFilledInput-underline:before{
-            border-color: darkred;
-        }
-        .MuiFilledInput-underline:after{
-            border-color: white;
-        }
-        input, label{
-            color: white;
-            font-family: 'Odibee Sans', cursive;
-            font-size: 1.3em;
-        }
     }
     .type-container{
         width: calc(50% - 20px);
@@ -141,6 +141,57 @@
             }
         }
     }
+    .ending-options-container{
+        width: calc(80% - 20px);
+        padding: 10px;
+        text-align: center;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        .ending-phase-btn{
+            width: calc(40% - 32px);
+            padding: 20px 10px;
+            border-radius: 10px;
+            border: none;
+            background: $btn-linear-gradient;
+            font-size: 1.9em;
+            font-family: 'Odibee Sans', cursive;
+            margin: 6px;
+            display: inline-block;
+            cursor: pointer;
+            transition: filter 0.4s;
+        }
+        .ending-phase-btn:hover{
+            filter: brightness(70%);
+        }
+    }
+}
+.ending-panel{
+    font-family: 'Odibee Sans', cursive;
+    .ending-header{
+        width: calc(90% - 20px);
+        text-align: center;
+        font-size: 1.9em;
+        letter-spacing: 0.07em;
+        font-family: 'Odibee Sans', cursive;
+        margin-bottom: 4vh;
+        color: white;
+    }
+    .finish-btn{
+        width: calc(30% - 20px);
+        padding: 20px 10px;
+        text-align: center;
+        font-size: 2.1em;
+        letter-spacing: 0.06em;
+        font-family: 'Odibee Sans', cursive;
+        background: $btn-linear-gradient;
+        cursor: pointer;
+        transition: filter 0.4s;
+    }
+    .finish-btn:hover{
+        filter: brightness(70%);
+    }
 }
 @import "./RWDFirstPhase";
 @import "./RWDSecondPhase";
+@import "./RWDFinalPhase";

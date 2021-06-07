@@ -16,13 +16,15 @@ export default class TestCreator extends React.Component{
         this.state = {
             ifCreatingAllowed: true,
             startedCreating: true,
-            currentQuestion: 1,
+            currentQuestion: 2,
             howManyQuestions: 1,
             currentQuestionType: -1,
             currentQuestionData: {
                 answerStack: ["true", "false"],
                 correctAnswerInd: -1
-            }
+            },
+            currentTestID: "",
+            isEndingOfTheQuiz: false
         };
 
         this.allowNextPhase = this.allowNextPhase.bind(this);
@@ -30,6 +32,10 @@ export default class TestCreator extends React.Component{
         this.nextQuestion = this.nextQuestion.bind(this);
         this.pickUpNewQuestionType = this.pickUpNewQuestionType.bind(this);
         this.selectNewCorrectAnswer = this.selectNewCorrectAnswer.bind(this);
+        this.sendNextRowData = this.sendNextRowData.bind(this);
+        this.previousQuestion = this.previousQuestion.bind(this);
+        this.lastPhase = this.lastPhase.bind(this);
+        this.finishThePublishing = this.finishThePublishing.bind(this);
 
         this.tableOfQuestionTypeRefs = [this.singleAnswerRef, this.multiAnswerRef, this.textAnswerRef, this.numberAnswerRef];
     }
@@ -68,9 +74,43 @@ export default class TestCreator extends React.Component{
         }, () => {});
     }
     nextQuestion(){
+        this.sendNextRowData(this.state.currentQuestionData);
+    }
+    previousQuestion(){
         this.setState({
-            currentQuestion: this.state.currentQuestion+1
+            currentQuestion: this.state.currentQuestion-1
         }, () => {});
+    }
+    async sendNextRowData(dataToSend){
+        await fetch("/publish/tempRow",{
+            method: "POST",
+            headers: {"Content-type": "application/json"},
+            body: JSON.stringify({
+                questionNumber: this.state.currentQuestion,
+                questionData: JSON.stringify(dataToSend),
+                testID: this.state.currentTestID,
+                _token: this.props.token
+            })
+        }).then(back => back.json())
+        .then(data => {
+            if(data[0] === "success"){
+                this.setState({
+                    currentQuestion: this.state.currentQuestion+1,
+                    currentTestID: this.state.currentTestID === "" ? data[1] : this.state.currentTestID
+                }, () => {});
+            }
+            else{
+
+            }
+        });
+    }
+    lastPhase(){
+        this.setState({
+            isEndingOfTheQuiz: !this.state.isEndingOfTheQuiz
+        }, () => {});
+    }
+    finishThePublishing(){
+
     }
     render(){
         return <div>
@@ -106,17 +146,44 @@ export default class TestCreator extends React.Component{
                     {this.state.currentQuestionType === -1 ? "" : this.state.currentQuestionType === 0 ?
                     this.state.currentQuestionData.answerStack.map((elem, index) => <QuestionContent defaultValue = {elem} chooseAsCorrect = {this.selectNewCorrectAnswer} 
                     questionIndex = {index} currentCorrectInd={this.state.currentQuestionData["correctAnswerInd"]}/>) : ""}
-                    {this.state.currentQuestionData["correctAnswerInd"] !== -1 ? <Grid item xs={12}>
+                    {this.state.currentQuestionData["correctAnswerInd"] !== -1 && this.state.currentQuestionType !== -1? <Grid item xs={12}>
                         <Button variant="contained" 
                         className="go-to-questions-btn block-center" type = "button"
                         onClick = {() => {this.nextQuestion()}}>
                             Next question
                         </Button>
                     </Grid> : ""}
-                </Grid> : <Grid container className="creator-panel block-center">
+                </Grid> : this.state.isEndingOfTheQuiz === false ? <Grid container className="creator-panel block-center">
                     <Grid item xs={12}>
                         <header className="question-header block-center">End of Questions</header>
+                        <Grid item xs={12} className="ending-options-container">
+                            <Button variant="contained" 
+                            className="ending-phase-btn" type = "button"
+                            onClick = {() => {this.previousQuestion()}}>
+                                Previous question
+                            </Button>
+                            <Button variant="contained" 
+                            className="ending-phase-btn" type = "button"
+                            onClick = {() => {this.lastPhase()}}>
+                                Finish creating
+                            </Button>
+                        </Grid>
                     </Grid>
+                </Grid> : <Grid container className = "ending-panel block-center">
+                        <header className="ending-header block-center">Final data</header>  
+                        <Grid item xs={12}>
+                            <TextField
+                                required
+                                label="Test name" variant="filled" 
+                                className = "question-name-input block-center" margin="normal" name="test-name"/>  
+                        </Grid>   
+                        <Grid item xs={12}>
+                        <Button variant="contained" 
+                            className="finish-btn" type = "button"
+                            onClick = {() => {this.finishThePublishing()}}>
+                                Publish the quiz
+                            </Button>
+                        </Grid> 
                 </Grid>}
         </div>
     }

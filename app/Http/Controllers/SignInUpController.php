@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Carbon\Carbon;
 
 class SignInUpController extends Controller
@@ -58,8 +59,10 @@ class SignInUpController extends Controller
                     if(password_verify($passwd,$getFinalData["passwd"])){
                         $helper = (string) $getFinalData["verification_date"];
                         $day1 = (int)$helper[8]; $day2 = (int)$helper[9];
-                        $user_history_table_name = $this->userDatabaseName($email,$day1,$day2)."_testsHistory";
-                        session(["current" => $email, "name" => $getFinalData["nickname"], "dbs" => [$user_history_table_name]]);
+                        $baseForDatabaseName = $this->userDatabaseName($email,$day1, $day2);
+                        $user_history_table_name = $baseForDatabaseName."_testsHistory";
+                        $user_tests_temp_table = $baseForDatabaseName."_temp";
+                        session(["current" => $email, "name" => $getFinalData["nickname"], "dbs" => [$user_history_table_name,$user_tests_temp_table]]);
                         return redirect("/main");
                     }
                     else return $this->redirectWithError("/sign-in","Wrong email or password");
@@ -96,12 +99,12 @@ class SignInUpController extends Controller
                 $day1 = intdiv($currentDate,10); $day2 = $currentDate%10;
                 $baseForDatabaseName = $this->userDatabaseName($email,$day1, $day2);
                 $user_history_table_name = $baseForDatabaseName."_testsHistory";
-                $user_temp_tests_name = $baseForDatabaseName."_temp";
+                $user_tests_temp_table = $baseForDatabaseName."_temp";
                 DB::statement("CREATE TABLE ".$user_history_table_name." ( id INT NOT NULL AUTO_INCREMENT , testID TEXT CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
                     last_opened_at DATETIME NOT NULL, result INT NOT NULL, PRIMARY KEY (id)) ENGINE = InnoDB CHARSET=utf8
                     COLLATE utf8_polish_ci;");
                 DB::table("users")->insert($dataToPutIn);
-                session(["current" => $dataToPutIn["email"], "name" => $dataToPutIn["nickname"], "dbs" => [$user_history_table_name]]);
+                session(["current" => $dataToPutIn["email"], "name" => $dataToPutIn["nickname"], "dbs" => [$user_history_table_name, $user_tests_temp_table]]);
                 return $this->launchMainPanel();
             } catch (Illuminate\Database\QueryException $e) {
                 return $this->redirectWithError("/sign-up","Connection error. Try later");

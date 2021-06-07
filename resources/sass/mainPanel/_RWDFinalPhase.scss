@@ -1,0 +1,33 @@
+@media screen and (max-width: 1046px) {
+    .ending-panel{
+        .finish-btn{
+            width: calc(50% - 20px);
+        }
+    }
+}
+@media screen and (max-width: 838px) {
+    .ending-panel{
+        .question-name-input{
+            width: calc(60% - 20px);
+        }
+    }
+}
+@media screen and (max-width: 726px) {
+    .ending-panel{
+        .finish-btn{
+            width: calc(60% - 20px);
+            font-size: 1.5em;
+        }
+    }
+}
+@media screen and (max-width: 466px) {
+    .ending-panel{
+        .finish-btn{
+            width: calc(80% - 20px);
+            font-size: 1.3em;
+        }
+        .question-name-input{
+            width: calc(80% - 20px);
+        }
+    }
+}

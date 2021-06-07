@@ -38,3 +38,4 @@ Route::get("/logout","SignInUpController@Logout");
 
 Route::post("/signin","SignInUpController@SignIn");
 Route::post("/signup","SignInUpController@SignUp");
+Route::post("/publish/tempRow/","PublishingController@ThrowANewRow");

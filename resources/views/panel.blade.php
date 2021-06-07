@@ -12,7 +12,7 @@
                                 <button type="button" class="go-to-tests-btn block-center">Find a test</button>
                             </a>
                         @else
-                        <header class="recent-header block-center">Approached tests</header>
+                            <header class="recent-header block-center">Approached tests</header>
                         @endif
                     </div>
                     <div class="data-wrapper recently-published">
@@ -22,7 +22,14 @@
                             <button type="button" class="go-to-tests-btn block-center">Publish a test</button>
                         </a>
                         @else
-                        <header class="recent-header block-center">Published tests</header>
+                            <header class="recent-header published-header block-center">Published tests</header>
+                            @foreach ($data["recentlyPublished"] as $item)
+                                <a href = "/solve/{{$item["testKey"]}}">
+                                    <div class="created-test block-center">
+                                        <header class="created-header test-elem">{{substr($item["testName"],0,20)}}</header>
+                                    </div>
+                                </a>
+                            @endforeach
                         @endif
                     </div>
                 </section>

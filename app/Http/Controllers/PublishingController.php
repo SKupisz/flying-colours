@@ -117,7 +117,8 @@ class PublishingController extends Controller
                         $getTheCurrentTime = new Carbon();
                         $dataToPutIn = [
                             "testName" => $testName,
-                            "author" => session()->has("current"),
+                            "testKey" => $testID,
+                            "author" => session()->get("current"),
                             "authorityLevel" => 1,
                             "questionsAmount" => $howManyQuestions,
                             "usersAttempts" => 0,

@@ -124,7 +124,9 @@ class SignInUpController extends Controller
                 $history = session()->get("dbs")[0];
                 $getTheRecentHistory = DB::table($history)->orderBy("last_opened_at")->take(5)->get();
                 $getTheRecentHistory = json_decode(json_encode($getTheRecentHistory),true);
-                return view("panel")->with("data",["status" => "done", "recentlyDone" => $getTheRecentHistory, "recentlyPublished" => []]);
+                $getRecentlyPublished = DB::table("published_tests")->where("author","=",session()->get("current"))->take(5)->get();
+                $getRecentlyPublished = json_decode(json_encode($getRecentlyPublished),true);
+                return view("panel")->with("data",["status" => "done", "recentlyDone" => $getTheRecentHistory, "recentlyPublished" => $getRecentlyPublished]);
             } catch (Illuminate\Database\QueryException $e) {
                 return view("panel")->with("data",["status" => "error"]);
             }

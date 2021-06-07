@@ -13,24 +13,9 @@ export default class TestCreator extends React.Component{
         this.textAnswerRef = React.createRef();
         this.numberAnswerRef = React.createRef();
 
-        this.defaultQuestionModels = [
-            {
-                type: "csa",
-                questionName: "",
-                answerStack: ["answer 1", "answer 2"],
-                correctAnswerInd: -1 // closed-single-answer
-            },
-            {
-                type: "cma",
-                questionName: "",
-                answerStack: ["answer 1", "answer 2"],
-                correctAnswerInd: [] // closed-multi-answer
-            }
-        ];
-
         this.state = {
-            ifCreatingAllowed: true,
-            startedCreating: true,
+            ifCreatingAllowed: false,
+            startedCreating: false,
             currentQuestion: 1,
             howManyQuestions: 1,
             currentQuestionType: -1,
@@ -41,8 +26,26 @@ export default class TestCreator extends React.Component{
                 correctAnswerInd: -1 // closed-single-answer
             },
             currentTestID: "",
-            isEndingOfTheQuiz: false
+            isEndingOfTheQuiz: false,
+            quizName: "",
+            currentQuestionName: "",
+            isPublished: 0
         };
+
+        this.defaultQuestionModels = [
+            {
+                type: "csa",
+                questionName: this.state.currentQuestionName,
+                answerStack: ["answer 1", "answer 2"],
+                correctAnswerInd: -1 // closed-single-answer
+            },
+            {
+                type: "cma",
+                questionName: this.state.currentQuestionName,
+                answerStack: ["answer 1", "answer 2"],
+                correctAnswerInd: [] // closed-multi-answer
+            }
+        ];
 
         this.allowNextPhase = this.allowNextPhase.bind(this);
         this.startCreating = this.startCreating.bind(this);
@@ -81,6 +84,7 @@ export default class TestCreator extends React.Component{
     pickUpNewQuestionType(ind){
         let current = this.state.currentQuestionData, operand = this.defaultQuestionModels[ind];
         if(current["questionName"] !== "") operand["questionName"] = current["questionName"];
+        operand["questionName"] = this.state.currentQuestionName;
         this.setState({
             currentQuestionData: this.state.currentQuestionType === ind ? {} : {...operand},
             currentQuestionType: this.state.currentQuestionType === ind ? -1 : ind
@@ -128,11 +132,13 @@ export default class TestCreator extends React.Component{
             if(data[0] === "success"){
                 this.setState({
                     currentQuestion: this.state.currentQuestion+1,
-                    currentTestID: this.state.currentTestID === "" ? data[1] : this.state.currentTestID
+                    currentTestID: this.state.currentTestID === "" ? data[1] : this.state.currentTestID,
+                    currentQuestionType: -1,
+                    currentQuestionData: {}
                 }, () => {});
             }
             else{
-
+                console.log("fail");
             }
         });
     }
@@ -152,7 +158,8 @@ export default class TestCreator extends React.Component{
         let operand = this.state.currentQuestionData, newName = event.target.value;
         operand["questionName"] = newName;
         this.setState({
-            currentQuestionData: operand
+            currentQuestionData: operand,
+            currentQuestionName: newName
         }, () => {});
     }
     addNewAnswer(){
@@ -170,8 +177,28 @@ export default class TestCreator extends React.Component{
             currentQuestionData: operand
         }, () => {});
     }
-    finishThePublishing(){
-        
+    giveTheNewName(event){
+        let helper = event.target.value;
+        this.setState({
+            quizName: helper
+        }, () => {});
+    }
+    async finishThePublishing(){
+        await fetch("/publish/publishTheTest",{
+            method: "POST",
+            headers: {"Content-type": "application/json"},
+            body: JSON.stringify({
+                testName: this.state.quizName,
+                questionsAmount: this.state.howManyQuestions,
+                testID: this.state.currentTestID,
+                _token: this.props.token
+            })
+        }).then(back => back.json())
+        .then(data => {
+            this.setState({
+                isPublished: data === "success" ? 1 : -1
+            }, () => {});
+        })
     }
     render(){
         return <div>
@@ -239,20 +266,37 @@ export default class TestCreator extends React.Component{
                         </Grid>
                     </Grid>
                 </Grid> : <Grid container className = "ending-panel block-center">
-                        <header className="ending-header block-center">Final data</header>  
-                        <Grid item xs={12}>
-                            <TextField
-                                required
-                                label="Test name" variant="filled" 
-                                className = "question-name-input block-center" margin="normal" name="test-name"/>  
-                        </Grid>   
-                        <Grid item xs={12}>
-                        <Button variant="contained" 
-                            className="finish-btn" type = "button"
-                            onClick = {() => {this.finishThePublishing()}}>
-                                Publish the quiz
-                            </Button>
-                        </Grid> 
+                        {this.state.isPublished === 0 ? <Grid item xs={12}>
+                            <header className="ending-header block-center">Final data</header>  
+                            <Grid item xs={12}>
+                                <TextField
+                                    required
+                                    label="Test name" variant="filled" 
+                                    className = "question-name-input block-center" margin="normal" name="test-name"
+                                    onChange = {event => {this.giveTheNewName(event);}}/>  
+                            </Grid>
+                            {this.state.quizName.length > 0 ? <Grid item xs={12}>
+                                <Button variant="contained" 
+                                    className="finish-btn" type = "button"
+                                    onClick = {() => {this.finishThePublishing()}}>
+                                    Publish the quiz
+                                </Button>
+                            </Grid> : ""}
+                        </Grid>  : this.state.isPublished === 1 ? <Grid item xs={12}>
+                            <header className = "published-header block-center">You've just published the test!</header>
+                            <a href = {"/solve/"+this.state.currentTestID}>
+                                <Button variant="contained" className="finish-btn" type = "button">
+                                    Solve the quiz
+                                </Button>
+                            </a>
+                        </Grid> : <Grid item xs={12}>
+                        <header className = "published-header block-center">Something went wrong. Try another time</header>
+                        <a href = "/publish">
+                                <Button variant="contained" className="finish-btn" type = "button">
+                                    Go back
+                                </Button>
+                            </a>
+                        </Grid>}
                 </Grid>}
         </div>
     }

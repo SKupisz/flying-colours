@@ -201,7 +201,7 @@
         font-size: 1.9em;
         letter-spacing: 0.07em;
         font-family: 'Odibee Sans', cursive;
-        margin-bottom: 4vh;
+        margin-bottom: 2vh;
         color: white;
     }
     .finish-btn{
@@ -217,6 +217,16 @@
     }
     .finish-btn:hover{
         filter: brightness(70%);
+    }
+    .published-header{
+        width: calc(80% - 20px);
+        padding: 10px;
+        text-align: center;
+        font-size: 1.9em;
+        letter-spacing: 0.05em;
+        font-family: 'Odibee Sans', cursive;
+        color: white;
+        margin-bottom: 4vh;
     }
 }
 @import "./RWDFirstPhase";

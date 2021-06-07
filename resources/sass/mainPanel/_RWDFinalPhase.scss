@@ -20,7 +20,7 @@
         }
     }
 }
-@media screen and (max-width: 466px) {
+@media screen and (max-width: 474px) {
     .ending-panel{
         .finish-btn{
             width: calc(80% - 20px);
@@ -28,6 +28,18 @@
         }
         .question-name-input{
             width: calc(80% - 20px);
+        }
+        .published-header{
+            width: calc(90% - 20px);
+            font-size: 1.6em;
+        }
+    }
+}
+@media screen and (max-width: 340px) {
+    .ending-panel{
+        .published-header{
+            width: calc(95% - 20px);
+            font-size: 1.4em;
         }
     }
 }

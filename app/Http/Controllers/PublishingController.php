@@ -46,7 +46,7 @@ class PublishingController extends Controller
                     Schema::create($tempRowsDBName, function(Blueprint $table){
                         $table->bigIncrements('id');
                         $table->text("testID");
-                        $table->text("questionNumber");
+                        $table->integer("questionNumber");
                         $table->longText("questionContent");
                         $table->timestamps();
                     });
@@ -68,7 +68,7 @@ class PublishingController extends Controller
                 ];
                 try {
                     $checkIfAlreadyExists = DB::table($tempRowsDBName)->where("testID","=",$testID)->where("questionNumber","=",$number);
-                    if($checkIfAlreadyExists->count() == 0 && $number == 1){
+                    if($checkIfAlreadyExists->count() == 0){
                         DB::table($tempRowsDBName)->insert($dataToPutIn);
                     }
                     else{
@@ -78,13 +78,61 @@ class PublishingController extends Controller
                     return json_encode(["error"]);
                 }
 
-                return json_encode(["success", $testID]);
+                return json_encode(["success", $testID, $number]);
             }
             else return json_encode(["error"]);
         }
         else return json_encode(["error"]);
     }
-    public function PublishTheTest(Request $data){
-        
+    public function PublishNewTest(Request $data){
+        if(session()->has("current") && session()->has("name") && session()->has("dbs")){
+            if($data->has("questionsAmount") && $data->has("testID") && $data->has("testName")){
+                $howManyQuestions = $data->input("questionsAmount");
+                $testID = $data->input("testID");
+                $testName = $this->SignInUpController->entities($data->input("testName"));
+                try {
+                    $tempDatabase = session()->get("dbs")[1];
+                    $checkIfIDExists = DB::table($tempDatabase)->where("testID","=",$testID)->orderBy("questionNumber");
+                    if($checkIfIDExists->count() == 0) return json_encode("error ".$tempDatabase." ".$testID);
+                    else{
+                        $checkIfIDExists = json_decode(json_encode($checkIfIDExists->get()),true);
+                        if(count($checkIfIDExists) != $howManyQuestions) return json_encode("error");
+                        for($i = 0; $i < count($checkIfIDExists); $i++){
+                            $operand = json_decode(json_encode($checkIfIDExists[$i]),true);
+                            if($operand["questionNumber"] != ($i+1)) return json_encode("error");
+                        }
+                        if(Schema::hasTable($testID)) return json_encode("error");
+                        Schema::create($testID, function(Blueprint $table){
+                            $table->bigIncrements("id");
+                            $table->json("questionData");
+                            $table->timestamps();
+                        });
+                        for($i = 0 ; $i < count($checkIfIDExists); $i++){
+                            $operand = json_decode(json_encode($checkIfIDExists[$i]),true);
+                            $questionRow = [
+                                "questionData" => $operand["questionContent"]
+                            ];
+                            DB::table($testID)->insert($questionRow);
+                        }
+                        $getTheCurrentTime = new Carbon();
+                        $dataToPutIn = [
+                            "testName" => $testName,
+                            "author" => session()->has("current"),
+                            "authorityLevel" => 1,
+                            "questionsAmount" => $howManyQuestions,
+                            "usersAttempts" => 0,
+                            "published_on" => $getTheCurrentTime
+                        ];
+                        DB::table("published_tests")->insert($dataToPutIn);   
+                        DB::table($tempDatabase)->where("testID","=",$testID)->delete();                     
+                    }
+                } catch (\Throwable $th) {
+                    return json_encode("error");
+                }
+                return json_encode("success");
+            }
+            else return json_encode("error");
+        }
+        else return json_encode("error");
     }
 }

@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { Grid, Button } from "@material-ui/core";
 
 import StandardButton from "./publishPanelComponents/StandardButton.js";
+import FinishPanel from "./testSolvingComponents/FinishPanel.js";
 
 export default class TestSolvingPanel extends React.Component{
     constructor(props){
@@ -64,20 +65,8 @@ export default class TestSolvingPanel extends React.Component{
             {this.state.ifStarted === false ? <StandardButton content = "Start" classes = "start-btn block-center" callbackFunction = {this.startTheGame}/> 
             : this.state.errorOccured === true ? <Grid item xs={12}>
                 <header className="error-header block-center">Test got crashed. Try later</header>
-            </Grid> : this.state.currentQuestion-1 > this.state.questionAmount ? <Grid item xs={12}>
-                <header className = "ending-header block-center">And that's all!</header>
-                <Grid item xs={12}>
-                    <div className = "result block-center">Your result was: x/y</div>
-                </Grid>
-                <Grid item xs = {12} className = "options-wrapper">
-                    <StandardButton content = "Solve again" classes = "end-option-btn" callbackFunction = {this.startTheGame}/>
-                    <a href = "/tests">
-                        <Button color="inherit" className = "end-option-btn">
-                            Take another test
-                        </Button>
-                    </a>
-                </Grid>
-            </Grid> : <Grid item xs={12}>
+            </Grid> : this.state.currentQuestion-1 > this.state.questionAmount ?<FinishPanel result={78} 
+            restartTheQuiz = {this.startTheGame}/> : <Grid item xs={12}>
                     <header className="question-name block-center">{this.state.currentQuestionData["questionName"]}</header>
                     <StandardButton content = "Next question" classes = "next-btn block-center" callbackFunction = {this.getTheQuestion}/>
                 </Grid>}

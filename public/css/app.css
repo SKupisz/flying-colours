@@ -307,7 +307,7 @@ a {
   font-family: 'Odibee Sans', cursive;
   color: white;
   letter-spacing: 0.07em;
-  margin-bottom: 12vh;
+  margin-bottom: 4vh;
 }
 
 .main-data-container .data-wrapper .go-to-tests-btn {
@@ -344,7 +344,7 @@ a {
   width: calc(80% - 40px);
 }
 
-.main-data-container .recently-published .created-test {
+.main-data-container .created-test {
   width: calc(80% - 20px);
   padding: 5px 10px;
   text-align: center;
@@ -353,12 +353,12 @@ a {
   margin-bottom: 1vh;
 }
 
-.main-data-container .recently-published .created-test .test-elem {
+.main-data-container .created-test .test-elem {
   display: inline-block;
   margin: 4px;
 }
 
-.main-data-container .recently-published .created-test .created-header {
+.main-data-container .created-test .created-header {
   width: calc(50% - 28px);
   padding: 5px 10px;
   font-size: 1.3em;
@@ -414,17 +414,13 @@ a {
     margin-left: auto;
     margin-right: auto;
     width: calc(80% - 20px);
-    height: 40vh;
+    height: 60vh;
     margin-bottom: 2vh;
   }
 
   .main-data-container .data-wrapper .go-to-tests-btn {
     padding: 20px;
     width: calc(70% - 40px);
-  }
-
-  .main-data-container .recently-published {
-    height: 60vh;
   }
 }
 

@@ -13,6 +13,13 @@
                             </a>
                         @else
                             <header class="recent-header block-center">Approached tests</header>
+                            @foreach ($data["recentlyDone"] as $item)
+                            <a href = "/solve/{{$item["testID"]}}">
+                                <div class="created-test block-center">
+                                    <header class="created-header test-elem">{{substr($item["testName"],0,20)}}</header>
+                                </div>
+                            </a>
+                        @endforeach
                         @endif
                     </div>
                     <div class="data-wrapper recently-published">

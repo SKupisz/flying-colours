@@ -22,7 +22,7 @@
             font-family: 'Odibee Sans', cursive;
             color: white;
             letter-spacing: 0.07em;
-            margin-bottom: 12vh;
+            margin-bottom: 4vh;
         }
         .go-to-tests-btn{
             padding: 20px 40px;
@@ -52,24 +52,24 @@
             padding: 20px;
             width: calc(80% - 40px);
         }
-        .created-test{
-            width: calc(80% - 20px);
+    }
+    .created-test{
+        width: calc(80% - 20px);
+        padding: 5px 10px;
+        text-align: center;
+        border-radius: 10px;
+        background: $btn-linear-gradient;
+        margin-bottom: 1vh;
+        .test-elem{
+            display: inline-block;
+            margin: 4px;
+        }
+        .created-header{
+            width: calc(50% - 28px);
             padding: 5px 10px;
-            text-align: center;
-            border-radius: 10px;
-            background: $btn-linear-gradient;
-            margin-bottom: 1vh;
-            .test-elem{
-                display: inline-block;
-                margin: 4px;
-            }
-            .created-header{
-                width: calc(50% - 28px);
-                padding: 5px 10px;
-                font-size: 1.3em;
-                font-family: 'Odibee Sans', cursive;
-                letter-spacing: 0.06em;
-            }
+            font-size: 1.3em;
+            font-family: 'Odibee Sans', cursive;
+            letter-spacing: 0.06em;
         }
     }
 }
@@ -124,15 +124,12 @@
             margin-left: auto;
             margin-right: auto;
             width: calc(80% - 20px);
-            height: 40vh;
+            height: 60vh;
             margin-bottom: 2vh;
             .go-to-tests-btn{
                 padding: 20px;
                 width: calc(70% - 40px);
             }
-        }
-        .recently-published{
-            height: 60vh;
         }
     }
 }

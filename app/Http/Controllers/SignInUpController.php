@@ -122,7 +122,7 @@ class SignInUpController extends Controller
         if(session()->has("current") && session()->has("name") && session()->has("dbs")){
             try {
                 $history = session()->get("dbs")[0];
-                $getTheRecentHistory = DB::table($history)->orderBy("last_opened_at")->take(5)->get();
+                $getTheRecentHistory = DB::table($history)->join("published_tests", "published_tests.testKey","=",$history.".testID")->orderBy("last_opened_at")->take(5)->get();
                 $getTheRecentHistory = json_decode(json_encode($getTheRecentHistory),true);
                 $getRecentlyPublished = DB::table("published_tests")->where("author","=",session()->get("current"))->take(5)->get();
                 $getRecentlyPublished = json_decode(json_encode($getRecentlyPublished),true);

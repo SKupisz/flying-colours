@@ -587,6 +587,30 @@ a {
   background: radial-gradient(#ff4441, #f83838, #ff3333, #ff1d1d);
 }
 
+.creator-panel .points-input {
+  width: calc(50% - 20px);
+  padding: 10px;
+  text-align: center;
+  font-size: 1.3em;
+  font-family: 'Odibee Sans', cursive;
+}
+
+.creator-panel .points-input input::-webkit-outer-spin-button,
+.creator-panel .points-input input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.creator-panel .points-input input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.creator-panel .points-input input,
+.creator-panel .points-input label {
+  color: white;
+  text-align: center;
+}
+
 .creator-panel .adding-answer-button {
   width: calc(40% - 20px);
   padding: 20px 10px;
@@ -990,7 +1014,8 @@ a {
 .test-solving-container .next-btn,
 .test-solving-container .result,
 .test-solving-container .ending-header,
-.test-solving-container .end-option-btn {
+.test-solving-container .end-option-btn,
+.test-solving-container .click-option {
   font-family: 'Odibee Sans', cursive;
   letter-spacing: 0.06em;
   padding: 10px;
@@ -1069,6 +1094,25 @@ a {
 
 .test-solving-container .end-option-btn:hover {
   filter: brightness(70%);
+}
+
+.test-solving-container .solving-answer-container {
+  width: calc(100% - 20px);
+  padding: 10px;
+  text-align: center;
+}
+
+.test-solving-container .solving-answer-container .click-option {
+  margin: 4px;
+  width: calc(60% - 28px);
+  background: linear-gradient(to left, #e53935, #d32f2f, #c62828, #b71c1c);
+  border-radius: 10px;
+  font-size: 1.2em;
+  padding: 20px 10px;
+}
+
+.test-solving-container .solving-answer-container .chosen {
+  background: linear-gradient(to right, #380000, #610101, #8b0303, #c70000, #ff0000, #fc0808, #ff2623, #F83839, #ff2623, #fc0808, #ff0000, #c70000, #8b0303, #610101, #380000);
 }
 
 @media screen and (max-width: 1024px) {

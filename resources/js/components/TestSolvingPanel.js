@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { Grid, Button } from "@material-ui/core";
 
 import StandardButton from "./publishPanelComponents/StandardButton.js";
+import CloseAnswerPanel from "./testSolvingComponents/CloseAnswerPanel.js";
 import FinishPanel from "./testSolvingComponents/FinishPanel.js";
 
 export default class TestSolvingPanel extends React.Component{
@@ -17,16 +18,27 @@ export default class TestSolvingPanel extends React.Component{
             questionAmount: Number(this.props.questionamount),
             currentQuestionData: {
 
-            }
+            },
+            currentAnswer: null,
+            pointsScored: [],
+            pointsTotal: 0,
+            finalPoints: 0,
+            currentlyChosenAnswerInd: -1
         };
 
         this.startTheGame = this.startTheGame.bind(this);
         this.getTheQuestion = this.getTheQuestion.bind(this);
+        this.closeQuestionChoosing = this.closeQuestionChoosing.bind(this);
     }
     startTheGame(){
         this.setState({
             ifStarted: true,
-            currentQuestion: 1
+            currentQuestion: 1,
+            currentAnswer: null,
+            pointsScored: [],
+            pointsTotal: 0,
+            finalPoints: 0,
+            currentlyChosenAnswerInd: -1
         }, () => {
             this.getTheQuestion();
         });
@@ -44,10 +56,18 @@ export default class TestSolvingPanel extends React.Component{
             }).then(back => back.json())
             .then(data => {
                 if(data[0] === "success"){
+                    let operand = JSON.parse(data[1][0]["questionData"]);
                     this.setState({
                         currentQuestion: this.state.currentQuestion+1,
-                        currentQuestionData: JSON.parse(data[1][0]["questionData"])
-                    }, () => {});
+                        currentQuestionData: operand,
+                        pointsTotal: this.state.pointsTotal+operand["points"]
+                    }, () => {
+                        if(this.state.currentQuestionData["type"] === "csa" || this.state.currentQuestionData["type"] === "cma"){
+                            this.setState({
+                                currentAnswer: ""
+                            }, () => {});
+                        }
+                    });
                 } 
                 else{
                     this.setState({
@@ -56,8 +76,32 @@ export default class TestSolvingPanel extends React.Component{
                 }
             });
         }
-        else this.setState({
-            currentQuestion: this.state.currentQuestion+1
+        else{
+            let counter = 0;
+            for(let i = 0 ; i < this.state.pointsScored.length; i++){
+                counter+=this.state.pointsScored[i];
+            }
+            this.setState({
+                currentQuestion: this.state.currentQuestion+1,
+                finalPoints: counter
+            }, () => {});
+        }
+    }
+    closeQuestionChoosing(ind){
+        let ifAdding = false;
+        if(ind === this.state.currentQuestionData["correctAnswerInd"]) ifAdding = true;
+        console.log(ifAdding);
+        let operand = this.state.pointsScored;
+        if(this.state.currentQuestion-2 === operand.length){
+            if(ifAdding) operand.push(this.state.currentQuestionData["points"]);
+            else operand.push(0);
+        }
+        else{
+            operand[this.state.currentQuestion-2] = ifAdding ? this.state.currentQuestionData["points"] : 0;
+        }
+        this.setState({
+            pointsScored: operand,
+            currentlyChosenAnswerInd: ind === this.state.currentlyChosenAnswerInd ? -1 : ind
         }, () => {});
     }
     render(){
@@ -65,10 +109,13 @@ export default class TestSolvingPanel extends React.Component{
             {this.state.ifStarted === false ? <StandardButton content = "Start" classes = "start-btn block-center" callbackFunction = {this.startTheGame}/> 
             : this.state.errorOccured === true ? <Grid item xs={12}>
                 <header className="error-header block-center">Test got crashed. Try later</header>
-            </Grid> : this.state.currentQuestion-1 > this.state.questionAmount ?<FinishPanel result={78} 
+            </Grid> : this.state.currentQuestion-1 > this.state.questionAmount ?<FinishPanel result={((this.state.finalPoints/this.state.pointsTotal).toFixed(2))*100} 
             restartTheQuiz = {this.startTheGame}/> : <Grid item xs={12}>
                     <header className="question-name block-center">{this.state.currentQuestionData["questionName"]}</header>
-                    <StandardButton content = "Next question" classes = "next-btn block-center" callbackFunction = {this.getTheQuestion}/>
+                    {this.state.currentQuestionData["type"] === "csa" ? <CloseAnswerPanel data = {this.state.currentQuestionData["answerStack"]}
+                    callBack = {this.closeQuestionChoosing} currentChosen = {this.state.currentlyChosenAnswerInd}/>: ""}
+                    <StandardButton content = {this.state.currentQuestion-1 === this.state.questionAmount ? "Submit the results" : "Next question"}
+                     classes = "next-btn block-center" callbackFunction = {this.getTheQuestion}/>
                 </Grid>}
         </Grid>;
     }

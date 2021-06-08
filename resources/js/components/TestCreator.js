@@ -16,6 +16,7 @@ export default class TestCreator extends React.Component{
         this.multiAnswerRef = React.createRef();
         this.textAnswerRef = React.createRef();
         this.numberAnswerRef = React.createRef();
+        this.pointsRef = React.createRef();
 
         this.state = {
             ifCreatingAllowed: true,
@@ -27,7 +28,8 @@ export default class TestCreator extends React.Component{
                 type: "csa",
                 questionName: "",
                 answerStack: ["answer 1", "answer 2"],
-                correctAnswerInd: -1 // closed-single-answer
+                correctAnswerInd: -1, // closed-single-answer
+                points: 0
             },
             currentTestID: "",
             isEndingOfTheQuiz: false,
@@ -41,13 +43,15 @@ export default class TestCreator extends React.Component{
                 type: "csa",
                 questionName: this.state.currentQuestionName,
                 answerStack: ["answer 1", "answer 2"],
-                correctAnswerInd: -1 // closed-single-answer
+                correctAnswerInd: -1, // closed-single-answer
+                points: 0
             },
             {
                 type: "cma",
                 questionName: this.state.currentQuestionName,
                 answerStack: ["answer 1", "answer 2"],
-                correctAnswerInd: [] // closed-multi-answer
+                correctAnswerInd: [], // closed-multi-answer
+                points: 0
             },
             {
                 type: "ota",
@@ -56,7 +60,8 @@ export default class TestCreator extends React.Component{
                 answerMaxLength: {
                     isMax: false,
                     maxLength: 100
-                }
+                },
+                points: 0
             }
         ];
 
@@ -77,6 +82,7 @@ export default class TestCreator extends React.Component{
         this.finishThePublishing = this.finishThePublishing.bind(this);
         this.changeQuestionAnswer = this.changeQuestionAnswer.bind(this);
         this.changeQuestionName = this.changeQuestionName.bind(this);
+        this.updateTheMaxPoints = this.updateTheMaxPoints.bind(this);
 
         this.tableOfQuestionTypeRefs = [this.singleAnswerRef, this.multiAnswerRef, this.textAnswerRef, this.numberAnswerRef];
     }
@@ -101,6 +107,7 @@ export default class TestCreator extends React.Component{
         let current = this.state.currentQuestionData, operand = this.defaultQuestionModels[ind];
         if(current["questionName"] !== "") operand["questionName"] = current["questionName"];
         operand["questionName"] = this.state.currentQuestionName;
+        operand["points"] = this.state.currentQuestionData["points"];
         this.setState({
             currentQuestionData: this.state.currentQuestionType === ind ? {} : {...operand},
             currentQuestionType: this.state.currentQuestionType === ind ? -1 : ind
@@ -228,6 +235,20 @@ export default class TestCreator extends React.Component{
             quizName: helper
         }, () => {});
     }
+    updateTheMaxPoints(event){
+        let helper = Number(event.target.value);
+        if(helper < 0 || Number.isInteger(helper) === false){
+            this.pointsRef.current.childNodes[0].value = this.state.currentQuestionData["points"];
+        }
+        else{
+            let operand = this.state.currentQuestionData;
+            operand["points"] = helper;
+             this.setState({
+                currentQuestionData: operand
+            }, () => {});
+            
+        }
+    }
     async finishThePublishing(){
         await fetch("/publish/publishTheTest",{
             method: "POST",
@@ -274,6 +295,11 @@ export default class TestCreator extends React.Component{
                     <QuestionTypes refsTable = {this.tableOfQuestionTypeRefs} callBackFunction = {this.pickUpNewQuestionType}/>
                     {this.state.currentQuestionType === 0 || this.state.currentQuestionType === 1 ? <StandardButton content = "Add an answer"
                         classes = "adding-answer-button block-center" callbackFunction={this.addNewAnswer}/> : ""}
+                    {this.state.currentQuestionType !== -1 ? <Grid item xs={12}>
+                        <InputBase type="number" placeholder="How many points?" required 
+                        margin="dense" variant="filled" className="points-input block-center" name = "max-points"
+                        onChange={(event) => {this.updateTheMaxPoints(event);}} ref = {this.pointsRef}/>
+                    </Grid> : ""}
                     {this.state.currentQuestionType === -1 ? "" : this.state.currentQuestionType === 0 ?
                     <CloseAnswerQuestion currentQuestionData = {this.state.currentQuestionData} 
                     selectNewCorrectAnswer = {this.selectNewCorrectAnswer}

@@ -100,6 +100,25 @@
             background: $btn-selected-gradient;
         }
     }
+    .points-input{
+        width: calc(50% - 20px);
+        padding: 10px;
+        text-align: center;
+        font-size: 1.3em;
+        font-family: 'Odibee Sans', cursive;
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+        input, label{
+            color: white;
+            text-align: center;
+        }
+    }
     .adding-answer-button{
         width: calc(40% - 20px);
         padding: 20px 10px;

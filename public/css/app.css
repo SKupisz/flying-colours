@@ -58,7 +58,8 @@ a {
   margin-left: auto;
 }
 
-.nav-wrapper .rwd {
+.nav-wrapper .rwd,
+.nav-wrapper .rwd-2 {
   display: none;
 }
 
@@ -106,6 +107,28 @@ a {
 
   .nav-wrapper .item-btn {
     font-size: 0.6em;
+  }
+}
+
+@media screen and (max-width: 364px) {
+  .nav-wrapper {
+    text-align: center;
+  }
+
+  .nav-wrapper .right-aligned {
+    display: none;
+  }
+
+  .nav-wrapper .rwd-2 {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    display: block;
+  }
+
+  .nav-wrapper .rwd-2 .item-btn {
+    width: calc(95% - 40px);
+    display: block;
+    margin: 2px auto;
   }
 }
 
@@ -594,13 +617,15 @@ a {
 }
 
 .creator-panel .answer-wrapper .answer-content,
-.creator-panel .answer-wrapper .answer-icon {
+.creator-panel .answer-wrapper .answer-icon,
+.creator-panel .answer-wrapper .max-length-input {
   display: inline-block;
   vertical-align: top;
   margin: 6px;
 }
 
-.creator-panel .answer-wrapper .answer-icon {
+.creator-panel .answer-wrapper .answer-icon,
+.creator-panel .answer-wrapper .max-length-input {
   background: none;
   border: none;
   margin: 0 10px;
@@ -626,19 +651,35 @@ a {
   color: white;
 }
 
-.creator-panel .answer-wrapper .answer-content {
-  width: 60%;
+.creator-panel .answer-wrapper .max-length-input {
   color: white;
+  font-family: 'Odibee Sans', cursive;
+  font-size: 1.2em;
+  width: calc(15% - 20px);
 }
 
+.creator-panel .answer-wrapper .max-length-input input::-webkit-outer-spin-button,
+.creator-panel .answer-wrapper .max-length-input input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.creator-panel .answer-wrapper .max-length-input input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.creator-panel .answer-wrapper .max-length-input .MuiFilledInput-underline:before,
 .creator-panel .answer-wrapper .answer-content .MuiFilledInput-underline:before {
   border-color: darkred;
 }
 
+.creator-panel .answer-wrapper .max-length-input .MuiFilledInput-underline.Mui-focused:after,
 .creator-panel .answer-wrapper .answer-content .MuiFilledInput-underline.Mui-focused:after {
   border-color: white !important;
 }
 
+.creator-panel .answer-wrapper .max-length-input input,
+.creator-panel .answer-wrapper .max-length-input label,
 .creator-panel .answer-wrapper .answer-content input,
 .creator-panel .answer-wrapper .answer-content label {
   color: white;
@@ -648,8 +689,14 @@ a {
   font-family: 'Odibee Sans', cursive;
 }
 
+.creator-panel .answer-wrapper .max-length-input input,
 .creator-panel .answer-wrapper .answer-content input {
   width: 100%;
+}
+
+.creator-panel .answer-wrapper .answer-content {
+  width: 60%;
+  color: white;
 }
 
 .creator-panel .ending-options-container {

@@ -121,12 +121,12 @@
         padding: 10px;
         margin-bottom: 3vh;
         height: auto;
-        .answer-content,.answer-icon{
+        .answer-content,.answer-icon, .max-length-input{
             display: inline-block;
             vertical-align: top;
             margin: 6px;
         }
-        .answer-icon{
+        .answer-icon, .max-length-input{
             background: none;
             border: none;
             margin: 0 10px;
@@ -147,9 +147,21 @@
         .delete-icon{
             color: white;
         }
-        .answer-content{
-            width: 60%;
+        .max-length-input{
             color: white;
+            font-family: 'Odibee Sans', cursive;
+            font-size: 1.2em;
+            width: calc(15% - 20px);
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+            }
+            input[type=number] {
+                -moz-appearance: textfield;
+            }
+        }
+        .max-length-input, .answer-content{
             .MuiFilledInput-underline:before{
                 border-color: darkred;
             }
@@ -165,7 +177,11 @@
             }
             input{
                 width: 100%;
-            }
+            } 
+        }
+        .answer-content{
+            width: 60%;
+            color: white;
         }
     }
     .ending-options-container{

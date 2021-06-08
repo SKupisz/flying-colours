@@ -1,8 +1,12 @@
 import React from "React";
 import ReactDOM from "react-dom";
 import {Grid, InputBase, Button, TextField} from "@material-ui/core";
+import StandardButton from "./publishPanelComponents/StandardButton.js";
 import QuestionTypes from "./QuestionTypes.js";
 import CloseAnswerQuestion from "./questions/CloseAnswerQuestion.js";
+import OpenTextQuestion from "./questions/OpenTextQuestion.js";
+import LastStandDecision from "./publishPanelComponents/LastStandDecision.js";
+import FinalMessage from "./publishPanelComponents/FinalMessage.js";
 
 export default class TestCreator extends React.Component{
     constructor(props){
@@ -14,8 +18,8 @@ export default class TestCreator extends React.Component{
         this.numberAnswerRef = React.createRef();
 
         this.state = {
-            ifCreatingAllowed: false,
-            startedCreating: false,
+            ifCreatingAllowed: true,
+            startedCreating: true,
             currentQuestion: 1,
             howManyQuestions: 1,
             currentQuestionType: -1,
@@ -44,6 +48,15 @@ export default class TestCreator extends React.Component{
                 questionName: this.state.currentQuestionName,
                 answerStack: ["answer 1", "answer 2"],
                 correctAnswerInd: [] // closed-multi-answer
+            },
+            {
+                type: "ota",
+                questionName: this.state.currentQuestionName,
+                answer: "",
+                answerMaxLength: {
+                    isMax: false,
+                    maxLength: 100
+                }
             }
         ];
 
@@ -55,6 +68,9 @@ export default class TestCreator extends React.Component{
         this.addNewAnswer = this.addNewAnswer.bind(this);
         this.deleteAnswer = this.deleteAnswer.bind(this);
         this.addNewCorrectAnswer = this.addNewCorrectAnswer.bind(this);
+        this.updateTextAnswer = this.updateTextAnswer.bind(this);
+        this.changeTheLimitState = this.changeTheLimitState.bind(this);
+        this.changeTextMaxLength = this.changeTextMaxLength.bind(this);
         this.sendNextRowData = this.sendNextRowData.bind(this);
         this.previousQuestion = this.previousQuestion.bind(this);
         this.lastPhase = this.lastPhase.bind(this);
@@ -177,6 +193,27 @@ export default class TestCreator extends React.Component{
             currentQuestionData: operand
         }, () => {});
     }
+    updateTextAnswer(newText){
+        let operand = this.state.currentQuestionData;
+        operand["answer"] = newText;
+        this.setState({
+            currentQuestionData: operand
+        }, () => {});
+    }
+    changeTheLimitState(){
+        let operand = this.state.currentQuestionData;
+        operand["answerMaxLength"]["isMax"] = !operand["answerMaxLength"]["isMax"];
+        this.setState({
+            currentQuestionData: operand
+        }, () => {});
+    }
+    changeTextMaxLength(newLimit){
+        let operand = this.state.currentQuestionData;
+        operand["answerMaxLength"]["maxLength"] = newLimit;
+        this.setState({
+            currentQuestionData: operand
+        }, () => {});
+    }
     giveTheNewName(event){
         let helper = event.target.value;
         this.setState({
@@ -210,13 +247,8 @@ export default class TestCreator extends React.Component{
                     min={1} onChange={(event) => {this.allowNextPhase(event);}}/>
 
                 </Grid>
-                {this.state.ifCreatingAllowed === true ? <Grid item xs = {12}>
-                    <Button variant="contained" 
-                    className="go-to-questions-btn block-center" type = "button"
-                    onClick = {() => {this.startCreating()}}>
-                        Create the questions
-                    </Button>
-                </Grid> : ""}
+                {this.state.ifCreatingAllowed === true ? <StandardButton content = "Create the questions"
+                classes = "go-to-questions-btn block-center" callbackFunction={this.startCreating}/> : ""}
             </Grid> : this.state.currentQuestion <= this.state.howManyQuestions ? <Grid container className="creator-panel block-center">
                     <Grid item xs={12}>
                         <header className="question-header block-center">Question nr {this.state.currentQuestion}</header>
@@ -232,13 +264,8 @@ export default class TestCreator extends React.Component{
                         <header className="question-sub-header block-center">Select type of the questions</header>
                     </Grid>
                     <QuestionTypes refsTable = {this.tableOfQuestionTypeRefs} callBackFunction = {this.pickUpNewQuestionType}/>
-                    {this.state.currentQuestionType === 0 || this.state.currentQuestionType === 1 ? <Grid item xs = {12}>
-                        <Button variant="contained" 
-                        className="adding-answer-button block-center" type = "button"
-                        onClick = {() => {this.addNewAnswer()}}>
-                            Add an answer
-                        </Button>
-                    </Grid> : ""}
+                    {this.state.currentQuestionType === 0 || this.state.currentQuestionType === 1 ? <StandardButton content = "Add an answer"
+                        classes = "adding-answer-button block-center" callbackFunction={this.addNewAnswer}/> : ""}
                     {this.state.currentQuestionType === -1 ? "" : this.state.currentQuestionType === 0 ?
                     <CloseAnswerQuestion currentQuestionData = {this.state.currentQuestionData} 
                     selectNewCorrectAnswer = {this.selectNewCorrectAnswer}
@@ -248,24 +275,14 @@ export default class TestCreator extends React.Component{
                     selectNewCorrectAnswer = {this.addNewCorrectAnswer}
                     currentQuestionType = {this.state.currentQuestionType}
                     goToNextQuestion = {this.nextQuestion} deleteTheAnswer = {this.deleteAnswer}
-                    changeQuestionAnswer = {this.changeQuestionAnswer}/> : ""}
-                </Grid> : this.state.isEndingOfTheQuiz === false ? <Grid container className="creator-panel block-center">
-                    <Grid item xs={12}>
-                        <header className="question-header block-center">End of Questions</header>
-                        <Grid item xs={12} className="ending-options-container">
-                            <Button variant="contained" 
-                            className="ending-phase-btn" type = "button"
-                            onClick = {() => {this.previousQuestion()}}>
-                                Previous question
-                            </Button>
-                            <Button variant="contained" 
-                            className="ending-phase-btn" type = "button"
-                            onClick = {() => {this.lastPhase()}}>
-                                Finish creating
-                            </Button>
-                        </Grid>
-                    </Grid>
-                </Grid> : <Grid container className = "ending-panel block-center">
+                    changeQuestionAnswer = {this.changeQuestionAnswer}/> : this.state.currentQuestionType === 2 ? <OpenTextQuestion currentQuestionData = {this.state.currentQuestionData}
+                    updateTextAnswer = {this.updateTextAnswer}
+                    changeTheLimitState = {this.changeTheLimitState}
+                    changeTheCharsLimit = {this.changeTextMaxLength}
+                    goToNextQuestion = {this.nextQuestion}/> : ""}
+                </Grid> : 
+                this.state.isEndingOfTheQuiz === false ? <LastStandDecision prevQuestion = {this.previousQuestion} 
+                finalizeTheQuiz = {this.lastPhase}/> : <Grid container className = "ending-panel block-center">
                         {this.state.isPublished === 0 ? <Grid item xs={12}>
                             <header className="ending-header block-center">Final data</header>  
                             <Grid item xs={12}>
@@ -275,28 +292,11 @@ export default class TestCreator extends React.Component{
                                     className = "question-name-input block-center" margin="normal" name="test-name"
                                     onChange = {event => {this.giveTheNewName(event);}}/>  
                             </Grid>
-                            {this.state.quizName.length > 0 ? <Grid item xs={12}>
-                                <Button variant="contained" 
-                                    className="finish-btn" type = "button"
-                                    onClick = {() => {this.finishThePublishing()}}>
-                                    Publish the quiz
-                                </Button>
-                            </Grid> : ""}
-                        </Grid>  : this.state.isPublished === 1 ? <Grid item xs={12}>
-                            <header className = "published-header block-center">You've just published the test!</header>
-                            <a href = {"/solve/"+this.state.currentTestID}>
-                                <Button variant="contained" className="finish-btn" type = "button">
-                                    Solve the quiz
-                                </Button>
-                            </a>
-                        </Grid> : <Grid item xs={12}>
-                        <header className = "published-header block-center">Something went wrong. Try another time</header>
-                        <a href = "/publish">
-                                <Button variant="contained" className="finish-btn" type = "button">
-                                    Go back
-                                </Button>
-                            </a>
-                        </Grid>}
+                            {this.state.quizName.length > 0 ? <StandardButton content = "Publish the quiz"
+                                classes = "finish-btn" callbackFunction={this.finishThePublishing}/> : ""}
+                        </Grid>  : <FinalMessage 
+                        resultState={this.state.isPublished} 
+                        textID={this.state.currentTestID}/>}
                 </Grid>}
         </div>
     }

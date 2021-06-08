@@ -32,7 +32,7 @@
     .right-aligned{
         margin-left: auto;
     }
-    .rwd{
+    .rwd, .rwd-2{
         display: none;
     }
     .hidden{
@@ -77,6 +77,24 @@
         }
         .item-btn{
             font-size: 0.6em;
+        }
+    }
+}
+@media screen and (max-width: 364px) {
+    .nav-wrapper{
+        text-align: center;
+        .right-aligned{
+            display: none;
+        }
+        .rwd-2{
+            margin-top: 2px;
+            margin-bottom: 2px;
+            display: block;
+            .item-btn{
+                width: calc(95% - 40px);
+                display: block;
+                margin: 2px auto;
+            }
         }
     }
 }

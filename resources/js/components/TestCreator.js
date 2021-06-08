@@ -163,6 +163,14 @@ export default class TestCreator extends React.Component{
             isEndingOfTheQuiz: !this.state.isEndingOfTheQuiz
         }, () => {});
     }
+    setNewValueOfTheQuestionData(ind, secondInd, newValue){
+        let operand = this.state.currentQuestionData;
+        if(secondInd === "") operand[ind] = newValue;
+        else operand[ind][secondInd] = newValue;
+        this.setState({
+            currentQuestionData: operand
+        }, () => {});
+    }
     changeQuestionAnswer(event, ind){
         let operand = this.state.currentQuestionData, newName = event.target.value;
         operand["answerStack"][ind] = newName;

@@ -77,7 +77,7 @@ a {
   }
 }
 
-@media screen and (max-width: 656px) {
+@media screen and (max-width: 708px) {
   .nav-wrapper .menu-btn {
     display: block;
   }
@@ -985,6 +985,131 @@ a {
   .ending-panel .published-header {
     width: calc(95% - 20px);
     font-size: 1.4em;
+  }
+}
+
+.test-solving-container .start-btn,
+.test-solving-container .error-header,
+.test-solving-container .question-name,
+.test-solving-container .next-btn,
+.test-solving-container .result,
+.test-solving-container .ending-header,
+.test-solving-container .end-option-btn {
+  font-family: 'Odibee Sans', cursive;
+  letter-spacing: 0.06em;
+  padding: 10px;
+  text-align: center;
+}
+
+.test-solving-container .start-btn,
+.test-solving-container .next-btn {
+  width: calc(50% - 20px);
+  font-size: 2.8em;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(to right, #380000, #610101, #8b0303, #c70000, #ff0000, #fc0808, #ff2623, #F83839, #ff2623, #fc0808, #ff0000, #c70000, #8b0303, #610101, #380000);
+  transition: filter 0.4s;
+  cursor: pointer;
+}
+
+.test-solving-container .start-btn:hover {
+  filter: brightness(70%);
+}
+
+.test-solving-container .error-header,
+.test-solving-container .question-name,
+.test-solving-container .result,
+.test-solving-container .ending-header,
+.test-solving-container .end-option-btn {
+  color: white;
+}
+
+.test-solving-container .error-header {
+  width: calc(60% - 20px);
+  font-size: 1.6em;
+}
+
+.test-solving-container .question-name {
+  width: calc(80% - 20px);
+  font-size: 1.4em;
+  margin-bottom: 4vh;
+}
+
+.test-solving-container .next-btn {
+  width: calc(40% - 20px);
+  font-size: 1.2em;
+}
+
+.test-solving-container .result {
+  width: calc(70% - 20px);
+  font-size: 1.4em;
+}
+
+.test-solving-container .ending-header {
+  width: calc(60% - 20px);
+  font-size: 2.9em;
+  margin-bottom: 3vh;
+}
+
+.test-solving-container .options-wrapper {
+  margin-top: 4vh;
+}
+
+.test-solving-container a {
+  text-decoration: none;
+  color: white;
+}
+
+.test-solving-container .end-option-btn {
+  width: calc(40% - 20px);
+  font-size: 1.8em;
+  background: linear-gradient(to right, #cc3532, #d32f2f, #c62828, #b71c1c);
+  border: none;
+  border-radius: 10px;
+  margin-bottom: 1vh;
+  cursor: pointer;
+  transition: filter 0.4s;
+}
+
+.test-solving-container .end-option-btn:hover {
+  filter: brightness(70%);
+}
+
+@media screen and (max-width: 1024px) {
+  .test-solving-container .end-option-btn {
+    width: calc(60% - 20px);
+    font-size: 1.5em;
+  }
+}
+
+@media screen and (max-width: 670px) {
+  .test-solving-container .ending-header {
+    width: calc(80% - 20px);
+    font-size: 2.4em;
+  }
+
+  .test-solving-container .end-option-btn {
+    width: calc(80% - 20px);
+    font-size: 1.2em;
+  }
+}
+
+@media screen and (max-width: 432px) {
+  .test-solving-container .result {
+    width: calc(100% - 20px);
+    font-size: 1.2em;
+  }
+}
+
+@media screen and (max-width: 414px) {
+  .test-solving-container .ending-header {
+    width: calc(100% - 20px);
+    font-size: 2em;
+  }
+
+  .test-solving-container .end-option-btn {
+    width: calc(100% - 20px);
+    font-size: 1em;
   }
 }
 

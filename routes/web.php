@@ -29,6 +29,9 @@ Route::get("/sign-up",function(){
 });
 
 Route::get("/main","SignInUpController@launchMainPanel");
+
+Route::get("/solve/{testId}/","TestOperationsController@launchTestSolving");
+
 Route::get("/publish", function(){
     return view("publish");
 });
@@ -40,3 +43,4 @@ Route::post("/signin","SignInUpController@SignIn");
 Route::post("/signup","SignInUpController@SignUp");
 Route::post("/publish/tempRow/","PublishingController@ThrowANewRow");
 Route::post("/publish/publishTheTest","PublishingController@PublishNewTest");
+Route::post("/solve/getTheRow","TestOperationsController@loadTheNextRow");

@@ -1,0 +1,40 @@
+@media screen and (max-width: 1024px) {
+    .test-solving-container{
+        .end-option-btn{
+            width: calc(60% - 20px);
+            font-size: 1.5em;
+        }
+    }
+}
+@media screen and (max-width: 670px) {
+    .test-solving-container{
+        .ending-header{
+            width: calc(80% - 20px);
+            font-size: 2.4em;
+        }
+        .end-option-btn{
+            width: calc(80% - 20px);
+            font-size: 1.2em;
+        }
+    }
+}
+@media screen and (max-width: 432px) {
+    .test-solving-container{
+        .result{
+            width: calc(100% - 20px);
+            font-size: 1.2em;
+        }
+    }
+}
+@media screen and (max-width: 414px) {
+    .test-solving-container{
+        .ending-header{
+            width: calc(100% - 20px);
+            font-size: 2em;
+        }
+        .end-option-btn{
+            width: calc(100% - 20px);
+            font-size: 1em;
+        }
+    }
+}

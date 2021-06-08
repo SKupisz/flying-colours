@@ -1,0 +1,67 @@
+.test-solving-container{
+    .start-btn, .error-header, .question-name, .next-btn, 
+    .result, .ending-header, .end-option-btn{
+        font-family: 'Odibee Sans', cursive;
+        letter-spacing: 0.06em;
+        padding: 10px;
+        text-align: center;
+    }
+    .start-btn, .next-btn{
+        width: calc(50% - 20px);
+        font-size: 2.8em;
+        border: none;
+        border-radius: 10px;
+        background: $btn-linear-gradient-2;
+        transition: filter 0.4s;
+        cursor: pointer;
+    }
+    .start-btn:hover{
+        filter: brightness(70%);
+    }
+    .error-header, .question-name, .result, .ending-header, .end-option-btn{
+        color: white;
+    }
+    .error-header{
+        width: calc(60% - 20px);
+        font-size: 1.6em;
+    }
+    .question-name{
+        width: calc(80% - 20px);
+        font-size: 1.4em;
+        margin-bottom: 4vh;
+    }
+    .next-btn{
+        width: calc(40% - 20px);
+        font-size: 1.2em;
+    }
+    .result{
+        width: calc(70% - 20px);
+        font-size: 1.4em;
+    }
+    .ending-header{
+        width: calc(60% - 20px);
+        font-size: 2.9em;
+        margin-bottom: 3vh;
+    }
+    .options-wrapper{
+        margin-top: 4vh;
+    }
+    a{
+        text-decoration: none;
+        color: white;
+    }
+    .end-option-btn{
+        width: calc(40% - 20px);
+        font-size: 1.8em;
+        background: $btn-round-gradient;
+        border: none;
+        border-radius: 10px;
+        margin-bottom: 1vh;
+        cursor: pointer;
+        transition: filter 0.4s;
+    }
+    .end-option-btn:hover{
+        filter: brightness(70%);
+    }
+}
+@import "./ResultPanelRWD";

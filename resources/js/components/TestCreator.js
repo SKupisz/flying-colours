@@ -1,10 +1,16 @@
 import React from "React";
 import ReactDOM from "react-dom";
 import {Grid, InputBase, Button, TextField} from "@material-ui/core";
+
+import QuestionsAmount from "./publishPanelComponents/QuestionsAmount.js";
 import StandardButton from "./publishPanelComponents/StandardButton.js";
 import QuestionTypes from "./QuestionTypes.js";
+
 import CloseAnswerQuestion from "./questions/CloseAnswerQuestion.js";
 import OpenTextQuestion from "./questions/OpenTextQuestion.js";
+import OpenNumberQuestion from "./questions/OpenNumberQuestion.js";
+
+import EndingPanel from "./publishPanelComponents/EndingPanel.js";
 import LastStandDecision from "./publishPanelComponents/LastStandDecision.js";
 import FinalMessage from "./publishPanelComponents/FinalMessage.js";
 
@@ -62,6 +68,12 @@ export default class TestCreator extends React.Component{
                     maxLength: 100
                 },
                 points: 0
+            },
+            {
+                type: "ona",
+                questionName: this.state.currentQuestionName,
+                answer: 0,
+                points: 0
             }
         ];
 
@@ -83,6 +95,7 @@ export default class TestCreator extends React.Component{
         this.changeQuestionAnswer = this.changeQuestionAnswer.bind(this);
         this.changeQuestionName = this.changeQuestionName.bind(this);
         this.updateTheMaxPoints = this.updateTheMaxPoints.bind(this);
+        this.giveTheNewName = this.giveTheNewName.bind(this);
 
         this.tableOfQuestionTypeRefs = [this.singleAnswerRef, this.multiAnswerRef, this.textAnswerRef, this.numberAnswerRef];
     }
@@ -268,17 +281,8 @@ export default class TestCreator extends React.Component{
     }
     render(){
         return <div>
-            {this.state.startedCreating === false ? <Grid container className="creator-container block-center">
-                <Grid item xs={12}>
-                    
-                    <InputBase type="number" placeholder="How many questions?" required 
-                    margin="dense" variant="filled" className="questions-input block-center" name = "questions-amount"
-                    min={1} onChange={(event) => {this.allowNextPhase(event);}}/>
-
-                </Grid>
-                {this.state.ifCreatingAllowed === true ? <StandardButton content = "Create the questions"
-                classes = "go-to-questions-btn block-center" callbackFunction={this.startCreating}/> : ""}
-            </Grid> : this.state.currentQuestion <= this.state.howManyQuestions ? <Grid container className="creator-panel block-center">
+            {this.state.startedCreating === false ? <QuestionsAmount numberCallback = {this.allowNextPhase} 
+            creatingAllowed = {this.state.ifCreatingAllowed} startCallback = {this.startCreating}/> : this.state.currentQuestion <= this.state.howManyQuestions ? <Grid container className="creator-panel block-center">
                     <Grid item xs={12}>
                         <header className="question-header block-center">Question nr {this.state.currentQuestion}</header>
                     </Grid>
@@ -316,22 +320,9 @@ export default class TestCreator extends React.Component{
                     goToNextQuestion = {this.nextQuestion}/> : ""}
                 </Grid> : 
                 this.state.isEndingOfTheQuiz === false ? <LastStandDecision prevQuestion = {this.previousQuestion} 
-                finalizeTheQuiz = {this.lastPhase}/> : <Grid container className = "ending-panel block-center">
-                        {this.state.isPublished === 0 ? <Grid item xs={12}>
-                            <header className="ending-header block-center">Final data</header>  
-                            <Grid item xs={12}>
-                                <TextField
-                                    required
-                                    label="Test name" variant="filled" 
-                                    className = "question-name-input block-center" margin="normal" name="test-name"
-                                    onChange = {event => {this.giveTheNewName(event);}}/>  
-                            </Grid>
-                            {this.state.quizName.length > 0 ? <StandardButton content = "Publish the quiz"
-                                classes = "finish-btn" callbackFunction={this.finishThePublishing}/> : ""}
-                        </Grid>  : <FinalMessage 
-                        resultState={this.state.isPublished} 
-                        textID={this.state.currentTestID}/>}
-                </Grid>}
+                finalizeTheQuiz = {this.lastPhase}/> : <EndingPanel isPublished = {this.state.isPublished}
+                changeNameCallback = {this.giveTheNewName} quizName = {this.state.quizName} 
+                finishPublishingCallback = {this.finishThePublishing} testID = {this.state.currentTestID}/>}
         </div>
     }
 }

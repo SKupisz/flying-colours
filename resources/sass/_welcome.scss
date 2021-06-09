@@ -1,0 +1,106 @@
+.welcome-container{
+    .section-btn, .short-describe{
+        font-family: 'Odibee Sans', cursive;
+        letter-spacing: 0.06em;
+    }
+    .short-describe{
+        width: calc(70% - 20px);
+        padding: 10px;
+        text-align: center;
+        font-size: 1.7em;
+        color: white;
+        margin-bottom: 14vh;
+        .short-desc-word{
+            display: inline-block;
+        }
+    }
+    .buttons-section{
+        width: calc(90% - 20px);
+        padding: 10px;
+        text-align: center;
+        a{
+            text-decoration: none;
+            color: white;
+            display: inline-block;
+            width: calc(30% - 8px);
+            margin: 4px;
+        }
+        .section-btn{
+            width: calc(90% - 20px);
+            padding: 20px 10px;
+            font-size: 1.4em;
+            border: none;
+            border-radius: 10px;
+            background: $btn-linear-gradient;
+        }
+    }
+}
+@media screen and (max-width: 1011px) {
+    .welcome-container{
+        .main-header{
+            font-size: 3.1em;
+        }
+        .short-describe{
+            width: calc(80% - 20px);
+            font-size: 1.5em;
+            margin-bottom: 10vh;
+        }
+        .buttons-section{
+            a{
+                width: calc(40% - 8px);
+            }
+            .section-btn{
+                width: calc(90% - 20px);
+                font-size: 1.3em;
+            }
+        }
+    }
+}
+@media screen and (max-width: 595px) {
+    .welcome-container{
+        .main-header{
+            font-size: 2.7em;
+        }
+        .short-describe{
+            width: calc(90% - 20px);
+            font-size: 1.3em;
+        }
+        .buttons-section{
+            a{
+                width: calc(70% - 8px);
+                display: block;
+                margin: 6px auto;
+            }
+            .section-btn{
+                font-size: 1.1em;
+            }
+        }
+    }
+}
+@media screen and (max-width: 536px) {
+    .welcome-container{
+        .main-header{
+            font-size: 2.3em;
+        }
+        .short-describe{
+            width: calc(95% - 20px);
+            font-size: 1.1em;
+        }
+    }
+}
+@media screen and (max-width: 454px) {
+    .welcome-container{
+        .short-describe{
+            width: calc(100% - 20px);
+            font-size: 1em;
+        }
+        .buttons-section{
+            a{
+                width: calc(100% - 8px);
+            }
+            .section-btn{
+                font-size: 1em;
+            }
+        }
+    }
+}

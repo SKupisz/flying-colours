@@ -132,6 +132,116 @@ a {
   }
 }
 
+.welcome-container .section-btn,
+.welcome-container .short-describe {
+  font-family: 'Odibee Sans', cursive;
+  letter-spacing: 0.06em;
+}
+
+.welcome-container .short-describe {
+  width: calc(70% - 20px);
+  padding: 10px;
+  text-align: center;
+  font-size: 1.7em;
+  color: white;
+  margin-bottom: 14vh;
+}
+
+.welcome-container .short-describe .short-desc-word {
+  display: inline-block;
+}
+
+.welcome-container .buttons-section {
+  width: calc(90% - 20px);
+  padding: 10px;
+  text-align: center;
+}
+
+.welcome-container .buttons-section a {
+  text-decoration: none;
+  color: white;
+  display: inline-block;
+  width: calc(30% - 8px);
+  margin: 4px;
+}
+
+.welcome-container .buttons-section .section-btn {
+  width: calc(90% - 20px);
+  padding: 20px 10px;
+  font-size: 1.4em;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(to left, #e53935, #d32f2f, #c62828, #b71c1c);
+}
+
+@media screen and (max-width: 1011px) {
+  .welcome-container .main-header {
+    font-size: 3.1em;
+  }
+
+  .welcome-container .short-describe {
+    width: calc(80% - 20px);
+    font-size: 1.5em;
+    margin-bottom: 10vh;
+  }
+
+  .welcome-container .buttons-section a {
+    width: calc(40% - 8px);
+  }
+
+  .welcome-container .buttons-section .section-btn {
+    width: calc(90% - 20px);
+    font-size: 1.3em;
+  }
+}
+
+@media screen and (max-width: 595px) {
+  .welcome-container .main-header {
+    font-size: 2.7em;
+  }
+
+  .welcome-container .short-describe {
+    width: calc(90% - 20px);
+    font-size: 1.3em;
+  }
+
+  .welcome-container .buttons-section a {
+    width: calc(70% - 8px);
+    display: block;
+    margin: 6px auto;
+  }
+
+  .welcome-container .buttons-section .section-btn {
+    font-size: 1.1em;
+  }
+}
+
+@media screen and (max-width: 536px) {
+  .welcome-container .main-header {
+    font-size: 2.3em;
+  }
+
+  .welcome-container .short-describe {
+    width: calc(95% - 20px);
+    font-size: 1.1em;
+  }
+}
+
+@media screen and (max-width: 454px) {
+  .welcome-container .short-describe {
+    width: calc(100% - 20px);
+    font-size: 1em;
+  }
+
+  .welcome-container .buttons-section a {
+    width: calc(100% - 8px);
+  }
+
+  .welcome-container .buttons-section .section-btn {
+    font-size: 1em;
+  }
+}
+
 .main-header,
 .service-describe,
 .author-footer,

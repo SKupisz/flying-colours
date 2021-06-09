@@ -19,8 +19,8 @@ export default class TestCreator extends React.Component{
         this.pointsRef = React.createRef();
 
         this.state = {
-            ifCreatingAllowed: true,
-            startedCreating: true,
+            ifCreatingAllowed: false,
+            startedCreating: false,
             currentQuestion: 1,
             howManyQuestions: 1,
             currentQuestionType: -1,

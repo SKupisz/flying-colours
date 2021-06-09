@@ -64,7 +64,8 @@ export default class TestSolvingPanel extends React.Component{
                     }, () => {
                         if(this.state.currentQuestionData["type"] === "csa" || this.state.currentQuestionData["type"] === "cma"){
                             this.setState({
-                                currentAnswer: ""
+                                currentAnswer: "",
+                                currentlyChosenAnswerInd: this.state.currentQuestionData["type"] === "csa" ? -1 : []
                             }, () => {});
                         }
                     });
@@ -87,33 +88,57 @@ export default class TestSolvingPanel extends React.Component{
             }, () => {});
         }
     }
-    closeQuestionChoosing(ind){
+    closeQuestionChoosing(ind, questionType){
         let ifAdding = false;
-        if(ind === this.state.currentQuestionData["correctAnswerInd"]) ifAdding = true;
-        console.log(ifAdding);
+        if((questionType === "csa" && ind === this.state.currentQuestionData["correctAnswerInd"]) || 
+        (questionType === "cma" && this.state.currentQuestionData["correctAnswerInd"].indexOf(ind) !== -1)){
+            ifAdding = true;
+        }
+        
         let operand = this.state.pointsScored;
+        let howMuchUp = 0;
+        if(questionType === "cma") howMuchUp = this.state.currentQuestionData["points"]/this.state.currentQuestionData["correctAnswerInd"].length;
         if(this.state.currentQuestion-2 === operand.length){
-            if(ifAdding) operand.push(this.state.currentQuestionData["points"]);
+            if(ifAdding) {
+                if(questionType === "csa") operand.push(this.state.currentQuestionData["points"]);
+                else if(questionType == "cma") operand.push(howMuchUp);
+            }
             else operand.push(0);
         }
         else{
-            operand[this.state.currentQuestion-2] = ifAdding ? this.state.currentQuestionData["points"] : 0;
+            if(questionType === "csa") operand[this.state.currentQuestion-2] = ifAdding ? this.state.currentQuestionData["points"] : 0;
+            else if(questionType == "cma") {
+                if(ifAdding) operand[this.state.currentQuestion-2]+=howMuchUp;
+                else operand[this.state.currentQuestion-2]-=howMuchUp;
+            }
+        }
+        let newCurrentlyChosenAnswerInd = this.state.currentlyChosenAnswerInd;
+        if(questionType === "csa"){
+            newCurrentlyChosenAnswerInd = ind === this.state.currentlyChosenAnswerInd ? -1 : ind;
+        }
+        else if(questionType === "cma"){
+            if(this.state.currentlyChosenAnswerInd.indexOf(ind) !== -1){
+                newCurrentlyChosenAnswerInd = newCurrentlyChosenAnswerInd.filter(elem => {return elem !== ind});
+            }
+            else newCurrentlyChosenAnswerInd.push(ind);
         }
         this.setState({
             pointsScored: operand,
-            currentlyChosenAnswerInd: ind === this.state.currentlyChosenAnswerInd ? -1 : ind
-        }, () => {});
+            currentlyChosenAnswerInd: newCurrentlyChosenAnswerInd
+        }, () => {console.log(newCurrentlyChosenAnswerInd);});
     }
     render(){
         return <Grid container className = "test-solving-container block-center">
             {this.state.ifStarted === false ? <StandardButton content = "Start" classes = "start-btn block-center" callbackFunction = {this.startTheGame}/> 
             : this.state.errorOccured === true ? <Grid item xs={12}>
                 <header className="error-header block-center">Test got crashed. Try later</header>
-            </Grid> : this.state.currentQuestion-1 > this.state.questionAmount ?<FinishPanel result={((this.state.finalPoints/this.state.pointsTotal).toFixed(2))*100} 
+            </Grid> : this.state.currentQuestion-1 > this.state.questionAmount ? <FinishPanel result={((this.state.finalPoints/this.state.pointsTotal).toFixed(2))*100} 
             restartTheQuiz = {this.startTheGame}/> : <Grid item xs={12}>
                     <header className="question-name block-center">{this.state.currentQuestionData["questionName"]}</header>
                     {this.state.currentQuestionData["type"] === "csa" ? <CloseAnswerPanel data = {this.state.currentQuestionData["answerStack"]}
-                    callBack = {this.closeQuestionChoosing} currentChosen = {this.state.currentlyChosenAnswerInd}/>: ""}
+                    callBack = {this.closeQuestionChoosing} currentChosen = {this.state.currentlyChosenAnswerInd} type = {this.state.currentQuestionData["type"]}/>: 
+                    this.state.currentQuestionData["type"] === "cma" ? <CloseAnswerPanel data = {this.state.currentQuestionData["answerStack"]}
+                    callBack = {this.closeQuestionChoosing} currentChosen = {this.state.currentlyChosenAnswerInd} type = {this.state.currentQuestionData["type"]}/>:""}
                     <StandardButton content = {this.state.currentQuestion-1 === this.state.questionAmount ? "Submit the results" : "Next question"}
                      classes = "next-btn block-center" callbackFunction = {this.getTheQuestion}/>
                 </Grid>}

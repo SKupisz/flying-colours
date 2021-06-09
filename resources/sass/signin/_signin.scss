@@ -44,3 +44,42 @@
         }
     }
 }
+@media screen and (max-width: 858px) {
+    .signin-form{
+        width: calc(90% - 20px);
+        .sign-in-container{
+            width: calc(100% - 20px);
+        }
+    }
+}
+@media screen and (max-width: 588px) {
+    .signin-form{
+        width: calc(95% - 20px);
+        .sign-in-container{
+            .email-input{
+                width: calc(80% - 20px);
+            }
+            .error-message{
+                width: calc(100% - 10px);
+            }
+            .login-btn{
+                width: calc(60% - 40px);
+                font-size: 1.2em;
+            }
+        }
+    }
+}
+@media screen and (max-width: 330px) {
+    .signin-form{
+        width: calc(100% - 20px);
+        .sign-in-container{
+            .email-input{
+                width: calc(90% - 20px);
+            }
+            .login-btn{
+                width: calc(100% - 40px);
+                font-size: 1.2em;
+            }
+        }
+    }
+}

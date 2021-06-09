@@ -41,8 +41,12 @@ const MainNav = (data) => {
             </Toolbar>
             <ButtonComponent href = "/tests" hrefClassName = {isHidden === true ? "public-tests-btn rwd hidden" : "public-tests-btn rwd"} content = "Public tests"/>
             <ButtonComponent href = "/about" hrefClassName = {isHidden === true ? "about-btn rwd hidden" : "about-btn rwd"} content = "About the project"/>
-            <ButtonComponent href = "/publish" hrefClassName = {isHidden === true ? "publish-btn rwd-2 hidden" : "publish-btn rwd-2"} content = "Publish a test"/>
-            <ButtonComponent href = "/logout" hrefClassName = {isHidden === true ? "login-btn rwd-2 hidden" : "login-btn rwd-2"} content = "Logout"/>
+            <ButtonComponent href = {data["issignedin"] === "false" ? "/sign-in" : "/publish"} 
+                hrefClassName = {isHidden === true ? "publish-btn rwd-2 hidden" : "publish-btn rwd-2"} 
+                content = {data["issignedin"] === "false" ? "Sign in" : "Publish"}/>
+            <ButtonComponent href = {data["issignedin"] === "false" ? "/sign-in" : "/logout"} 
+                hrefClassName = {isHidden === true ? "publish-btn rwd-2 hidden" : "publish-btn rwd-2"} 
+                content = {data["issignedin"] === "false" ? "Sign up" : "Logout"}/>
         </AppBar>;
 
 }

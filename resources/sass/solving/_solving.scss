@@ -95,6 +95,17 @@
                 font-size: 1.6em;
             }
         }
+        .number-answer{
+            width: calc(70% - 20px);
+            padding: 10px;
+            text-align: center;
+            input{
+                color: white;
+                font-family: 'Odibee Sans', cursive;
+                font-size: 1.6em;
+                text-align: center;
+            }
+        }
     }
 }
 @import "./ResultPanelRWD";

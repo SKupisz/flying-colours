@@ -12,7 +12,7 @@ export default class OpenNumberQuestion extends React.Component{
             <div className="answer-wrapper block-center">
                 <InputBase type = "number" className="answer-content number-content" margin="dense" variant="filled" 
                 placeholder="Answer content..." required defaultValue = {this.props.currentQuestionData["answer"]}
-                    onChange = {(event) => {this.props.setNewValueOfTheQuestionData("answer", "", event);}}/>
+                    onChange = {(event) => {this.props.updateNumberAnswer("answer", "", Number(event.target.value));}}/>
             </div>
             {(this.props.currentQuestionData["questionName"].length > 0
              && this.props.currentQuestionData["points"] > 0 && this.props.currentQuestionData["answer"] !== null) ? <StandardButton

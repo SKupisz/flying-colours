@@ -12,7 +12,6 @@ import OpenNumberQuestion from "./questions/OpenNumberQuestion.js";
 
 import EndingPanel from "./publishPanelComponents/EndingPanel.js";
 import LastStandDecision from "./publishPanelComponents/LastStandDecision.js";
-import FinalMessage from "./publishPanelComponents/FinalMessage.js";
 
 export default class TestCreator extends React.Component{
     constructor(props){
@@ -216,8 +215,7 @@ export default class TestCreator extends React.Component{
     }
     deleteAnswer(ind){
         let operand = this.state.currentQuestionData;
-        operand["answerStack"] = operand["answerStack"].filter((elem,index) => {console.log(index); return index !== ind});
-        console.log(operand["answerStack"]);
+        operand["answerStack"] = operand["answerStack"].filter((elem,index) => {return index !== ind});
         this.setState({
             currentQuestionData: operand
         }, () => {});

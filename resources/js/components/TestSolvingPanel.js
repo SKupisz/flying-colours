@@ -3,8 +3,11 @@ import ReactDOM from "react-dom";
 import { Grid, Button } from "@material-ui/core";
 
 import StandardButton from "./publishPanelComponents/StandardButton.js";
+
 import CloseAnswerPanel from "./testSolvingComponents/CloseAnswerPanel.js";
 import OpenTextAnswerPanel from "./testSolvingComponents/OpenTextAnswerPanel.js";
+import OpenNumberAnswerPanel from "./testSolvingComponents/OpenNumberAnswerPanel.js";
+
 import FinishPanel from "./testSolvingComponents/FinishPanel.js";
 
 export default class TestSolvingPanel extends React.Component{
@@ -31,6 +34,7 @@ export default class TestSolvingPanel extends React.Component{
         this.getTheQuestion = this.getTheQuestion.bind(this);
         this.closeQuestionChoosing = this.closeQuestionChoosing.bind(this);
         this.openQuestionAnswer = this.openQuestionAnswer.bind(this);
+        this.openNumberAnswer = this.openNumberAnswer.bind(this);
     }
     startTheGame(){
         this.setState({
@@ -148,6 +152,20 @@ export default class TestSolvingPanel extends React.Component{
             pointsScored: scoredOperand
         }, () => {});
     }
+    openNumberAnswer(newNumber){
+        let scoredOperand = this.state.pointsScored, ifCorrect = false;
+        if(newNumber === this.state.currentQuestionData["answer"]) ifCorrect = true;
+        if(this.state.currentQuestion-2 === scoredOperand.length){
+            scoredOperand.push(ifCorrect === true ? this.state.currentQuestionData["points"] : 0);
+        }
+        else{
+            scoredOperand[this.state.currentQuestion-2] = ifCorrect === true ? this.state.currentQuestionData["points"] : 0;
+        }
+        this.setState({
+            currentAnswer: newNumber,
+            pointsScored: scoredOperand
+        }, () => {});
+    }
     render(){
         return <Grid container className = "test-solving-container block-center">
             {this.state.ifStarted === false ? <StandardButton content = "Start" classes = "start-btn block-center" callbackFunction = {this.startTheGame}/> 
@@ -161,7 +179,9 @@ export default class TestSolvingPanel extends React.Component{
                     this.state.currentQuestionData["type"] === "cma" ? <CloseAnswerPanel data = {this.state.currentQuestionData["answerStack"]}
                     callBack = {this.closeQuestionChoosing} currentChosen = {this.state.currentlyChosenAnswerInd} type = {this.state.currentQuestionData["type"]}/>: 
                     this.state.currentQuestionData["type"] === "ota" ? <OpenTextAnswerPanel data = {this.state.currentQuestionData}
-                    changeTheAnswer = {this.openQuestionAnswer}/> : ""}
+                    changeTheAnswer = {this.openQuestionAnswer}/> : 
+                    this.state.currentQuestionData["type"] === "ona" ? <OpenNumberAnswerPanel data = {this.state.currentQuestionData}
+                    changeTheAnswer = {this.openNumberAnswer} /> : ""}
                     <StandardButton content = {this.state.currentQuestion-1 === this.state.questionAmount ? "Submit the results" : "Next question"}
                      classes = "next-btn block-center" callbackFunction = {this.getTheQuestion}/>
                 </Grid>}

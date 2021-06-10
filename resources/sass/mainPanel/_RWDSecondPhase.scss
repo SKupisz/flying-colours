@@ -129,3 +129,10 @@
         }
     }
 }
+@media screen and (max-width: 330px) {
+    .creator-panel{
+        .points-input{
+            width: calc(70% - 20px);
+        }
+    }
+}

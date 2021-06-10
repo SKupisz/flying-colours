@@ -1,7 +1,8 @@
-import { Grid, Button } from "@material-ui/core";
 import React from "react";
+import { Grid } from "@material-ui/core";
 
 import QuestionContent from "../QuestionContent.js";
+import StandardButton from "../publishPanelComponents/StandardButton.js";
 
 export default class CloseAnswerQuestion extends React.Component{
     render(){
@@ -12,13 +13,8 @@ export default class CloseAnswerQuestion extends React.Component{
                     deleteTheAnswer = {this.props.deleteTheAnswer}/>)}
             {(((this.props.currentQuestionData["type"] === "csa" && this.props.currentQuestionData["correctAnswerInd"] !== -1) || (this.props.currentQuestionData["type"] === "cma" && this.props.currentQuestionData["correctAnswerInd"].length > 0)) && this.props.currentQuestionType !== -1 
             && this.props.currentQuestionData["questionName"].length > 0
-            && this.props.currentQuestionData["answerStack"].length > 0 && this.props.currentQuestionData["points"] > 0) ? <Grid item xs={12}>
-                        <Button variant="contained" 
-                        className="go-to-questions-btn block-center" type = "button"
-                        onClick = {() => {this.props.goToNextQuestion()}}>
-                            Next question
-                        </Button>
-            </Grid> : ""}
+            && this.props.currentQuestionData["answerStack"].length > 0 && this.props.currentQuestionData["points"] > 0) ? <StandardButton
+            content = "Next question" classes = "go-to-questions-btn block-center" callbackFunction = {this.props.goToNextQuestion}/>: ""}
         </Grid>
     }
 }

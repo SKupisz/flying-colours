@@ -1,6 +1,8 @@
 import React from "react";
-import {Grid, TextField, InputBase, Button} from "@material-ui/core";
+import {Grid, TextField, InputBase} from "@material-ui/core";
 import BorderColorIcon from '@material-ui/icons/BorderColor';
+
+import StandardButton from "../publishPanelComponents/StandardButton.js";
 
 export default class OpenTextQuestion extends React.Component{
     constructor(props){
@@ -68,13 +70,8 @@ export default class OpenTextQuestion extends React.Component{
                     onChange = {(event) => {this.checkIfItCanWork(event);}} ref = {this.answerRef}/>
             </div>
             {(this.props.currentQuestionData["questionName"].length > 0
-            && this.props.currentQuestionData["answer"].length > 0) ? <Grid item xs={12}>
-                        <Button variant="contained" 
-                        className="go-to-questions-btn block-center" type = "button"
-                        onClick = {() => {this.props.goToNextQuestion()}}>
-                            Next question
-                        </Button>
-            </Grid> : ""}
+            && this.props.currentQuestionData["answer"].length > 0) ? <StandardButton
+            content = "Next question" classes = "go-to-questions-btn block-center" callbackFunction = {this.props.goToNextQuestion}/> : ""}
         </Grid>
     }
 }

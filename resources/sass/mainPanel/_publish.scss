@@ -3,6 +3,14 @@
         margin-bottom: 3vh;
     }
 }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+input[type=number] {
+    -moz-appearance: textfield;
+}
 .creator-container, .creator-panel, .ending-panel{
     width: calc(90% - 20px);
     padding: 10px;
@@ -46,14 +54,6 @@
         color: white;
         font-size: 2.5em;
         margin-bottom: 6vh;
-    }
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-    }
-    input[type=number] {
-        -moz-appearance: textfield;
     }
     .MuiInput-underline:before{
         border-color: darkred;
@@ -106,14 +106,6 @@
         text-align: center;
         font-size: 1.3em;
         font-family: 'Odibee Sans', cursive;
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-        }
-        input[type=number] {
-            -moz-appearance: textfield;
-        }
         input, label{
             color: white;
             text-align: center;
@@ -171,14 +163,6 @@
             font-family: 'Odibee Sans', cursive;
             font-size: 1.2em;
             width: calc(15% - 20px);
-            input::-webkit-outer-spin-button,
-            input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-            }
-            input[type=number] {
-                -moz-appearance: textfield;
-            }
         }
         .max-length-input, .answer-content{
             .MuiFilledInput-underline:before{
@@ -201,6 +185,10 @@
         .answer-content{
             width: 60%;
             color: white;
+        }
+        .number-content{
+            width: calc(80% - 20px);
+            padding: 10px;
         }
     }
     .ending-options-container{

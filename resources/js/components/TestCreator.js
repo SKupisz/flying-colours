@@ -82,6 +82,7 @@ export default class TestCreator extends React.Component{
         this.nextQuestion = this.nextQuestion.bind(this);
         this.pickUpNewQuestionType = this.pickUpNewQuestionType.bind(this);
         this.selectNewCorrectAnswer = this.selectNewCorrectAnswer.bind(this);
+        this.setNewValueOfTheQuestionData = this.setNewValueOfTheQuestionData.bind(this);
         this.addNewAnswer = this.addNewAnswer.bind(this);
         this.deleteAnswer = this.deleteAnswer.bind(this);
         this.addNewCorrectAnswer = this.addNewCorrectAnswer.bind(this);
@@ -317,6 +318,8 @@ export default class TestCreator extends React.Component{
                     updateTextAnswer = {this.updateTextAnswer}
                     changeTheLimitState = {this.changeTheLimitState}
                     changeTheCharsLimit = {this.changeTextMaxLength}
+                    goToNextQuestion = {this.nextQuestion}/> : this.state.currentQuestionType === 3 ? <OpenNumberQuestion currentQuestionData = {this.state.currentQuestionData}
+                    updateNumberAnswer = {this.setNewValueOfTheQuestionData}
                     goToNextQuestion = {this.nextQuestion}/> : ""}
                 </Grid> : 
                 this.state.isEndingOfTheQuiz === false ? <LastStandDecision prevQuestion = {this.previousQuestion} 

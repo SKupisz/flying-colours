@@ -606,6 +606,16 @@ a {
   margin-bottom: 3vh;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 .creator-container,
 .creator-panel,
 .ending-panel {
@@ -677,16 +687,6 @@ a {
   margin-bottom: 6vh;
 }
 
-.creator-container input::-webkit-outer-spin-button,
-.creator-container input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.creator-container input[type=number] {
-  -moz-appearance: textfield;
-}
-
 .creator-container .MuiInput-underline:before {
   border-color: darkred;
 }
@@ -747,16 +747,6 @@ a {
   text-align: center;
   font-size: 1.3em;
   font-family: 'Odibee Sans', cursive;
-}
-
-.creator-panel .points-input input::-webkit-outer-spin-button,
-.creator-panel .points-input input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.creator-panel .points-input input[type=number] {
-  -moz-appearance: textfield;
 }
 
 .creator-panel .points-input input,
@@ -832,16 +822,6 @@ a {
   width: calc(15% - 20px);
 }
 
-.creator-panel .answer-wrapper .max-length-input input::-webkit-outer-spin-button,
-.creator-panel .answer-wrapper .max-length-input input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.creator-panel .answer-wrapper .max-length-input input[type=number] {
-  -moz-appearance: textfield;
-}
-
 .creator-panel .answer-wrapper .max-length-input .MuiFilledInput-underline:before,
 .creator-panel .answer-wrapper .answer-content .MuiFilledInput-underline:before {
   border-color: darkred;
@@ -871,6 +851,11 @@ a {
 .creator-panel .answer-wrapper .answer-content {
   width: 60%;
   color: white;
+}
+
+.creator-panel .answer-wrapper .number-content {
+  width: calc(80% - 20px);
+  padding: 10px;
 }
 
 .creator-panel .ending-options-container {
@@ -1117,6 +1102,12 @@ a {
   .creator-panel .ending-options-container .ending-phase-btn {
     width: calc(90% - 32px);
     font-size: 1.2em;
+  }
+}
+
+@media screen and (max-width: 330px) {
+  .creator-panel .points-input {
+    width: calc(70% - 20px);
   }
 }
 

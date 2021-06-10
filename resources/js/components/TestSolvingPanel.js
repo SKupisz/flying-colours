@@ -4,6 +4,7 @@ import { Grid, Button } from "@material-ui/core";
 
 import StandardButton from "./publishPanelComponents/StandardButton.js";
 import CloseAnswerPanel from "./testSolvingComponents/CloseAnswerPanel.js";
+import OpenTextAnswerPanel from "./testSolvingComponents/OpenTextAnswerPanel.js";
 import FinishPanel from "./testSolvingComponents/FinishPanel.js";
 
 export default class TestSolvingPanel extends React.Component{
@@ -29,6 +30,7 @@ export default class TestSolvingPanel extends React.Component{
         this.startTheGame = this.startTheGame.bind(this);
         this.getTheQuestion = this.getTheQuestion.bind(this);
         this.closeQuestionChoosing = this.closeQuestionChoosing.bind(this);
+        this.openQuestionAnswer = this.openQuestionAnswer.bind(this);
     }
     startTheGame(){
         this.setState({
@@ -65,7 +67,8 @@ export default class TestSolvingPanel extends React.Component{
                         if(this.state.currentQuestionData["type"] === "csa" || this.state.currentQuestionData["type"] === "cma"){
                             this.setState({
                                 currentAnswer: "",
-                                currentlyChosenAnswerInd: this.state.currentQuestionData["type"] === "csa" ? -1 : []
+                                currentlyChosenAnswerInd: (this.state.currentQuestionData["type"] === "csa" || 
+                                this.state.currentQuestionData["type"] === "ota") ? -1 : []
                             }, () => {});
                         }
                     });
@@ -127,6 +130,24 @@ export default class TestSolvingPanel extends React.Component{
             currentlyChosenAnswerInd: newCurrentlyChosenAnswerInd
         }, () => {console.log(newCurrentlyChosenAnswerInd);});
     }
+    openQuestionAnswer(text){
+        let operand = text.trim();
+        operand = operand.toLowerCase();
+        let correctAnswer = this.state.currentQuestionData["answer"];
+        correctAnswer = correctAnswer.toLowerCase();
+        let scoredOperand = this.state.pointsScored, ifCorrect = false;
+        if(operand === correctAnswer) ifCorrect = true;
+        if(this.state.currentQuestion-2 === scoredOperand.length){
+            scoredOperand.push(ifCorrect === true ? this.state.currentQuestionData["points"] : 0);
+        }
+        else{
+            scoredOperand[this.state.currentQuestion-2] = ifCorrect === true ? this.state.currentQuestionData["points"] : 0;
+        }
+        this.setState({
+            currentAnswer: text,
+            pointsScored: scoredOperand
+        }, () => {});
+    }
     render(){
         return <Grid container className = "test-solving-container block-center">
             {this.state.ifStarted === false ? <StandardButton content = "Start" classes = "start-btn block-center" callbackFunction = {this.startTheGame}/> 
@@ -138,7 +159,9 @@ export default class TestSolvingPanel extends React.Component{
                     {this.state.currentQuestionData["type"] === "csa" ? <CloseAnswerPanel data = {this.state.currentQuestionData["answerStack"]}
                     callBack = {this.closeQuestionChoosing} currentChosen = {this.state.currentlyChosenAnswerInd} type = {this.state.currentQuestionData["type"]}/>: 
                     this.state.currentQuestionData["type"] === "cma" ? <CloseAnswerPanel data = {this.state.currentQuestionData["answerStack"]}
-                    callBack = {this.closeQuestionChoosing} currentChosen = {this.state.currentlyChosenAnswerInd} type = {this.state.currentQuestionData["type"]}/>:""}
+                    callBack = {this.closeQuestionChoosing} currentChosen = {this.state.currentlyChosenAnswerInd} type = {this.state.currentQuestionData["type"]}/>: 
+                    this.state.currentQuestionData["type"] === "ota" ? <OpenTextAnswerPanel data = {this.state.currentQuestionData}
+                    changeTheAnswer = {this.openQuestionAnswer}/> : ""}
                     <StandardButton content = {this.state.currentQuestion-1 === this.state.questionAmount ? "Submit the results" : "Next question"}
                      classes = "next-btn block-center" callbackFunction = {this.getTheQuestion}/>
                 </Grid>}

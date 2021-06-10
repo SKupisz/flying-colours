@@ -1260,6 +1260,28 @@ input[type=number] {
   background: linear-gradient(to right, #380000, #610101, #8b0303, #c70000, #ff0000, #fc0808, #ff2623, #F83839, #ff2623, #fc0808, #ff0000, #c70000, #8b0303, #610101, #380000);
 }
 
+.test-solving-container .solving-answer-container .text-answer {
+  width: calc(80% - 20px);
+  padding: 10px;
+  text-align: center;
+  letter-spacing: 0.06em;
+}
+
+.test-solving-container .solving-answer-container .text-answer .MuiFilledInput-underline:before {
+  border-color: darkred;
+}
+
+.test-solving-container .solving-answer-container .text-answer .MuiFilledInput-underline:after {
+  border-color: white;
+}
+
+.test-solving-container .solving-answer-container .text-answer input,
+.test-solving-container .solving-answer-container .text-answer label {
+  color: white;
+  font-family: 'Odibee Sans', cursive;
+  font-size: 1.6em;
+}
+
 @media screen and (max-width: 1024px) {
   .test-solving-container .end-option-btn {
     width: calc(60% - 20px);

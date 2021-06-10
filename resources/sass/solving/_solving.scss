@@ -78,6 +78,23 @@
         .chosen{
             background: $btn-linear-gradient-2;
         }
+        .text-answer{
+            width: calc(80% - 20px);
+            padding: 10px;
+            text-align: center;
+            letter-spacing: 0.06em;
+            .MuiFilledInput-underline:before{
+                border-color: darkred;
+            }
+            .MuiFilledInput-underline:after{
+                border-color: white;
+            }
+            input, label{
+                color: white;
+                font-family: 'Odibee Sans', cursive;
+                font-size: 1.6em;
+            }
+        }
     }
 }
 @import "./ResultPanelRWD";

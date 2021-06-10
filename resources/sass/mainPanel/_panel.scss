@@ -63,13 +63,20 @@
         .test-elem{
             display: inline-block;
             margin: 4px;
-        }
-        .created-header{
-            width: calc(50% - 28px);
-            padding: 5px 10px;
-            font-size: 1.3em;
             font-family: 'Odibee Sans', cursive;
             letter-spacing: 0.06em;
+            padding: 5px 10px;
+        }
+        .created-header{
+            width: calc(40% - 28px);
+            font-size: 1.3em;
+        }
+        .solved-at{
+            width: calc(50% - 28px);
+            font-size: 1.3em;
+        }
+        .published-elem{
+            width: calc(80% - 28px);
         }
     }
 }
@@ -95,12 +102,44 @@
                 width: calc(90% - 40px);
             }
         }
+        .created-test{
+            .solved-at{
+                width: calc(55% - 28px);
+                font-size: 1.1em;
+            }
+        }
+    }
+}
+@media screen and (max-width: 1050px) {
+    .main-data-container{
+        .created-test{
+            .created-header{
+                font-size: 1.1em;
+            }
+            .solved-at{
+                width: calc(55% - 28px);
+                font-size: 1em;
+            }
+        }
     }
 }
 @media screen and (max-width: 930px) {
     .history-container{
         .main-header{
             font-size: 3.1em !important;
+        }
+    }
+    .main-data-container{
+        .created-test{
+            .approached-header{
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                width: calc(80% - 20px);
+            }
+            .solved-at{
+                display: none;
+            }
         }
     }
 }

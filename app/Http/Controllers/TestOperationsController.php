@@ -24,12 +24,21 @@ class TestOperationsController extends Controller
                 if(session()->has("current") && session()->has("name") && session()->has("dbs")){
                     $history = session()->get("dbs")[0];
                     $currentTime = new Carbon();
+                    $checkIfAlreadyWatched = DB::table($history)->where("testID","=",$testID);
                     $toInsert = [
                         "testID" => $testID,
                         "last_opened_at" => $currentTime,
                         "result" => -1
                     ]; 
-                    DB::table($history)->insert($toInsert);
+                    if($checkIfAlreadyWatched->count() == 0){
+                        DB::table($history)->insert($toInsert);
+                    }
+                    else{
+                        $getTheRecordID = json_decode(json_encode($checkIfAlreadyWatched->get()),true);
+                        $id = $getTheRecordID[0]["id"];
+                        DB::table($history)->where("id","=",$id)->update($toInsert);
+                    }
+                    
                 }
                 return view("solving")->with("data",["status" => "success","quizData" => $data[0]]);
             }

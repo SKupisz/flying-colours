@@ -30,6 +30,9 @@ Route::get("/sign-up",function(){
 
 Route::get("/main","SignInUpController@launchMainPanel");
 
+Route::get("/tests",function(){
+    return view("tests");
+});
 Route::get("/solve/{testId}/","TestOperationsController@launchTestSolving");
 
 Route::get("/publish", function(){

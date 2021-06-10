@@ -16,7 +16,14 @@
                             @foreach ($data["recentlyDone"] as $item)
                             <a href = "/solve/{{$item["testID"]}}">
                                 <div class="created-test block-center">
-                                    <header class="created-header test-elem">{{substr($item["testName"],0,20)}}</header>
+                                    <header class="created-header test-elem approached-header">
+                                        @if(strlen($item["testName"]) > 20) {{substr($item["testName"],0,17)}}...
+                                        @else {{$item["testName"]}}
+                                        @endif
+                                    </header>
+                                    <div class="test-elem solved-at">
+                                        {{$item["last_opened_at"]}}
+                                    </div>
                                 </div>
                             </a>
                         @endforeach
@@ -33,7 +40,11 @@
                             @foreach ($data["recentlyPublished"] as $item)
                                 <a href = "/solve/{{$item["testKey"]}}">
                                     <div class="created-test block-center">
-                                        <header class="created-header test-elem">{{substr($item["testName"],0,20)}}</header>
+                                        <header class="created-header published-elem test-elem">
+                                            @if(strlen($item["testName"]) > 20){{substr($item["testName"],0,17)}}...
+                                            @else {{$item["testName"]}}
+                                            @endif
+                                        </header>
                                     </div>
                                 </a>
                             @endforeach

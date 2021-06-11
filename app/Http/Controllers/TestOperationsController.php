@@ -17,7 +17,7 @@ class TestOperationsController extends Controller
     public function launchTestSolving($testID){
         $toCheck = $this->SignInUpController->entities($testID);
         try {
-            $checkIfTheTestExists = DB::table("published_tests")->where("testKey","=",$testID);
+            $checkIfTheTestExists = DB::table("published_tests")->join("users","users.email","=","published_tests.author")->where("testKey","=",$testID);
             if($checkIfTheTestExists->count() == 0) return view("solving")->with("data",["status"=>"error-id"]);
             else{
                 $data = json_decode(json_encode($checkIfTheTestExists->get()),true);
@@ -38,8 +38,11 @@ class TestOperationsController extends Controller
                         $id = $getTheRecordID[0]["id"];
                         DB::table($history)->where("id","=",$id)->update($toInsert);
                     }
-                    
                 }
+                $dataToUpdate = $data[0]["usersAttempts"]+1;
+                DB::table("published_tests")->where("testKey","=",$testID)->update([
+                    "usersAttempts" => $dataToUpdate
+                ]);
                 return view("solving")->with("data",["status" => "success","quizData" => $data[0]]);
             }
         } catch (\Throwable $th) {

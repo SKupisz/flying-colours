@@ -1189,6 +1189,10 @@ input[type=number] {
   }
 }
 
+.solving-container .main-header {
+  margin-bottom: 4vh;
+}
+
 .test-solving-container .start-btn,
 .test-solving-container .error-header,
 .test-solving-container .question-name,
@@ -1196,11 +1200,27 @@ input[type=number] {
 .test-solving-container .result,
 .test-solving-container .ending-header,
 .test-solving-container .end-option-btn,
-.test-solving-container .click-option {
+.test-solving-container .click-option,
+.test-solving-container .info-header,
+.test-solving-container .attempts-header,
+.test-solving-container .questions-header {
   font-family: 'Odibee Sans', cursive;
   letter-spacing: 0.06em;
   padding: 10px;
   text-align: center;
+}
+
+.test-solving-container .info-header,
+.test-solving-container .attempts-header,
+.test-solving-container .questions-header {
+  width: calc(80% - 10px);
+  color: white;
+  margin-bottom: 1vh;
+  font-size: 1.4em;
+}
+
+.test-solving-container .questions-header {
+  margin-bottom: 7vh;
 }
 
 .test-solving-container .start-btn,
@@ -1350,6 +1370,15 @@ input[type=number] {
   }
 }
 
+@media screen and (max-width: 596px) {
+  .test-solving-container .info-header,
+  .test-solving-container .attempts-header,
+  .test-solving-container .questions-header {
+    width: calc(90% - 10px);
+    font-size: 1.1em;
+  }
+}
+
 @media screen and (max-width: 432px) {
   .test-solving-container .result {
     width: calc(100% - 20px);
@@ -1366,6 +1395,13 @@ input[type=number] {
   .test-solving-container .end-option-btn {
     width: calc(100% - 20px);
     font-size: 1em;
+  }
+
+  .test-solving-container .info-header,
+  .test-solving-container .attempts-header,
+  .test-solving-container .questions-header {
+    width: calc(100% - 10px);
+    font-size: 1.1em;
   }
 }
 

@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Grid, Button } from "@material-ui/core";
 
+import IntroPanel from "./testSolvingComponents/IntroPanel.js";
 import StandardButton from "./publishPanelComponents/StandardButton.js";
 
 import CloseAnswerPanel from "./testSolvingComponents/CloseAnswerPanel.js";
@@ -168,7 +169,8 @@ export default class TestSolvingPanel extends React.Component{
     }
     render(){
         return <Grid container className = "test-solving-container block-center">
-            {this.state.ifStarted === false ? <StandardButton content = "Start" classes = "start-btn block-center" callbackFunction = {this.startTheGame}/> 
+            {this.state.ifStarted === false ? <IntroPanel startGameCallback = {this.startTheGame} author = {this.props.author} 
+            publishDate = {this.props.published_on} attemptsAmount={this.props.attempts} questionsAmount = {this.state.questionAmount}/>
             : this.state.errorOccured === true ? <Grid item xs={12}>
                 <header className="error-header block-center">Test got crashed. Try later</header>
             </Grid> : this.state.currentQuestion-1 > this.state.questionAmount ? <FinishPanel result={((this.state.finalPoints/this.state.pointsTotal).toFixed(2))*100} 

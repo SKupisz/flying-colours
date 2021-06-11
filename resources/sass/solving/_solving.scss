@@ -1,10 +1,25 @@
+.solving-container{
+    .main-header{
+        margin-bottom: 4vh;
+    }
+}
 .test-solving-container{
     .start-btn, .error-header, .question-name, .next-btn, 
-    .result, .ending-header, .end-option-btn, .click-option{
+    .result, .ending-header, .end-option-btn, .click-option, .info-header,
+    .attempts-header, .questions-header{
         font-family: 'Odibee Sans', cursive;
         letter-spacing: 0.06em;
         padding: 10px;
         text-align: center;
+    }
+    .info-header, .attempts-header, .questions-header{
+        width: calc(80% - 10px);
+        color: white;
+        margin-bottom: 1vh;
+        font-size: 1.4em;
+    }
+    .questions-header{
+        margin-bottom: 7vh;
     }
     .start-btn, .next-btn{
         width: calc(50% - 20px);

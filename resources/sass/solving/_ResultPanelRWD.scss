@@ -18,6 +18,14 @@
         }
     }
 }
+@media screen and (max-width: 596px) {
+    .test-solving-container{
+        .info-header, .attempts-header, .questions-header{
+            width: calc(90% - 10px);
+            font-size: 1.1em;
+        }
+    }
+}
 @media screen and (max-width: 432px) {
     .test-solving-container{
         .result{
@@ -35,6 +43,10 @@
         .end-option-btn{
             width: calc(100% - 20px);
             font-size: 1em;
+        }
+        .info-header, .attempts-header, .questions-header{
+            width: calc(100% - 10px);
+            font-size: 1.1em;
         }
     }
 }

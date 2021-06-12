@@ -14,8 +14,8 @@ export default class Welcome extends React.Component{
         return <Grid container xs={12} className="signin-container welcome-container">
             <header className="main-header block-center">Welcome to Flying Colours</header>
             <div className = "short-describe block-center">
-                {this.shortDesc.map(elem => <div className = "short-desc-word">
-                    <Wave text = {elem+" "}
+                {this.shortDesc.map((elem,index) => <div className = "short-desc-word">
+                    <Wave key = {"key"+index} text = {elem+" "}
                     effect = "verticalFadeIn" iterations = {1}
                     paused = {false} effectDuration = {0.5} delay = {0.2}
                     effectChange = {0.5} effectDelay = {1} className = "short-describe-wrapper"/>

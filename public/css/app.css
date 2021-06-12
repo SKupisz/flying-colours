@@ -1405,3 +1405,79 @@ input[type=number] {
   }
 }
 
+.error-header {
+  width: calc(80% - 20px);
+  padding: 10px;
+  text-align: center;
+  font-size: 1.6em;
+  letter-spacing: 0.06em;
+  color: red;
+}
+
+.tests-showing-wrapper {
+  width: calc(100% - 20px);
+  padding: 10px;
+  text-align: center;
+  align-items: center;
+}
+
+.tests-showing-wrapper .test-button {
+  width: calc(30% - 18px);
+  padding: 5px;
+  margin: 4px;
+  display: inline-block;
+  vertical-align: top;
+  color: white;
+  height: 25vh;
+  border-radius: 10px;
+  background: darkred;
+  cursor: pointer;
+  transition: all 0.4s;
+}
+
+.tests-showing-wrapper .test-button .test-header,
+.tests-showing-wrapper .test-button .date-header {
+  width: calc(95% - 10px);
+  padding: 5px;
+  text-align: center;
+  font-size: 1.8em;
+  letter-spacing: 0.07em;
+  font-family: "Odibee Sans", cursive;
+  margin-bottom: 2vh;
+}
+
+.tests-showing-wrapper .test-button .date-header {
+  font-size: 1.3em;
+}
+
+.tests-showing-wrapper .test-button:hover,
+.tests-showing-wrapper .test-button:focus {
+  background: red;
+}
+
+@media screen and (max-width: 852px) {
+  .tests-showing-wrapper .test-button {
+    width: calc(40% - 18px);
+    font-size: 0.8em;
+  }
+}
+
+@media screen and (max-width: 558px) {
+  .tests-showing-wrapper .test-button {
+    width: calc(50% - 18px);
+    font-size: 0.5em;
+  }
+}
+
+@media screen and (max-width: 376px) {
+  .tests-showing-wrapper .test-button {
+    width: calc(80% - 18px);
+    font-size: 0.6em;
+  }
+
+  .tests-showing-wrapper .test-button .test-header,
+  .tests-showing-wrapper .test-button .date-header {
+    width: calc(100% - 10px);
+  }
+}
+

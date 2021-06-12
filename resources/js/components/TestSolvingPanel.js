@@ -90,10 +90,29 @@ export default class TestSolvingPanel extends React.Component{
             for(let i = 0 ; i < this.state.pointsScored.length; i++){
                 counter+=this.state.pointsScored[i];
             }
-            this.setState({
-                currentQuestion: this.state.currentQuestion+1,
-                finalPoints: counter
-            }, () => {});
+            let finalResult = ((counter/this.state.pointsTotal).toFixed(2))*100;
+            await fetch ("/solve/putTheResults",{
+                method: "POST",
+                headers: {"Content-type": "application/json"},
+                body: JSON.stringify({
+                    testID: this.state.testID,
+                    results: finalResult,
+                    _token: this.props.token
+                })
+            }).then(back => back.json())
+            .then(data => {
+                if(data === "success") {
+                    this.setState({
+                        currentQuestion: this.state.currentQuestion+1,
+                        finalPoints: counter
+                    }, () => {});
+                }
+                else{
+                    this.setState({
+                        errorOccured: true
+                    }, () => {});
+                }
+            })
         }
     }
     closeQuestionChoosing(ind, questionType){
@@ -133,7 +152,7 @@ export default class TestSolvingPanel extends React.Component{
         this.setState({
             pointsScored: operand,
             currentlyChosenAnswerInd: newCurrentlyChosenAnswerInd
-        }, () => {console.log(newCurrentlyChosenAnswerInd);});
+        }, () => {});
     }
     openQuestionAnswer(text){
         let operand = text.trim();
@@ -170,7 +189,8 @@ export default class TestSolvingPanel extends React.Component{
     render(){
         return <Grid container className = "test-solving-container block-center">
             {this.state.ifStarted === false ? <IntroPanel startGameCallback = {this.startTheGame} author = {this.props.author} 
-            publishDate = {this.props.published_on} attemptsAmount={this.props.attempts} questionsAmount = {this.state.questionAmount}/>
+            publishDate = {this.props.published_on} attemptsAmount={this.props.attempts} questionsAmount = {this.state.questionAmount}
+            lastResult = {Number(this.props.lastresult)}/>
             : this.state.errorOccured === true ? <Grid item xs={12}>
                 <header className="error-header block-center">Test got crashed. Try later</header>
             </Grid> : this.state.currentQuestion-1 > this.state.questionAmount ? <FinishPanel result={((this.state.finalPoints/this.state.pointsTotal).toFixed(2))*100} 

@@ -21,6 +21,7 @@ class TestOperationsController extends Controller
             if($checkIfTheTestExists->count() == 0) return view("solving")->with("data",["status"=>"error-id"]);
             else{
                 $data = json_decode(json_encode($checkIfTheTestExists->get()),true);
+                $recentResult = -1;
                 if(session()->has("current") && session()->has("name") && session()->has("dbs")){
                     $history = session()->get("dbs")[0];
                     $currentTime = new Carbon();
@@ -36,6 +37,8 @@ class TestOperationsController extends Controller
                     else{
                         $getTheRecordID = json_decode(json_encode($checkIfAlreadyWatched->get()),true);
                         $id = $getTheRecordID[0]["id"];
+                        $recentResult = $getTheRecordID[0]["result"];
+                        if($recentResult != -1) $toInsert["result"] = $recentResult;
                         DB::table($history)->where("id","=",$id)->update($toInsert);
                     }
                 }
@@ -43,7 +46,7 @@ class TestOperationsController extends Controller
                 DB::table("published_tests")->where("testKey","=",$testID)->update([
                     "usersAttempts" => $dataToUpdate
                 ]);
-                return view("solving")->with("data",["status" => "success","quizData" => $data[0]]);
+                return view("solving")->with("data",["status" => "success","quizData" => $data[0], "recentResult" => $recentResult]);
             }
         } catch (\Throwable $th) {
             return view("solving")->with("data",["status"=>"error","code" => $th->getMessage()]);
@@ -52,16 +55,40 @@ class TestOperationsController extends Controller
     }
     public function loadTheNextRow(Request $data){
         if($data->has("testID") && $data->has("questionNumber")){
-            $testID = $this->SignInUpController->entities($data->input("testID"));
-            $checkIfTheTestExists = DB::table("published_tests")->where("testKey","=",$testID);
-            if($checkIfTheTestExists->count() == 0) return json_encode(["error"]);
-            $row = $data->input("questionNumber");
-            if(gettype($row) != "integer") return json_encode(["error"]);
-            $getTheQuestion = DB::table($testID)->where("id","=",$row);
-            if($getTheQuestion->count() == 0) return json_encode(["error"]);
-            $getTheQuestion = json_decode(json_encode($getTheQuestion->get()),true);
-            return json_encode(["success", $getTheQuestion]);
+            try {
+                $testID = $this->SignInUpController->entities($data->input("testID"));
+                $checkIfTheTestExists = DB::table("published_tests")->where("testKey","=",$testID);
+                if($checkIfTheTestExists->count() == 0) return json_encode(["error"]);
+                $row = $data->input("questionNumber");
+                if(gettype($row) != "integer") return json_encode(["error"]);
+                $getTheQuestion = DB::table($testID)->where("id","=",$row);
+                if($getTheQuestion->count() == 0) return json_encode(["error"]);
+                $getTheQuestion = json_decode(json_encode($getTheQuestion->get()),true);
+                return json_encode(["success", $getTheQuestion]);
+            } catch (\Throwable $th) {
+                return json_encode(["error"]);
+            }
         }
         else return json_encode(["error"]);
+    }
+    public function putTheResultsToDB(Request $data){
+        if($data->has("testID") && $data->has("results")){
+            if(session()->has("current") && session()->has("name") && session()->has("dbs")){
+                $testID = $data->input("testID");
+                $historyDBName = session()->get("dbs")[0];
+                $getTheRecordID = DB::table($historyDBName)->where("testID","=",$testID);
+                if($getTheRecordID->count() != 1) return json_encode("error");
+                $getTheRecordID = json_decode(json_encode($getTheRecordID->get()),true);
+                $idToUpdate = $getTheRecordID[0]["id"];
+                $result = $data->input("results");
+                $dataToUpdate = [
+                    "result" => $result
+                ];
+                DB::table($historyDBName)->where("id","=",$idToUpdate)->update($dataToUpdate);
+                return json_encode("success");
+            }
+            else return json_encode("success");
+        }
+        else return json_encode("error");
     }
 }

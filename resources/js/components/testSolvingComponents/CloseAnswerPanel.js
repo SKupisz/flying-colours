@@ -20,7 +20,7 @@ const detectIfChosen = (ind, currentlyChosen, type) => {
 const CloseAnswerPanel = ({data, callBack, currentChosen, type}) => {
     return <Grid item xs={12}>
         <div className = "solving-answer-container block-center">
-            {data.map((elem,index) => {return <StandardButton content = {elem} 
+            {data.map((elem,index) => {return <StandardButton content = {elem} key = {"answer"+index}
             classes = {detectIfChosen(index, currentChosen, type) === true ? "click-option chosen" : "click-option"} 
             callbackFunction = {() => {callBack(index, type);}}/>;})}
         </div>

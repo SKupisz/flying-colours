@@ -47,3 +47,4 @@ Route::post("/signup","SignInUpController@SignUp");
 Route::post("/publish/tempRow/","PublishingController@ThrowANewRow");
 Route::post("/publish/publishTheTest","PublishingController@PublishNewTest");
 Route::post("/solve/getTheRow","TestOperationsController@loadTheNextRow");
+Route::post("/solve/putTheResults", "TestOperationsController@putTheResultsToDB");

@@ -1446,6 +1446,11 @@ input[type=number] {
   margin-bottom: 2vh;
 }
 
+.tests-showing-wrapper .test-button .test-header div,
+.tests-showing-wrapper .test-button .date-header div {
+  display: inline-block;
+}
+
 .tests-showing-wrapper .test-button .date-header {
   font-size: 1.3em;
 }

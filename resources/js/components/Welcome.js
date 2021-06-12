@@ -22,7 +22,7 @@ export default class Welcome extends React.Component{
                 </div>)}
             </div> 
             <Grid item xs={12} className = "buttons-section block-center">
-                {this.data.links.map(elem => <a href = {elem["href"]}>
+                {this.data.links.map(elem => <a href = {elem["href"]} key = {elem["href"]}>
                     <Button variant="contained" 
                     className="section-btn" type = "button">
                         {elem["content"]}

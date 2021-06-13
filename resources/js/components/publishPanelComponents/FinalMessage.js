@@ -2,19 +2,18 @@ import React from "react";
 import {Grid, Button} from "@material-ui/core";
 
 const FinalMessage = ({resultState, textID}) => {
-    if(resultState === 1) return <Grid item xs={12}>
-        <header className = "published-header block-center">You've just published the test!</header>
-        <a href = {"/solve/"+textID}>
+    let headerContent = "Something went wrong. Try another time", 
+    finalHref = "/", buttonContent = "Go back";
+    if(resultState === 1){
+        headerContent = "You've just published the test!";
+        finalHref = "/solve/"+textID;
+        buttonContent = "Solve the quiz";
+    }
+    return <Grid item xs={12}>
+        <header className = "published-header block-center">{headerContent}</header>
+        <a href = {finalHref}>
             <Button variant="contained" className="finish-btn" type = "button">
-                Solve the quiz
-            </Button>
-        </a>
-    </Grid>;
-    else return <Grid item xs={12}>
-    <header className = "published-header block-center">Something went wrong. Try another time</header>
-    <a href = "/">
-            <Button variant="contained" className="finish-btn" type = "button">
-                Go back
+                {buttonContent}
             </Button>
         </a>
     </Grid>;

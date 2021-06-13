@@ -39,7 +39,6 @@ export default class OpenTextQuestion extends React.Component{
     }
     checkIfTheRestrictionsAreCorrect(){
         let forHelp = this.limitRef.current.childNodes[0].value;
-        console.log(typeof forHelp);
         if(typeof Number(forHelp) === "number" && forHelp.indexOf(".") === -1 && forHelp.indexOf(",") === -1){
             forHelp = Number(forHelp);
             if(forHelp < 1 || forHelp > 4000){

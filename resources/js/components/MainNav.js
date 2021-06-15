@@ -35,12 +35,16 @@ const MainNav = (data) => {
                     <ButtonComponent href = "/sign-in" hrefClassName = "login-btn" content = "Sign in"/>
                     <ButtonComponent href = "/sign-up" hrefClassName = "register-btn" content = "Sign up"/>
                 </div> : <div className="right-aligned">
+                    <ButtonComponent href = "/options" hrefClassName = "options-btn " content = "Options"/>
                     <ButtonComponent href = "/publish" hrefClassName = "publish-btn" content = "Publish a test"/>
                     <ButtonComponent href = "/logout" hrefClassName = "login-btn" content = "Logout"/>
                     </div>}
             </Toolbar>
             <ButtonComponent href = "/tests" hrefClassName = {isHidden === true ? "public-tests-btn rwd hidden" : "public-tests-btn rwd"} content = "Public tests"/>
             <ButtonComponent href = "/about" hrefClassName = {isHidden === true ? "about-btn rwd hidden" : "about-btn rwd"} content = "About the project"/>
+            {data["issignedin"] === "false" ? "" : <ButtonComponent href = "/options"
+                hrefClassName = {isHidden === true ? "options-btn rwd-2 hidden" : "options-btn rwd-2"} 
+                content = "Options"/>}
             <ButtonComponent href = {data["issignedin"] === "false" ? "/sign-in" : "/publish"} 
                 hrefClassName = {isHidden === true ? "publish-btn rwd-2 hidden" : "publish-btn rwd-2"} 
                 content = {data["issignedin"] === "false" ? "Sign in" : "Publish"}/>

@@ -37,6 +37,10 @@ Route::get("/publish", function(){
     return view("publish");
 });
 
+Route::get("/options",function(){
+    return view("options");
+});
+
 Route::get("/logout","SignInUpController@Logout");
 
 

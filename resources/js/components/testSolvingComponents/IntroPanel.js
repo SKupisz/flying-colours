@@ -18,7 +18,7 @@ const IntroPanel = ({startGameCallback, author, publishDate, attemptsAmount, que
             <header className="attempts-header block-center">{lastResult === -1 ? "We don't have your recent result" : "Your recent result was "+lastResult+"%"}</header>
         </Grid>
         <Grid item xs = {12}>
-            <header className="questions-header block-center">{questionsAmount+(questionsAmount > 1 ? " questions are" : "question is")} waiting for you</header>
+            <header className="questions-header block-center">{questionsAmount+(questionsAmount > 1 ? " questions are" : " question is")} waiting for you</header>
         </Grid>
         <StandardButton content = "Start" classes = "start-btn block-center" callbackFunction = {startGameCallback}/> 
     </Grid>;

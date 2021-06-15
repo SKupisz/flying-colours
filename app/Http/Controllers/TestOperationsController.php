@@ -42,10 +42,6 @@ class TestOperationsController extends Controller
                         DB::table($history)->where("id","=",$id)->update($toInsert);
                     }
                 }
-                $dataToUpdate = $data[0]["usersAttempts"]+1;
-                DB::table("published_tests")->where("testKey","=",$testID)->update([
-                    "usersAttempts" => $dataToUpdate
-                ]);
                 return view("solving")->with("data",["status" => "success","quizData" => $data[0], "recentResult" => $recentResult]);
             }
         } catch (\Throwable $th) {
@@ -76,16 +72,33 @@ class TestOperationsController extends Controller
             if(session()->has("current") && session()->has("name") && session()->has("dbs")){
                 $testID = $data->input("testID");
                 $historyDBName = session()->get("dbs")[0];
-                $getTheRecordID = DB::table($historyDBName)->where("testID","=",$testID);
-                if($getTheRecordID->count() != 1) return json_encode("error");
-                $getTheRecordID = json_decode(json_encode($getTheRecordID->get()),true);
-                $idToUpdate = $getTheRecordID[0]["id"];
-                $result = $data->input("results");
-                $dataToUpdate = [
-                    "result" => $result
-                ];
-                DB::table($historyDBName)->where("id","=",$idToUpdate)->update($dataToUpdate);
-                return json_encode("success");
+                try {
+                    $checkIfExists = DB::table("published_tests")->where("testKey","=",$testID);
+                    if($checkIfExists->count() != 0){
+                        $getTheRecordID = DB::table($historyDBName)->where("testID","=",$testID);
+                        if($getTheRecordID->count() != 1) return json_encode("error");
+                        $getTheRecordID = json_decode(json_encode($getTheRecordID->get()),true);
+                        $idToUpdate = $getTheRecordID[0]["id"];
+                        $result = $data->input("results");
+                        $dataToUpdate = [
+                            "result" => $result
+                        ];
+                        DB::table($historyDBName)->where("id","=",$idToUpdate)->update($dataToUpdate);
+                        $getTheAvg = json_decode(json_encode($checkIfExists->get()),true);
+                        $id = $getTheAvg[0]["id"]; $avgNow = $getTheAvg[0]["averageResult"];
+                        $avgNow*=$getTheAvg[0]["usersAttempts"];
+                        $avgNow+=$result;
+                        $avgNow = round($avgNow/=($getTheAvg[0]["usersAttempts"]+1));
+                        DB::table("published_tests")->where("id","=",$id)->update([
+                            "usersAttempts" => $getTheAvg[0]["usersAttempts"]+1,
+                            "averageResult" => $avgNow
+                        ]);
+                        return json_encode("success");
+                    }
+                    else return json_encode("error");
+                } catch (\Throwable $th) {
+                    return json_encode("error ".$th->getMessage());
+                }
             }
             else return json_encode("success");
         }

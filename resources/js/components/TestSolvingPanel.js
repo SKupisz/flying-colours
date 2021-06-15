@@ -101,6 +101,7 @@ export default class TestSolvingPanel extends React.Component{
                 })
             }).then(back => back.json())
             .then(data => {
+                console.log(data);
                 if(data === "success") {
                     this.setState({
                         currentQuestion: this.state.currentQuestion+1,
@@ -190,7 +191,7 @@ export default class TestSolvingPanel extends React.Component{
         return <Grid container className = "test-solving-container block-center">
             {this.state.ifStarted === false ? <IntroPanel startGameCallback = {this.startTheGame} author = {this.props.author} 
             publishDate = {this.props.published_on} attemptsAmount={this.props.attempts} questionsAmount = {this.state.questionAmount}
-            lastResult = {Number(this.props.lastresult)}/>
+            lastResult = {Number(this.props.lastresult)} averageResult = {Number(this.props.average)}/>
             : this.state.errorOccured === true ? <Grid item xs={12}>
                 <header className="error-header block-center">Test got crashed. Try later</header>
             </Grid> : this.state.currentQuestion-1 > this.state.questionAmount ? <FinishPanel result={((this.state.finalPoints/this.state.pointsTotal).toFixed(2))*100} 

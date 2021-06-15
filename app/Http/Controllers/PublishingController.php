@@ -122,7 +122,8 @@ class PublishingController extends Controller
                             "authorityLevel" => 1,
                             "questionsAmount" => $howManyQuestions,
                             "usersAttempts" => 0,
-                            "published_on" => $getTheCurrentTime
+                            "published_on" => $getTheCurrentTime,
+                            "averageResult" => 0
                         ];
                         DB::table("published_tests")->insert($dataToPutIn);   
                         DB::table($tempDatabase)->where("testID","=",$testID)->delete();                     

@@ -18,3 +18,4 @@ require("./components/SigninInputs");
 require("./components/TestCreator");
 require("./components/TestSolvingPanel");
 require("./components/PublicTests");
+require("./components/OptionsPanel");

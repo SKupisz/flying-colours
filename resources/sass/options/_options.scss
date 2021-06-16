@@ -1,0 +1,50 @@
+.options-panel-container{
+    width: calc(80% - 10px);
+    padding: 5px;
+    text-align: center;
+    .options-choosing-btn{
+        width: calc(60% - 20px);
+        padding: 20px 10px;
+        text-align: center;
+        font-size: 1.6em;
+        letter-spacing: 0.06em;
+        font-family: "Odibee Sans",cursive;
+        border: none;
+        background: $btn-linear-gradient;
+        cursor: pointer;
+        transition: filter 0.4s;
+    }
+    .options-choosing-btn:hover{
+        filter: brightness(70%);
+    }
+    .change-section{
+        margin-top: 6vh;
+        .item-header{
+            width: calc(90% - 10px);
+            padding: 5px;
+            text-align: center;
+            font-size: 1.6em;
+            letter-spacing: 0.05em;
+            font-family: "Odibee Sans",cursive;
+            color: white;
+            margin-bottom: 2vh;
+        }
+        .email-input{
+            width: calc(40% - 20px);
+            margin-bottom: 2vh;
+            label{
+                font-size: 1.4em;
+            }
+            input{
+                font-size: 1.2em;
+            }
+        }
+        .error-header{
+            font-family: "Odibee Sans",cursive;
+            margin-bottom: 5vh;
+        }
+        .success-header{
+            color: darkgreen;
+        }
+    }
+}

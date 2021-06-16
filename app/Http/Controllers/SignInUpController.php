@@ -134,4 +134,35 @@ class SignInUpController extends Controller
         }
         else return $this->Logout();
     }
+    public function launchOptionsPanel(){
+        if(session()->has("current") && session()->has("name") && session()->has("dbs")){
+            return view("options")->with("data",["status" => "success"]);
+        }
+        else return redirect("/");
+    }
+    public function changeUserNickname(Request $data){
+        if($data->has("newNickname") && session()->has("current") && session()->has("name") && session()->has("dbs")){
+            $newNickname = $this->entities($data->input("newNickname"));
+            if(strlen($newNickname) > 0){
+                try {
+                    $getTheId = DB::table("users")->where("email","=",session()->get("current"))->where("nickname","=",session()->get("name"));
+                    if($getTheId->count() != 1) return json_encode("fail");
+                    else{
+                        $getTheId = json_decode(json_encode($getTheId->get()),true);
+                        $id = $getTheId[0]["id"];
+                        $toUpdate = [
+                            "nickname" => $newNickname
+                        ];
+                        DB::table("users")->where("id","=",$id)->update($toUpdate);
+                        session(["name" => $newNickname]);
+                        return json_encode("success");
+                    }
+                } catch (\Throwable $th) {
+                    return json_encode("fail");
+                }
+            }
+            else return json_encode("fail");
+        }
+        else return json_encode("fail");
+    }
 }

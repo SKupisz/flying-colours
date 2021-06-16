@@ -332,6 +332,25 @@ a {
   }
 }
 
+.email-input {
+  width: calc(60% - 20px);
+  padding: 10px;
+}
+
+.email-input .MuiFilledInput-underline:before {
+  border-color: darkred;
+}
+
+.email-input .MuiFilledInput-underline:after {
+  border-color: white;
+}
+
+.email-input input,
+.email-input label {
+  color: white !important;
+  font-family: 'Odibee Sans', cursive;
+}
+
 .signin-form {
   width: calc(70% - 20px);
   padding: 10px;
@@ -341,25 +360,6 @@ a {
 .signin-form .sign-in-container {
   width: calc(90% - 20px);
   padding: 10px;
-  font-family: 'Odibee Sans', cursive;
-}
-
-.signin-form .sign-in-container .email-input {
-  width: calc(60% - 20px);
-  padding: 10px;
-}
-
-.signin-form .sign-in-container .email-input .MuiFilledInput-underline:before {
-  border-color: darkred;
-}
-
-.signin-form .sign-in-container .email-input .MuiFilledInput-underline:after {
-  border-color: white;
-}
-
-.signin-form .sign-in-container .email-input input,
-.signin-form .sign-in-container .email-input label {
-  color: white;
   font-family: 'Odibee Sans', cursive;
 }
 
@@ -1484,5 +1484,65 @@ input[type=number] {
   .tests-showing-wrapper .test-button .date-header {
     width: calc(100% - 10px);
   }
+}
+
+.options-panel-container {
+  width: calc(80% - 10px);
+  padding: 5px;
+  text-align: center;
+}
+
+.options-panel-container .options-choosing-btn {
+  width: calc(60% - 20px);
+  padding: 20px 10px;
+  text-align: center;
+  font-size: 1.6em;
+  letter-spacing: 0.06em;
+  font-family: "Odibee Sans",cursive;
+  border: none;
+  background: linear-gradient(to left, #e53935, #d32f2f, #c62828, #b71c1c);
+  cursor: pointer;
+  transition: filter 0.4s;
+}
+
+.options-panel-container .options-choosing-btn:hover {
+  filter: brightness(70%);
+}
+
+.options-panel-container .change-section {
+  margin-top: 6vh;
+}
+
+.options-panel-container .change-section .item-header {
+  width: calc(90% - 10px);
+  padding: 5px;
+  text-align: center;
+  font-size: 1.6em;
+  letter-spacing: 0.05em;
+  font-family: "Odibee Sans",cursive;
+  color: white;
+  margin-bottom: 2vh;
+}
+
+.options-panel-container .change-section .email-input {
+  width: calc(40% - 20px);
+  margin-bottom: 2vh;
+}
+
+.options-panel-container .change-section .email-input label {
+  font-size: 1.4em;
+}
+
+.options-panel-container .change-section .email-input input {
+  font-size: 1.2em;
+}
+
+.options-panel-container .change-section .error-header {
+  font-family: "Odibee Sans",cursive;
+  margin-bottom: 5vh;
+}
+
+.options-panel-container .change-section .success-header {
+  color: darkgreen;
 }
 

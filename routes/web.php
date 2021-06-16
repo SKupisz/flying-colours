@@ -37,9 +37,7 @@ Route::get("/publish", function(){
     return view("publish");
 });
 
-Route::get("/options",function(){
-    return view("options");
-});
+Route::get("/options","SignInUpController@launchOptionsPanel");
 
 Route::get("/logout","SignInUpController@Logout");
 
@@ -50,3 +48,4 @@ Route::post("/publish/tempRow/","PublishingController@ThrowANewRow");
 Route::post("/publish/publishTheTest","PublishingController@PublishNewTest");
 Route::post("/solve/getTheRow","TestOperationsController@loadTheNextRow");
 Route::post("/solve/putTheResults", "TestOperationsController@putTheResultsToDB");
+Route::post("/options/support/changeTheNickname","SignInUpController@changeUserNickname");

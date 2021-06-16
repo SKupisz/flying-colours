@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { Grid, Button } from "@material-ui/core";
 
 import ChangeNickname from "./optionsPanelComponents/changeNickname.js";
+import ChangePassword from "./optionsPanelComponents/changePassword.js";
 
 export default class OptionsPanel extends React.Component{
     constructor(props){
@@ -11,26 +12,31 @@ export default class OptionsPanel extends React.Component{
         this.state = {
             currentStateOpened: 0,
             currentNickname: "",
-            ifFail: false
+            currentPasswd: "",
+            currentPasswdRep: "",
+            ifFail: false,
+            ifSuccess: false
+        };
+
+        this.defaultTextReset = {
+            ifFail: false,
+            ifSuccess: false
         };
 
         this.setTheNewMode = this.setTheNewMode.bind(this);
-        this.changeTheCurrentNickname = this.changeTheCurrentNickname.bind(this);
+        this.changeTheTextProperty = this.changeTheTextProperty.bind(this);
         this.changeTheNickname = this.changeTheNickname.bind(this);
+        this.changeThePasswd = this.changeThePasswd.bind(this);
     }
     setTheNewMode(mode){
-        this.setState({
-            currentStateOpened: this.state.currentStateOpened === mode ? -1 : mode,
-            ifSuccess: false,
-            ifFail: false
-        }, () => {});
+        let operand = this.defaultTextReset;
+        operand["currentStateOpened"] = this.state.currentStateOpened === mode ? -1 : mode;
+        this.setState(operand, () => {});
     }
-    changeTheCurrentNickname(value){
-        this.setState({
-            currentNickname: value,
-            ifFail: false,
-            ifSuccess: false
-        }, () => {});
+    changeTheTextProperty(operandInd, value){
+        let operand = this.defaultTextReset;
+        operand[operandInd] = value;
+        this.setState(operand, () => {});
     }
     async changeTheNickname(){
         if(this.state.currentNickname.length > 0){
@@ -59,6 +65,34 @@ export default class OptionsPanel extends React.Component{
             });
         }
     }
+    async changeThePasswd(){
+        await fetch("/options/support/changeThePassword",{
+            method: "POST",
+            headers: {"Content-type":"application/json"},
+            body: JSON.stringify({
+                newPasswd: this.state.currentPasswd,
+                newPasswdRep: this.state.currentPasswdRep,
+                _token: this.props.token
+            })
+        }).then(back => back.json())
+        .then(data => {
+            console.log(data);
+            if(data === "success"){
+                this.setState({
+                    ifSuccess: true,
+                    currentPasswd: "",
+                    currentPasswdRep: ""
+                }, () => {});
+            }
+            else{
+                this.setState({
+                    ifFail: true,
+                    currentPasswd: "",
+                    currentPasswdRep: ""
+                }, () => {});
+            }
+        });
+    }
     render(){
         return <Grid container className="options-panel-container block-center">
             <Grid item xs={6}>
@@ -73,10 +107,15 @@ export default class OptionsPanel extends React.Component{
                     Password
                 </Button>
             </Grid>
-            {this.state.currentStateOpened === 1 ? <ChangeNickname currentInputValue={this.state.currentNickname}
+            {this.state.currentStateOpened === 1 ? <ChangeNickname currentInputValue = {this.state.currentNickname}
             ifFailed = {this.state.ifFail} ifSuccesed = {this.state.ifSuccess}
-            changeTextFunction={this.changeTheCurrentNickname}
-            submitFunction={this.changeTheNickname}/> : ""}
+            changeTextFunction = {this.changeTheTextProperty}
+            submitFunction = {this.changeTheNickname}/> : 
+            this.state.currentStateOpened === 2 ? <ChangePassword currentInputValue = {this.state.currentPasswd}
+            currentRepValue = {this.state.currentPasswdRep}
+            ifFailed = {this.state.ifFail} ifSuccesed = {this.state.ifSuccess}
+            changeTextFunction = {this.changeTheTextProperty}
+            submitFunction = {this.changeThePasswd}/> : ""}
         </Grid>;
     }
 }

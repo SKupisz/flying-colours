@@ -49,3 +49,4 @@ Route::post("/publish/publishTheTest","PublishingController@PublishNewTest");
 Route::post("/solve/getTheRow","TestOperationsController@loadTheNextRow");
 Route::post("/solve/putTheResults", "TestOperationsController@putTheResultsToDB");
 Route::post("/options/support/changeTheNickname","SignInUpController@changeUserNickname");
+Route::post("/options/support/changeThePassword","SignInUpController@changeUserPassword");

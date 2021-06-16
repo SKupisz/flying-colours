@@ -8,7 +8,7 @@ const ChangeNickname = ({currentInputValue, ifFailed, ifSuccesed, changeTextFunc
             <TextField
                 required label="New nickname" variant="filled" value={currentInputValue}
                 className = "email-input block-center" margin="normal" name="nickname" type = "text"
-                onChange = {event => changeTextFunction(event.target.value)}/>
+                onChange = {event => changeTextFunction("currentNickname",event.target.value)}/>
         </Grid>
         {ifFailed ? <Grid item xs={12}>
             <header className = "error-header block-center">Something went wrong. Try later</header>

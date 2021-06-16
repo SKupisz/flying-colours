@@ -165,4 +165,30 @@ class SignInUpController extends Controller
         }
         else return json_encode("fail");
     }
+    public function changeUserPassword(Request $data){
+        if($data->has("newPasswd") && $data->has("newPasswdRep") && session()->has("current") && session()->has("name") && session()->has("dbs")){
+            $newPasswd = $data->input("newPasswd");
+            $newPasswdRep = $data->input("newPasswdRep");
+            if(strlen($newPasswd) == 0 || strlen($newPasswdRep) == 0 || $newPasswdRep != $newPasswd) return json_encode("fail");
+            else{
+                try {
+                    $getTheId = DB::table("users")->where("email","=",session()->get("current"))->where("nickname","=",session()->get("name"));
+                    if($getTheId->count() != 1) return json_encode("fail");
+                    else{
+                        $getTheId = json_decode(json_encode($getTheId->get()),true);
+                        $id = $getTheId[0]["id"];
+                        $newPasswd = password_hash($newPasswd,PASSWORD_DEFAULT);
+                        $toUpdate = [
+                            "passwd" => $newPasswd
+                        ];
+                        DB::table("users")->where("id","=",$id)->update($toUpdate);
+                        return json_encode("success");
+                    }
+                } catch (\Throwable $th) {
+                    return json_encode("fail ".$th->getMessage());
+                }
+            }
+        }
+        else return json_encode("fail");
+    }
 }

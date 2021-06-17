@@ -95,13 +95,13 @@ export default class OptionsPanel extends React.Component{
     }
     render(){
         return <Grid container className="options-panel-container block-center">
-            <Grid item xs={6}>
+            <Grid item sm={6} xs={12}>
                 <Button variant="contained" className="options-choosing-btn block-center"
                 onClick = {() => this.setTheNewMode(1)}>
                     Nickname
                 </Button>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item sm={6} xs={12}>
                 <Button variant="contained" className="options-choosing-btn block-center"
                 onClick = {() => this.setTheNewMode(2)}>
                     Password

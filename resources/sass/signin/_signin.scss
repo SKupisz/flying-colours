@@ -53,12 +53,12 @@
     }
 }
 @media screen and (max-width: 588px) {
+    .email-input{
+        width: calc(80% - 20px);
+    }
     .signin-form{
         width: calc(95% - 20px);
         .sign-in-container{
-            .email-input{
-                width: calc(80% - 20px);
-            }
             .error-message{
                 width: calc(100% - 10px);
             }
@@ -70,12 +70,12 @@
     }
 }
 @media screen and (max-width: 330px) {
+    .email-input{
+        width: calc(90% - 20px);
+    }
     .signin-form{
         width: calc(100% - 20px);
         .sign-in-container{
-            .email-input{
-                width: calc(90% - 20px);
-            }
             .login-btn{
                 width: calc(100% - 40px);
                 font-size: 1.2em;

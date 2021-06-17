@@ -67,7 +67,7 @@ a {
   display: none !important;
 }
 
-@media screen and (max-width: 860px) {
+@media screen and (max-width: 980px) {
   .nav-wrapper .service-name {
     font-size: 1.3em;
   }
@@ -399,12 +399,12 @@ a {
 }
 
 @media screen and (max-width: 588px) {
-  .signin-form {
-    width: calc(95% - 20px);
+  .email-input {
+    width: calc(80% - 20px);
   }
 
-  .signin-form .sign-in-container .email-input {
-    width: calc(80% - 20px);
+  .signin-form {
+    width: calc(95% - 20px);
   }
 
   .signin-form .sign-in-container .error-message {
@@ -418,12 +418,12 @@ a {
 }
 
 @media screen and (max-width: 330px) {
-  .signin-form {
-    width: calc(100% - 20px);
+  .email-input {
+    width: calc(90% - 20px);
   }
 
-  .signin-form .sign-in-container .email-input {
-    width: calc(90% - 20px);
+  .signin-form {
+    width: calc(100% - 20px);
   }
 
   .signin-form .sign-in-container .login-btn {
@@ -1544,5 +1544,73 @@ input[type=number] {
 
 .options-panel-container .change-section .success-header {
   color: darkgreen;
+}
+
+@media screen and (max-width: 880px) {
+  .options-panel-container {
+    width: calc(90% - 10px);
+  }
+
+  .options-panel-container .change-section .item-header {
+    width: calc(100% - 10px);
+  }
+
+  .options-panel-container .change-section .email-input {
+    width: calc(70% - 20px);
+  }
+
+  .options-panel-container .change-section .email-input label {
+    font-size: 1.2em;
+  }
+
+  .options-panel-container .change-section .email-input input {
+    font-size: 1em;
+  }
+}
+
+@media screen and (max-width: 692px) {
+  .options-panel-container {
+    width: calc(90% - 10px);
+  }
+
+  .options-panel-container .options-choosing-btn {
+    width: calc(80% - 20px);
+    font-size: 1.4em;
+    margin-bottom: 4px;
+  }
+}
+
+@media screen and (max-width: 534px) {
+  .options-panel-container {
+    width: calc(100% - 10px);
+  }
+
+  .options-panel-container .change-section .email-input {
+    width: calc(90% - 20px);
+  }
+
+  .options-panel-container .change-section .email-input label {
+    font-size: 1.2em;
+  }
+
+  .options-panel-container .change-section .email-input input {
+    font-size: 1em;
+  }
+}
+
+@media screen and (max-width: 466px) {
+  .options-header {
+    width: calc(100% - 20px);
+    font-size: 2.6em;
+  }
+
+  .options-panel-container .options-choosing-btn {
+    width: calc(90% - 20px);
+    font-size: 1.2em;
+  }
+
+  .options-panel-container .change-section .email-input {
+    width: calc(100% - 20px);
+  }
 }
 

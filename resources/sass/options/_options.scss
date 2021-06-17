@@ -48,3 +48,65 @@
         }
     }
 }
+@media screen and (max-width: 880px) {
+    .options-panel-container{
+        width: calc(90% - 10px);
+        .change-section{
+            .item-header{
+                width: calc(100% - 10px);
+            }
+            .email-input{
+                width: calc(70% - 20px);
+                label{
+                    font-size: 1.2em;
+                }
+                input{
+                    font-size: 1em;
+                }
+            }
+        }
+    }
+}
+@media screen and (max-width: 692px) {
+    .options-panel-container{
+        width: calc(90% - 10px);
+        .options-choosing-btn{
+            width: calc(80% - 20px);
+            font-size: 1.4em;
+            margin-bottom: 4px;
+        }
+    }
+}
+@media screen and (max-width: 534px) {
+    .options-panel-container{
+        width: calc(100% - 10px);
+        .change-section{
+            .email-input{
+                width: calc(90% - 20px);
+                label{
+                    font-size: 1.2em;
+                }
+                input{
+                    font-size: 1em;
+                }
+            }
+        }
+    }
+}
+@media screen and (max-width: 466px) {
+    .options-header{
+        width: calc(100% - 20px);
+        font-size: 2.6em;
+    }
+    .options-panel-container{
+        .options-choosing-btn{
+            width: calc(90% - 20px);
+            font-size: 1.2em;
+        }
+        .change-section{
+            .email-input{
+                width: calc(100% - 20px);
+            }
+        }
+    }
+}

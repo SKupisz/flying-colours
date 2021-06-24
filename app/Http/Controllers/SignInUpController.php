@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Cookie;
 use Carbon\Carbon;
 
 class SignInUpController extends Controller
@@ -63,7 +64,8 @@ class SignInUpController extends Controller
                         $user_history_table_name = $baseForDatabaseName."_testsHistory";
                         $user_tests_temp_table = $baseForDatabaseName."_temp";
                         session(["current" => $email, "name" => $getFinalData["nickname"], "dbs" => [$user_history_table_name,$user_tests_temp_table]]);
-                        return redirect("/main");
+                        return redirect("/main")->withCookie(cookie("data",
+                        json_encode(["current" => $email, "name" => $getFinalData["nickname"], "dbs" => [$user_history_table_name,$user_tests_temp_table]]), 240));
                     }
                     else return $this->redirectWithError("/sign-in","Wrong email or password");
                 }
@@ -116,7 +118,7 @@ class SignInUpController extends Controller
         session()->forget("current");
         session()->forget("name");
         session()->forget("dbs");
-        return redirect("/");
+        return redirect("/")->withCookie(Cookie::forget("data"));
     }
     public function launchMainPanel(){
         if(session()->has("current") && session()->has("name") && session()->has("dbs")){
@@ -126,7 +128,8 @@ class SignInUpController extends Controller
                 $getTheRecentHistory = json_decode(json_encode($getTheRecentHistory),true);
                 $getRecentlyPublished = DB::table("published_tests")->where("author","=",session()->get("current"))->orderByDesc("published_on")->take(5)->get();
                 $getRecentlyPublished = json_decode(json_encode($getRecentlyPublished),true);
-                return view("panel")->with("data",["status" => "done", "recentlyDone" => $getTheRecentHistory, "recentlyPublished" => $getRecentlyPublished]);
+                return view("panel")->with("data",["status" => "done", "recentlyDone" => $getTheRecentHistory, "recentlyPublished" => $getRecentlyPublished])->withCookie(cookie("data",
+                json_encode(["current" => session()->get("current"), "name" => session()->get("name"), "dbs" => session()->get("dbs")]), 240));
             } catch (Illuminate\Database\QueryException $e) {
                 return view("panel")->with("data",["status" => "error"]);
             }

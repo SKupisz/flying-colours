@@ -11,33 +11,35 @@
 |
 */
 
+use App\Http\Middleware\SignInUpManagement;
+
 Route::get('/', function () {
     if(session()->has("current") && session()->has("name") && session()->has("dbs")) return redirect("/main");
     return view('welcome');
-});
+})->middleware(SignInUpManagement::class);
 
 Route::get("/about",function(){
     return view("about");
-});
+})->middleware(SignInUpManagement::class);
 
 Route::get("/sign-in",function(){
     return view("signin");
-});
+})->middleware(SignInUpManagement::class);
 
 Route::get("/sign-up",function(){
     return view("signup");
-});
+})->middleware(SignInUpManagement::class);
 
-Route::get("/main","SignInUpController@launchMainPanel");
+Route::get("/main","SignInUpController@launchMainPanel")->middleware(SignInUpManagement::class);
 
-Route::get("/tests","PublicTestsSectionController@launchTestsSection");
-Route::get("/solve/{testId}/","TestOperationsController@launchTestSolving");
+Route::get("/tests","PublicTestsSectionController@launchTestsSection")->middleware(SignInUpManagement::class);
+Route::get("/solve/{testId}/","TestOperationsController@launchTestSolving")->middleware(SignInUpManagement::class);
 
 Route::get("/publish", function(){
     return view("publish");
-});
+})->middleware(SignInUpManagement::class);
 
-Route::get("/options","SignInUpController@launchOptionsPanel");
+Route::get("/options","SignInUpController@launchOptionsPanel")->middleware(SignInUpManagement::class);
 
 Route::get("/logout","SignInUpController@Logout");
 

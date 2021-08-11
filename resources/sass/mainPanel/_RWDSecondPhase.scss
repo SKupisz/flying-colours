@@ -14,6 +14,22 @@
         }
     }
 }
+@media screen and (min-width: 1024px){
+    .creator-panel{
+        .type-container{
+            width: calc(50% - 20px);
+            .MuiFormControl-root{
+                width: 80%;
+                .MuiInputBase-formControl{
+                    width: calc(40% - 20px);
+                    .MuiSelect-selectMenu{
+                        font-size: 1.6em;
+                    }
+                }
+            }
+        }
+    }
+}
 @media screen and (max-width: 991px) {
     .creator-panel{
         .type-container{
@@ -26,6 +42,21 @@
             width: calc(100% - 20px);
             .ending-phase-btn{
                 font-size: 1.5em;
+            }
+        }
+    }
+}
+@media screen and (min-width: 768px) {
+    .creator-panel{
+        .type-container{
+            .MuiFormControl-root{
+                width: 90%;
+                .MuiInputBase-formControl{
+                    width: calc(50% - 20px);
+                    .MuiSelect-selectMenu{
+                        font-size: 1.4em;
+                    }
+                }
             }
         }
     }
@@ -133,6 +164,17 @@
     .creator-panel{
         .points-input{
             width: calc(70% - 20px);
+        }
+    }
+}
+@media screen and (min-width: 320px) {
+    .creator-panel{
+        .type-container{
+            .MuiFormControl-root{
+                .MuiInputBase-formControl{
+                    width: calc(80% - 20px);
+                }
+            }
         }
     }
 }

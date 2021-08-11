@@ -259,6 +259,10 @@ a {
   margin-bottom: 9vh;
 }
 
+.creating-header {
+  margin-bottom: 6vh;
+}
+
 .service-describe {
   width: calc(50% - 20px);
   font-size: 1.9em;
@@ -737,25 +741,63 @@ input[type=number] {
   text-align: center;
 }
 
-.creator-panel .question-header,
-.creator-panel .question-sub-header {
+.MuiMenu-list {
+  background: darkred;
+  text-align: center;
+}
+
+.MuiMenu-list .type-selecting-option {
+  font-family: "Odibee Sans", cursive;
+  color: white;
+  width: calc(100% - 10px);
+  padding: 5px;
+  text-align: center;
+  font-size: 1.1em;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.creator-panel .question-header {
   width: calc(90% - 20px);
   padding: 10px;
   text-align: center;
   font-size: 2.4em;
   font-family: 'Odibee Sans', cursive;
   color: white;
-}
-
-.creator-panel .question-sub-header {
-  font-size: 1.4em;
+  margin-bottom: 3vh;
 }
 
 .creator-panel .type-container {
-  width: calc(50% - 20px);
+  width: calc(60% - 20px);
   padding: 10px;
   text-align: center;
   margin-bottom: 1vh;
+}
+
+.creator-panel .type-container .MuiFormControl-root {
+  width: 100%;
+}
+
+.creator-panel .type-container .MuiFormControl-root .MuiFilledInput-underline:before {
+  border-color: darkred;
+}
+
+.creator-panel .type-container .MuiFormControl-root .MuiFilledInput-underline:after {
+  border-color: white;
+}
+
+.creator-panel .type-container .MuiFormControl-root .MuiInputBase-formControl {
+  width: calc(90% - 20px);
+  padding: 10px;
+}
+
+.creator-panel .type-container .MuiFormControl-root .MuiInputBase-formControl .MuiSelect-selectMenu {
+  width: calc(100% - 10px);
+  padding: 5px;
+  color: white;
+  font-family: "Odibee Sans", cursive;
+  font-size: 1.2em;
 }
 
 .creator-panel .type-container .question-type-btn {
@@ -1040,6 +1082,24 @@ input[type=number] {
   }
 }
 
+@media screen and (min-width: 1024px) {
+  .creator-panel .type-container {
+    width: calc(50% - 20px);
+  }
+
+  .creator-panel .type-container .MuiFormControl-root {
+    width: 80%;
+  }
+
+  .creator-panel .type-container .MuiFormControl-root .MuiInputBase-formControl {
+    width: calc(40% - 20px);
+  }
+
+  .creator-panel .type-container .MuiFormControl-root .MuiInputBase-formControl .MuiSelect-selectMenu {
+    font-size: 1.6em;
+  }
+}
+
 @media screen and (max-width: 991px) {
   .creator-panel .type-container .question-type-btn {
     width: calc(25% - 20px);
@@ -1052,6 +1112,20 @@ input[type=number] {
 
   .creator-panel .ending-options-container .ending-phase-btn {
     font-size: 1.5em;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .creator-panel .type-container .MuiFormControl-root {
+    width: 90%;
+  }
+
+  .creator-panel .type-container .MuiFormControl-root .MuiInputBase-formControl {
+    width: calc(50% - 20px);
+  }
+
+  .creator-panel .type-container .MuiFormControl-root .MuiInputBase-formControl .MuiSelect-selectMenu {
+    font-size: 1.4em;
   }
 }
 
@@ -1144,6 +1218,12 @@ input[type=number] {
 @media screen and (max-width: 330px) {
   .creator-panel .points-input {
     width: calc(70% - 20px);
+  }
+}
+
+@media screen and (min-width: 320px) {
+  .creator-panel .type-container .MuiFormControl-root .MuiInputBase-formControl {
+    width: calc(80% - 20px);
   }
 }
 

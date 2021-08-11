@@ -21,6 +21,7 @@ export default class TestCreator extends React.Component{
         this.multiAnswerRef = React.createRef();
         this.textAnswerRef = React.createRef();
         this.numberAnswerRef = React.createRef();
+        this.textGivenAnswerRef = React.createRef();
         this.pointsRef = React.createRef();
 
         this.state = {
@@ -73,6 +74,12 @@ export default class TestCreator extends React.Component{
                 questionName: this.state.currentQuestionName,
                 answer: 0,
                 points: 0
+            },
+            {
+                type: "tga", // text-given answer, works only for english texts
+                questionNames: [],
+                answers: [],
+                points: []
             }
         ];
 
@@ -97,7 +104,8 @@ export default class TestCreator extends React.Component{
         this.updateTheMaxPoints = this.updateTheMaxPoints.bind(this);
         this.giveTheNewName = this.giveTheNewName.bind(this);
 
-        this.tableOfQuestionTypeRefs = [this.singleAnswerRef, this.multiAnswerRef, this.textAnswerRef, this.numberAnswerRef];
+        this.tableOfQuestionTypeRefs = [this.singleAnswerRef, this.multiAnswerRef, this.textAnswerRef, this.numberAnswerRef, this.textGivenAnswerRef];
+        this.optionsNames = ["Closed-single", "Closed-multi", "Open-text", "Open-number", "Text given"];
     }
     allowNextPhase(event){
         let helper = parseInt(event.target.value);
@@ -117,19 +125,24 @@ export default class TestCreator extends React.Component{
         }, () => {});
     }
     pickUpNewQuestionType(ind){
-        let current = this.state.currentQuestionData, operand = this.defaultQuestionModels[ind];
-        if(current["questionName"] !== "") operand["questionName"] = current["questionName"];
-        operand["questionName"] = this.state.currentQuestionName;
-        operand["points"] = this.state.currentQuestionData["points"];
-        this.setState({
-            currentQuestionData: this.state.currentQuestionType === ind ? {} : {...operand},
-            currentQuestionType: this.state.currentQuestionType === ind ? -1 : ind
-        }, () => {
-            for(let i = 0 ; i < this.tableOfQuestionTypeRefs.length; i++){
-                if(i === this.state.currentQuestionType) this.tableOfQuestionTypeRefs[i].current.classList.add("selected-type");
-                else this.tableOfQuestionTypeRefs[i].current.classList.remove("selected-type");
-            }
-        });
+        const inputValue = ind.target.value;
+        const finalInd = this.optionsNames.indexOf(inputValue);
+        if(finalInd === -1){
+            this.setState({
+                currentQuestionData: {},
+                currentQuestionType: -1
+            }, () => {});
+        }
+        else{
+            let current = this.state.currentQuestionData, operand = this.defaultQuestionModels[finalInd];
+            if(current["questionName"] !== "") operand["questionName"] = current["questionName"];
+            operand["questionName"] = this.state.currentQuestionName;
+            operand["points"] = this.state.currentQuestionData["points"];
+            this.setState({
+                currentQuestionData: this.state.currentQuestionType === finalInd ? {} : {...operand},
+                currentQuestionType: this.state.currentQuestionType === finalInd ? -1 : finalInd
+            }, () => {});
+        }
     }
     selectNewCorrectAnswer(ind){
         let operand = this.state.currentQuestionData;
@@ -285,17 +298,15 @@ export default class TestCreator extends React.Component{
                     <Grid item xs={12}>
                         <header className="question-header block-center">Question nr {this.state.currentQuestion}</header>
                     </Grid>
-                    <Grid item xs={12}>
+                    <QuestionTypes optionsNames = {this.optionsNames} callBackFunction = {this.pickUpNewQuestionType}
+                    currentlySelectedType={this.state.currentQuestionType === -1 ? "None" : this.optionsNames[this.state.currentQuestionType]}/>
+                    {this.state.currentQuestionType !== -1 && this.state.currentQuestionType !== 4 ? <Grid item xs={12}>
                         <TextField
                             required
                             label="Question" variant="filled" 
                             className = "question-name-input block-center" margin="normal" name="question-name"
                             onChange = {event => {this.changeQuestionName(event);}}/>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <header className="question-sub-header block-center">Select type of the questions</header>
-                    </Grid>
-                    <QuestionTypes refsTable = {this.tableOfQuestionTypeRefs} callBackFunction = {this.pickUpNewQuestionType}/>
+                    </Grid> : ""}
                     {this.state.currentQuestionType === 0 || this.state.currentQuestionType === 1 ? <StandardButton content = "Add an answer"
                         classes = "adding-answer-button block-center" callbackFunction={this.addNewAnswer}/> : ""}
                     {this.state.currentQuestionType !== -1 ? <Grid item xs={12}>
